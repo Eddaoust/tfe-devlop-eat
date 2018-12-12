@@ -72,6 +72,16 @@ class Project
      */
     private $projectOwner;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Architect", inversedBy="projects")
+     */
+    private $architect;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\GeneralCompany", inversedBy="projects")
+     */
+    private $generalCompany;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -211,6 +221,30 @@ class Project
     public function setProjectOwner(?Company $projectOwner): self
     {
         $this->projectOwner = $projectOwner;
+
+        return $this;
+    }
+
+    public function getArchitect(): ?Architect
+    {
+        return $this->architect;
+    }
+
+    public function setArchitect(?Architect $architect): self
+    {
+        $this->architect = $architect;
+
+        return $this;
+    }
+
+    public function getGeneralCompany(): ?GeneralCompany
+    {
+        return $this->generalCompany;
+    }
+
+    public function setGeneralCompany(?GeneralCompany $generalCompany): self
+    {
+        $this->generalCompany = $generalCompany;
 
         return $this;
     }
