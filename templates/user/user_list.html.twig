@@ -1,0 +1,32 @@
+{% extends 'user/user-template.html.twig' %}
+
+{% block user_body %}
+    <table class="table table-hover table-bordered">
+        <thead>
+        <tr>
+            <th scope="col">Profile</th>
+            <th scope="col">Email</th>
+            <th scope="col">Prénom</th>
+            <th scope="col">Nom</th>
+            <th scope="col">Naissance</th>
+            <th scope="col">Création</th>
+            <th scope="col">Modifier</th>
+            <th scope="col">Supprimer</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% for user in users %}
+                <th class="text-center"><img src="{{ user.img ? asset('img/user-profil/') ~ user.img : asset('img/user-profil/default.png') }}" alt="user profil" width="20"></th>
+                <th>{{ user.email }}</th>
+                <th>{{ user.firstName }}</th>
+                <th>{{ user.lastName }}</th>
+                <th>{{ user.birthdate | date('d/m/Y') }}</th>
+                <th>{{ user.created | date('d/m/Y') }}</th>
+                <th class="text-center"><a href="#"><i class="fas fa-pen"></i></a></th>
+                <th class="text-center"><a href="#"><i class="fas fa-trash-alt"></i></a></th>
+            {% endfor %}
+        </tr>
+        </tbody>
+    </table>
+{% endblock %}

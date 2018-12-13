@@ -1,11 +1,33 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Dashboard{% endblock %}
+{% block title %}{{ parent() }}Dashboard{% endblock %}
 
 {% block body %}
-    <div class="container-fluid">
-        <div class="row">
-            {% include 'inc/navside.html.twig' %}
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-xl-2">
+            <ul class="nav nav-sidebar flex-column mt-5">
+                <li class="nav-item">
+                    <a class="nav-link text-success" href="{{ path('dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-success" href="{{ path('user_admin') }}"><i class="fas fa-users-cog"></i> Gérer les utilisateurs</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-success" href="#"><i class="fas fa-building"></i> Gérer les projets</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-success" href="#"><i class="fas fa-industry"></i> Gérer les sociétés</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-success" href="#"><i class="fas fa-drafting-compass"></i> Gérer les architectes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-success" href="#"><i class="fas fa-hammer"></i> Gérer les entreprises générales</a>
+                </li>
+            </ul>
         </div>
+        {% block dash_body %}{% endblock %}
     </div>
+</div>
 {% endblock %}
