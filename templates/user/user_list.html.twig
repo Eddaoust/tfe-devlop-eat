@@ -15,18 +15,18 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-            {% for user in users %}
+        {% for user in users %}
+            <tr>
                 <th class="text-center"><img src="{{ user.img ? asset('img/user-profil/') ~ user.img : asset('img/user-profil/default.png') }}" alt="user profil" width="20"></th>
                 <th>{{ user.email }}</th>
                 <th>{{ user.firstName }}</th>
                 <th>{{ user.lastName }}</th>
                 <th>{{ user.birthdate | date('d/m/Y') }}</th>
                 <th>{{ user.created | date('d/m/Y') }}</th>
-                <th class="text-center"><a href="#"><i class="fas fa-pen"></i></a></th>
-                <th class="text-center"><a href="#"><i class="fas fa-trash-alt"></i></a></th>
-            {% endfor %}
-        </tr>
+                <th class="text-center"><a href="{{ path('user_update', {id: user.id}) }}"><i class="fas fa-pen"></i></a></th>
+                <th class="text-center"><a href="{{ path('user_delete', {id: user.id}) }}"><i class="fas fa-trash-alt"></i></a></th>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 {% endblock %}

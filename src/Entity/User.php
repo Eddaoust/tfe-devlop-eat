@@ -41,7 +41,7 @@ class User implements UserInterface
     private $password;
 
     /**
-     * @Assert\EqualTo(propertyPath="password", message="Les mot de passe doivent être identique")
+     * @Assert\EqualTo(propertyPath="password", message="Les mots de passe doivent être identique")
      */
     private $confirmPassword;
 
