@@ -15,6 +15,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class UserType extends AbstractType
 {
+    /**
+     * @param $label
+     * @param $placeholder
+     * @return array
+     */
     private function getConfiguration($label, $placeholder)
     {
         return [
