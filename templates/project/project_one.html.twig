@@ -1,0 +1,20 @@
+{% extends 'project/project-template.html.twig' %}
+
+{% block project_body %}
+    <h1><span class="text-success">Nom du projet: </span>{{ project.name }}</h1><br>
+    <h3><span class="text-success">Project Owner: </span>{{ project.projectOwner.name }} {{ project.projectOwner.companyCategory.abbreviation }} - {{ project.projectOwner.country.name }}</h3><br>
+    <p><span class="text-success">Localisation: </span>{{ project.address }}, {{ project.postalCode }} {{ project.city }}</p>
+    <p><span class="text-success">Description: </span>{{ project.description }}</p>
+    <p><span class="text-success">Point d'intérêt: </span>{{ project.pointOfInterest }}</p><br>
+    <h3 class="text-success">Chiffres: </h3>
+    <p><span class="text-success">Terrain: </span>{{ project.fieldSize }} ares</p>
+    <p><span class="text-success">Chiffre d'affaire: </span>{{ project.turnover }} &euro;</p>
+    <p><span class="text-success">Lots: </span>{{ project.lots }}</p><br>
+    <h3 class="text-success">Partenaires: </h3>
+    {% for shareholder in project.projectOwner.shareholders %}
+    <p><span class="text-success">Actionnaires: </span>{{ shareholder.company.name }} - {{ shareholder.part }}%</p>
+    {% endfor %}
+    <p><span class="text-success">Architecte: </span>{{ project.architect.name }}</p>
+    <p><span class="text-success">Entreprise générale: </span>{{ project.generalCompany.name }}</p>
+
+{% endblock %}

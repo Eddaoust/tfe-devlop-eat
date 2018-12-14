@@ -4,12 +4,13 @@
     <table class="table table-hover table-bordered">
         <thead>
         <tr>
+            <th scope="col">#</th>
             <th scope="col">Nom</th>
             <th scope="col">Project Owner</th>
             <th scope="col">Addresse</th>
             <th scope="col">Ville</th>
             <th scope="col">Architecte</th>
-            <th scope="col">Entreprise Générale</th>
+            <th scope="col">Entr. Générale</th>
             <th scope="col">Création</th>
             <th scope="col">Modifier</th>
             <th scope="col">Supprimer</th>
@@ -18,7 +19,8 @@
         <tbody>
         {% for project in projects %}
             <tr>
-                <th><a href="#">{{ project.name }}</a></th>
+                <th>{{ loop.index }}</th>
+                <th><a href="{{ path('project_one', {id: project.id}) }}">{{ project.name }}</a></th>
                 <th>{{ project.projectOwner.name }}</th>
                 <th>{{ project.address }}</th>
                 <th>{{ project.city }}</th>

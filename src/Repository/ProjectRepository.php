@@ -38,7 +38,7 @@ class ProjectRepository extends ServiceEntityRepository
      * Get the data project with link in minimum request
      * @return mixed
      */
-    public function findAllWithLink()
+    public function findAllWithRelation()
     {
         return $this->createQueryBuilder('project')
                     ->select('project', 'projectOwner', 'architect', 'generalCompany')
