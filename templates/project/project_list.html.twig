@@ -27,8 +27,8 @@
                 <th>{{ project.architect.name }}</th>
                 <th>{{ project.generalCompany.name }}</th>
                 <th>{{ project.created | date('d/m/Y') }}</th>
-                <th class="text-center"><a href="#"><i class="fas fa-pen"></i></a></th>
-                <th class="text-center"><a href="#"><i class="fas fa-trash-alt"></i></a></th>
+                <th class="text-center"><a href="{{ path('project_update', {id: project.id}) }}"><i class="fas fa-pen"></i></a></th>
+                <th class="text-center"><a href="{{ path('project_delete', {id: project.id}) }}"><i class="fas fa-trash-alt"></i></a></th>
             </tr>
         {% endfor %}
         </tbody>

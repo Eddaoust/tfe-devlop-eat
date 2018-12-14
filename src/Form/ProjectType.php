@@ -64,7 +64,12 @@ class ProjectType extends AbstractType
                 'choice_label' => 'name',
                 'placeholder' => 'Choisissez une entreprise générale'
             ])
-            ->add('Ajouter', SubmitType::class)
+            ->add('Ajouter', SubmitType::class, [
+                'label' => 'Envoyer',
+                'attr' => [
+                    'class' => 'btn btn-success'
+                ]
+            ])
         ;
     }
 
