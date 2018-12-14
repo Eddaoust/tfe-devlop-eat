@@ -15,11 +15,13 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 class UserController extends Controller
 {
     /**
+     * @param UserRepository $repository
+     * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/admin/user", name="user_list")
      */
-    public function listUsers(UserRepository $repository)
+    public function listUsers(UserRepository $repo)
     {
-        $users = $repository->findAll();
+        $users = $repo->findAll();
 
         return $this->render('user/user_list.html.twig',[
             'users' => $users
@@ -57,7 +59,7 @@ class UserController extends Controller
             return $this->redirectToRoute('user_list');
         }
 
-        return $this->render('user/add_user.html.twig', [
+        return $this->render('user/user_add.html.twig', [
             'form' => $form->createView()
         ]);
     }
@@ -85,7 +87,7 @@ class UserController extends Controller
 
             return $this->redirectToRoute('user_list');
         }
-        return $this->render('user/update_user.html.twig', [
+        return $this->render('user/user_update.html.twig', [
             'form' => $form->createView()
         ]);
     }

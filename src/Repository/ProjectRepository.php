@@ -19,6 +19,35 @@ class ProjectRepository extends ServiceEntityRepository
         parent::__construct($registry, Project::class);
     }
 
+
+    /**
+     * Get the count of all projects
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getCount()
+    {
+        return $this->createQueryBuilder('project')
+                    ->select('count(project.id)')
+                    ->getQuery()
+                    ->getSingleScalarResult();
+    }
+
+    /**
+     * Resolve the N+1 issue
+     * Get the data project with link in minimum request
+     * @return mixed
+     */
+    public function findAllWithLink()
+    {
+        return $this->createQueryBuilder('project')
+                    ->select('project', 'projectOwner', 'architect', 'generalCompany')
+                    ->leftJoin('project.projectOwner', 'projectOwner')
+                    ->leftJoin('project.architect', 'architect')
+                    ->leftJoin('project.generalCompany', 'generalCompany')
+                    ->getQuery()
+                    ->getResult();
+    }
     // /**
     //  * @return Project[] Returns an array of Project objects
     //  */
