@@ -26,6 +26,7 @@ class UserFixtures extends Fixture
                 ->setPassword($this->encoder->encodePassword($user, 'testtest'))
                 ->setFirstName($faker->firstName)
                 ->setLastName($faker->lastName)
+                ->setRoles(['ROLE_ADMIN'])
                 ->setBirthdate($faker->dateTimeThisDecade)
                 ->setCreated($faker->dateTimeThisMonth);
 
