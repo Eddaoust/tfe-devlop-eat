@@ -9,7 +9,7 @@
             <p class="lead">Vous avez <strong class="text-success">{{ companiesCounter.getCompaniesCount() }}</strong> sociétés enregistrés sur la plateforme.</p>
             <hr class="my-4">
 
-            <a class="btn btn-success btn-lg" href="#" role="button"><i class="fas fa-user-plus"></i> Ajouter une société</a>
+            <a class="btn btn-success btn-lg" href="{{ path('company_add') }}" role="button"><i class="fas fa-user-plus"></i> Ajouter une société</a>
         </div>
         {% block company_body %}{% endblock %}
     </div>
