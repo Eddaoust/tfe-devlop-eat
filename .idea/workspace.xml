@@ -1,13 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d51d9484-cc41-470c-98b8-78f892d7a619" name="Default Changelist" comment="Finishing project add method">
-      <change beforePath="$PROJECT_DIR$/.idea/Devlop-Eat.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Devlop-Eat.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+    <list default="true" id="d51d9484-cc41-470c-98b8-78f892d7a619" name="Default Changelist" comment="Security Update">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/symfony.lock" beforeDir="false" afterPath="$PROJECT_DIR$/symfony.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CompanyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/CompanyType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CompanyType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/company/company_add.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/company/company_add.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -45,34 +43,104 @@
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="devlop-eat: schema" type="76f4a085:MysqlImplModel$Schema" />
       </path>
-      <path>
-        <item name="Database" type="3277223f:DatabaseStructure$DbRootGroup" />
-        <item name="devlop-eat@localhost" type="feb32156:DbDataSourceImpl" />
-        <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
-        <item name="devlop-eat: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="company: table" type="285a2a93:MysqlImplModel$Table" />
-      </path>
     </expand>
     <select />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/ProjectController.php">
+        <entry file="file://$PROJECT_DIR$/src/Controller/CompanyController.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1960">
-              <caret line="98" column="40" selection-start-line="98" selection-start-column="40" selection-end-line="98" selection-end-column="40" />
+            <state relative-caret-position="657">
+              <caret line="46" column="48" selection-start-line="46" selection-start-column="48" selection-end-line="46" selection-end-column="48" />
+              <folding>
+                <element signature="e#34#57#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="uml://DATABASE/42a11f38-8289-4aba-a099-4d2dbfde8ed2">
+          <provider selected="true" editor-type-id="UmlEditorProvider">
+            <state>
+              <ID>DATABASE</ID>
+              <OriginalElement>42a11f38-8289-4aba-a099-4d2dbfde8ed2</OriginalElement>
+              <nodes>
+                <node x="66.96875" y="0.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.country</node>
+                <node x="0.0" y="146.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company_category</node>
+                <node x="39.34375" y="314.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company</node>
+                <node x="0.0" y="1041.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.migration_versions</node>
+                <node x="799.34375" y="0.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.user</node>
+                <node x="302.75" y="658.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.project</node>
+                <node x="540.34375" y="369.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.architect</node>
+                <node x="306.34375" y="369.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.general_company</node>
+                <node x="15.09375" y="779.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.shareholder</node>
+              </nodes>
+              <notes />
+              <edges>
+                <edge source="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company" target="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.country">
+                  <point x="61.75" y="-147.0" />
+                  <point x="224.59375" y="289.0" />
+                  <point x="219.5" y="289.0" />
+                  <point x="219.5" y="121.0" />
+                  <point x="195.96875" y="121.0" />
+                  <point x="43.0" y="48.0" />
+                </edge>
+                <edge source="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.project" target="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.general_company">
+                  <point x="0.0" y="-169.0" />
+                  <point x="416.75" y="633.0" />
+                  <point x="413.34375" y="633.0" />
+                  <point x="0.0" y="92.0" />
+                </edge>
+                <edge source="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company" target="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company_category">
+                  <point x="-61.75" y="-147.0" />
+                  <point x="101.09375" y="289.0" />
+                  <point x="104.5" y="289.0" />
+                  <point x="0.0" y="59.0" />
+                </edge>
+                <edge source="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.project" target="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company">
+                  <point x="-76.0" y="-169.0" />
+                  <point x="340.75" y="633.0" />
+                  <point x="224.59375" y="633.0" />
+                  <point x="61.75" y="147.0" />
+                </edge>
+                <edge source="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.project" target="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.architect">
+                  <point x="76.0" y="-169.0" />
+                  <point x="492.75" y="633.0" />
+                  <point x="647.34375" y="633.0" />
+                  <point x="0.0" y="92.0" />
+                </edge>
+                <edge source="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.shareholder" target="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company">
+                  <point x="0.0" y="-48.0" />
+                  <point x="-61.75" y="147.0" />
+                </edge>
+                <edge source="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company_category" target="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.country">
+                  <point x="0.0" y="-59.0" />
+                  <point x="104.5" y="121.0" />
+                  <point x="109.96875" y="121.0" />
+                  <point x="-43.0" y="48.0" />
+                </edge>
+              </edges>
+              <settings layout="Hierarchic Group" zoom="0.8093525179856115" x="502.5" y="350.1644444444445" />
+              <SelectedNodes>
+                <node>42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.shareholder</node>
+              </SelectedNodes>
+              <Categories>
+                <Category>Key columns</Category>
+                <Category>Columns</Category>
+              </Categories>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Controller/CompanyController.php">
+        <entry file="file://$PROJECT_DIR$/src/Form/ShareholderType.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="240">
-              <caret line="14" column="52" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
+            <state relative-caret-position="400">
+              <caret line="20" column="58" selection-start-line="20" selection-start-column="58" selection-end-line="20" selection-end-column="58" />
               <folding>
-                <element signature="e#34#71#0#PHP" expanded="true" />
+                <element signature="e#28#51#0#PHP" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -80,46 +148,18 @@
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Form/CompanyType.php">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/company/company_list.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="30" column="50" selection-start-line="30" selection-start-column="50" selection-end-line="30" selection-end-column="50" />
+            <state relative-caret-position="710">
+              <caret line="58" column="35" selection-start-line="58" selection-start-column="35" selection-end-line="58" selection-end-column="35" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/company/company-template.html.twig">
+        <entry file="file://$PROJECT_DIR$/templates/company/company_add.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="340">
-              <caret line="16" selection-start-line="16" selection-end-line="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/public/.htaccess">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/config/packages/twig.yaml">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="9" selection-start-line="9" selection-end-line="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Service/CompaniesCounter.php">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="220">
-              <caret line="16" selection-start-line="16" selection-end-line="16" />
+            <state relative-caret-position="580">
+              <caret line="29" column="14" selection-start-line="29" selection-start-column="14" selection-end-line="29" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -136,11 +176,7 @@
         <option value="$PROJECT_DIR$/.env" />
         <option value="$PROJECT_DIR$/templates/inc/navbar.html.twig" />
         <option value="$PROJECT_DIR$/templates/security/index.html.twig" />
-        <option value="$PROJECT_DIR$/config/packages/security.yaml" />
-        <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/src/Entity/Project.php" />
-        <option value="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" />
-        <option value="$PROJECT_DIR$/src/Controller/DashboardController.php" />
         <option value="$PROJECT_DIR$/templates/inc/navside.html.twig" />
         <option value="$PROJECT_DIR$/templates/user/inc/user_nav.html.twig" />
         <option value="$PROJECT_DIR$/templates/inc/dashboard-footer.html.twig" />
@@ -156,7 +192,6 @@
         <option value="$PROJECT_DIR$/src/Entity/User.php" />
         <option value="$PROJECT_DIR$/templates/user/user_list.html.twig" />
         <option value="$PROJECT_DIR$/templates/user/update_user.html.twig" />
-        <option value="$PROJECT_DIR$/src/DataFixtures/UserFixtures.php" />
         <option value="$PROJECT_DIR$/src/Service/projectCounter.php" />
         <option value="$PROJECT_DIR$/src/Controller/UserController.php" />
         <option value="$PROJECT_DIR$/src/Service/ProjectsCounter.php" />
@@ -174,9 +209,18 @@
         <option value="$PROJECT_DIR$/src/Repository/CompanyRepository.php" />
         <option value="$PROJECT_DIR$/src/Service/CompaniesCounter.php" />
         <option value="$PROJECT_DIR$/templates/company/company_list.html.twig" />
-        <option value="$PROJECT_DIR$/src/Controller/CompanyController.php" />
         <option value="$PROJECT_DIR$/templates/dashboard/dashboard.html.twig" />
+        <option value="$PROJECT_DIR$/src/DataFixtures/.gitignore" />
+        <option value="$PROJECT_DIR$/src/Controller/DashboardController.php" />
+        <option value="$PROJECT_DIR$/config/packages/security.yaml" />
+        <option value="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/src/DataFixtures/UserFixtures.php" />
         <option value="$PROJECT_DIR$/templates/company/company-template.html.twig" />
+        <option value="$PROJECT_DIR$/src/Form/CompanyType.php" />
+        <option value="$PROJECT_DIR$/templates/company/company_add.html.twig" />
+        <option value="$PROJECT_DIR$/src/Form/ShareholderType.php" />
+        <option value="$PROJECT_DIR$/src/Controller/CompanyController.php" />
       </list>
     </option>
   </component>
@@ -300,6 +344,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -310,18 +355,13 @@
             <path>
               <item name="Devlop-Eat" type="b2602c69:ProjectViewProjectNode" />
               <item name="Devlop-Eat" type="462c0819:PsiDirectoryNode" />
-              <item name="public" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Devlop-Eat" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Devlop-Eat" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Devlop-Eat" type="b2602c69:ProjectViewProjectNode" />
               <item name="Devlop-Eat" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="Controller" type="462c0819:PsiDirectoryNode" />
+              <item name="Entity" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Devlop-Eat" type="b2602c69:ProjectViewProjectNode" />
@@ -338,19 +378,12 @@
               <item name="Devlop-Eat" type="b2602c69:ProjectViewProjectNode" />
               <item name="Devlop-Eat" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Devlop-Eat" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Devlop-Eat" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="project" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -360,7 +393,12 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="/usr/local/bin/node" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
-    <property name="settings.editor.selected.configurable" value="reference.webide.settings.project.settings.php" />
+    <property name="settings.editor.selected.configurable" value="terminal" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$USER_HOME$/Desktop" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -388,7 +426,16 @@
       <workItem from="1544690931962" duration="14484000" />
       <workItem from="1544774694457" duration="14660000" />
       <workItem from="1544805394443" duration="4971000" />
-      <workItem from="1545120353137" duration="230000" />
+      <workItem from="1545120353137" duration="591000" />
+      <workItem from="1545128340860" duration="41000" />
+      <workItem from="1545128538510" duration="20000" />
+      <workItem from="1545129520684" duration="465000" />
+      <workItem from="1545148862054" duration="25000" />
+      <workItem from="1545169992653" duration="1545000" />
+      <workItem from="1545206636328" duration="1392000" />
+      <workItem from="1545216567415" duration="14000" />
+      <workItem from="1545221665896" duration="2431000" />
+      <workItem from="1545233897158" duration="5729000" />
     </task>
     <task id="LOCAL-00001" summary="Add app fixtures (old)">
       <created>1544616815795</created>
@@ -467,16 +514,58 @@
       <option name="project" value="LOCAL" />
       <updated>1544823247645</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Add Apache Pack">
+      <created>1545120801254</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1545120801254</updated>
+    </task>
+    <task id="LOCAL-00013" summary="Add Apache Pack">
+      <created>1545171486731</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1545171486731</updated>
+    </task>
+    <task id="LOCAL-00014" summary="ignore .env">
+      <created>1545172327239</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1545172327239</updated>
+    </task>
+    <task id="LOCAL-00015" summary="Security Update">
+      <created>1545206933433</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1545206933433</updated>
+    </task>
+    <task id="LOCAL-00016" summary="lear git cache">
+      <created>1545207486396</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1545207486396</updated>
+    </task>
+    <task id="LOCAL-00017" summary="Company Add">
+      <created>1545224456225</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1545224456226</updated>
+    </task>
+    <option name="localTasksCounter" value="18" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="41927000" />
+    <option name="totallyTimeSpent" value="53950000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.15750916" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.15384616" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -488,16 +577,16 @@
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Database Console" order="7" weight="0.32987553" />
       <window_info anchor="bottom" id="Docker" order="8" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Version Control" order="9" visible="true" weight="0.32987553" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="9" visible="true" weight="0.32883817" />
       <window_info anchor="bottom" id="Database Changes" order="10" />
-      <window_info anchor="bottom" id="Terminal" order="11" weight="0.39107883" />
+      <window_info anchor="bottom" id="Terminal" order="11" weight="0.3900415" />
       <window_info anchor="bottom" id="Event Log" order="12" side_tool="true" />
       <window_info anchor="bottom" id="Messages" order="13" weight="0.32987553" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Remote Host" order="3" />
-      <window_info anchor="right" id="Database" order="4" weight="0.16239317" />
+      <window_info anchor="right" id="Database" order="4" visible="true" weight="0.15018316" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -515,83 +604,24 @@
     <MESSAGE value="Finishing project add method" />
     <MESSAGE value="Finishing Project CRUD" />
     <MESSAGE value="Starting CRUD on Company" />
-    <option name="LAST_COMMIT_MESSAGE" value="Starting CRUD on Company" />
+    <MESSAGE value="Add Apache Pack" />
+    <MESSAGE value="ignore .env" />
+    <MESSAGE value="Security Update" />
+    <MESSAGE value="lear git cache" />
+    <MESSAGE value="Company Add" />
+    <option name="LAST_COMMIT_MESSAGE" value="Company Add" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="das://42a11f38-8289-4aba-a099-4d2dbfde8ed2/schema/devlop-eat/table/country" />
-    <entry file="das://42a11f38-8289-4aba-a099-4d2dbfde8ed2/schema/devlop-eat/table/company_category" />
-    <entry file="das://42a11f38-8289-4aba-a099-4d2dbfde8ed2/schema/devlop-eat/table/general_company" />
-    <entry file="das://42a11f38-8289-4aba-a099-4d2dbfde8ed2/schema/devlop-eat/table/project" />
-    <entry file="das://42a11f38-8289-4aba-a099-4d2dbfde8ed2/schema/devlop-eat/table/company" />
-    <entry file="das://42a11f38-8289-4aba-a099-4d2dbfde8ed2/schema/devlop-eat/table/shareholder" />
-    <entry file="file://$PROJECT_DIR$/templates/inc/dashboard-footer.html.twig" />
     <entry file="file://$PROJECT_DIR$/templates/inc/navside.html.twig" />
     <entry file="file://$PROJECT_DIR$/templates/inc/navbar.html.twig" />
     <entry file="file://$PROJECT_DIR$/templates/user/inc/user_nav.html.twig" />
     <entry file="file://$PROJECT_DIR$/templates/security/login.html.twig">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/DashboardController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="17" selection-start-line="17" selection-end-line="17" />
-          <folding>
-            <element signature="e#34#91#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/SecurityController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="24" column="7" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
-          <folding>
-            <element signature="e#34#91#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="643">
-          <caret line="36" column="30" selection-start-line="36" selection-start-column="30" selection-end-line="36" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/user/user_add.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret selection-end-line="7" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataFixtures/AppFixtures.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-440">
-          <caret line="19" column="8" selection-start-line="19" selection-start-column="8" selection-end-line="19" selection-end-column="48" />
-          <folding>
-            <element signature="e#36#61#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/DataFixtures/UserFixtures.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="720">
-          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
-          <folding>
-            <element signature="e#36#56#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="202">
-          <caret line="72" column="29" selection-start-line="72" selection-start-column="29" selection-end-line="72" selection-end-column="29" />
-          <folding>
-            <element signature="e#30#62#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -630,41 +660,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="uml://DATABASE/42a11f38-8289-4aba-a099-4d2dbfde8ed2">
-      <provider selected="true" editor-type-id="UmlEditorProvider">
-        <state>
-          <ID>DATABASE</ID>
-          <OriginalElement>42a11f38-8289-4aba-a099-4d2dbfde8ed2</OriginalElement>
-          <nodes>
-            <node x="" y="">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.country</node>
-            <node x="" y="">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company_category</node>
-            <node x="" y="">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company</node>
-            <node x="" y="">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.migration_versions</node>
-            <node x="" y="">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.user</node>
-            <node x="" y="">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.project</node>
-            <node x="" y="">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.architect</node>
-            <node x="" y="">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.general_company</node>
-            <node x="" y="">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.shareholder</node>
-          </nodes>
-          <notes />
-          <edges />
-          <settings layout="Hierarchic Group" zoom="0.8093525179856115" x="503.0" y="546.0" />
-          <SelectedNodes />
-          <Categories>
-            <Category>Key columns</Category>
-            <Category>Columns</Category>
-          </Categories>
-          <SCOPE>All</SCOPE>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Entity/Company.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="426">
-          <caret line="273" column="45" lean-forward="true" selection-start-line="273" selection-start-column="45" selection-end-line="273" selection-end-column="45" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/services.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="620">
@@ -686,37 +681,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="100">
           <caret line="5" column="14" lean-forward="true" selection-start-line="5" selection-start-column="14" selection-end-line="5" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/project/project_add.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="5" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/project/project_one.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret selection-end-line="2" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/UserController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="12" selection-start-line="12" selection-end-line="12" selection-end-column="68" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Form/ProjectType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1238">
-          <caret line="70" column="17" selection-start-line="70" selection-start-column="17" selection-end-line="70" selection-end-column="17" />
-          <folding>
-            <element signature="e#28#53#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -765,43 +729,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://42a11f38-8289-4aba-a099-4d2dbfde8ed2/schema/devlop-eat/table/user">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-          <column-attributes>
-            <column name="roles" languageId="JSON" />
-          </column-attributes>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/ProjectController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1960">
-          <caret line="98" column="40" selection-start-line="98" selection-start-column="40" selection-end-line="98" selection-end-column="40" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/CompanyController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="240">
-          <caret line="14" column="52" selection-start-line="14" selection-start-column="52" selection-end-line="14" selection-end-column="52" />
-          <folding>
-            <element signature="e#34#71#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Form/CompanyType.php">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/company/company_list.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="30" column="50" selection-start-line="30" selection-start-column="50" selection-end-line="30" selection-end-column="50" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config/packages/twig.yaml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
@@ -816,15 +743,291 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/company/company-template.html.twig">
+    <entry file="file://$PROJECT_DIR$/public/.htaccess">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DataFixtures/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="340">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
+        <state relative-caret-position="40">
+          <caret line="2" lean-forward="true" selection-start-line="2" selection-end-line="2" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/.htaccess">
+    <entry file="file://$PROJECT_DIR$/src/Controller/UserController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="12" selection-start-line="12" selection-end-line="12" selection-end-column="68" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/config/packages/security.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="536">
+          <caret line="28" column="28" selection-start-line="28" selection-start-column="28" selection-end-line="28" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/SecurityController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="24" column="7" selection-start-line="24" selection-start-column="7" selection-end-line="24" selection-end-column="7" />
+          <folding>
+            <element signature="e#34#91#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/DashboardController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="340">
+          <caret line="17" selection-start-line="17" selection-end-line="17" />
+          <folding>
+            <element signature="e#34#91#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/User.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="547">
+          <caret line="117" lean-forward="true" selection-start-line="117" selection-end-line="117" />
+          <folding>
+            <element signature="e#30#62#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="140">
+          <caret line="7" column="14" lean-forward="true" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.env">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$USER_HOME$/Desktop/UserFixtures.php" />
+    <entry file="file://$PROJECT_DIR$/src/DataFixtures/AppFixtures.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="6" selection-start-line="6" selection-end-line="6" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.hyper.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1281">
+          <caret line="68" column="13" lean-forward="true" selection-start-line="68" selection-start-column="13" selection-end-line="68" selection-end-column="13" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/DataFixtures/UserFixtures.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="12" column="21" selection-start-line="12" selection-start-column="21" selection-end-line="12" selection-end-column="21" />
+          <folding>
+            <element signature="e#36#56#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/project/project_add.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="5" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/company/company-template.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://42a11f38-8289-4aba-a099-4d2dbfde8ed2/schema/devlop-eat/table/user">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+          <column-attributes>
+            <column name="roles" languageId="JSON" />
+          </column-attributes>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/ProjectController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="26">
+          <caret line="18" column="43" selection-start-line="18" selection-start-column="43" selection-end-line="18" selection-end-column="43" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Form/ProjectType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="51" column="16" selection-start-line="51" selection-start-column="16" selection-end-line="52" selection-end-column="62" />
+          <folding>
+            <element signature="e#28#53#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/Company.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="4">
+          <caret line="221" column="5" selection-start-line="221" selection-start-column="5" selection-end-line="221" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="621">
+          <caret line="36" column="30" selection-start-line="36" selection-start-column="30" selection-end-line="36" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/company/company_add.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="580">
+          <caret line="29" column="14" selection-start-line="29" selection-start-column="14" selection-end-line="29" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Entity/Shareholder.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-309" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/company/company_list.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="600">
+          <caret line="30" column="50" selection-start-line="30" selection-start-column="50" selection-end-line="30" selection-end-column="50" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/project/project_one.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="2" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://42a11f38-8289-4aba-a099-4d2dbfde8ed2/schema/devlop-eat/table/company">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://42a11f38-8289-4aba-a099-4d2dbfde8ed2/schema/devlop-eat/table/shareholder">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Form/CompanyType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="710">
+          <caret line="58" column="35" selection-start-line="58" selection-start-column="35" selection-end-line="58" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Form/ShareholderType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="400">
+          <caret line="20" column="58" selection-start-line="20" selection-start-column="58" selection-end-line="20" selection-end-column="58" />
+          <folding>
+            <element signature="e#28#51#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/CompanyController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="657">
+          <caret line="46" column="48" selection-start-line="46" selection-start-column="48" selection-end-line="46" selection-end-column="48" />
+          <folding>
+            <element signature="e#34#57#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="uml://DATABASE/42a11f38-8289-4aba-a099-4d2dbfde8ed2">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>DATABASE</ID>
+          <OriginalElement>42a11f38-8289-4aba-a099-4d2dbfde8ed2</OriginalElement>
+          <nodes>
+            <node x="66.96875" y="0.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.country</node>
+            <node x="0.0" y="146.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company_category</node>
+            <node x="39.34375" y="314.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company</node>
+            <node x="0.0" y="1041.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.migration_versions</node>
+            <node x="799.34375" y="0.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.user</node>
+            <node x="302.75" y="658.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.project</node>
+            <node x="540.34375" y="369.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.architect</node>
+            <node x="306.34375" y="369.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.general_company</node>
+            <node x="15.09375" y="779.0">42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.shareholder</node>
+          </nodes>
+          <notes />
+          <edges>
+            <edge source="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company" target="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.country">
+              <point x="61.75" y="-147.0" />
+              <point x="224.59375" y="289.0" />
+              <point x="219.5" y="289.0" />
+              <point x="219.5" y="121.0" />
+              <point x="195.96875" y="121.0" />
+              <point x="43.0" y="48.0" />
+            </edge>
+            <edge source="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.project" target="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.general_company">
+              <point x="0.0" y="-169.0" />
+              <point x="416.75" y="633.0" />
+              <point x="413.34375" y="633.0" />
+              <point x="0.0" y="92.0" />
+            </edge>
+            <edge source="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company" target="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company_category">
+              <point x="-61.75" y="-147.0" />
+              <point x="101.09375" y="289.0" />
+              <point x="104.5" y="289.0" />
+              <point x="0.0" y="59.0" />
+            </edge>
+            <edge source="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.project" target="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company">
+              <point x="-76.0" y="-169.0" />
+              <point x="340.75" y="633.0" />
+              <point x="224.59375" y="633.0" />
+              <point x="61.75" y="147.0" />
+            </edge>
+            <edge source="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.project" target="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.architect">
+              <point x="76.0" y="-169.0" />
+              <point x="492.75" y="633.0" />
+              <point x="647.34375" y="633.0" />
+              <point x="0.0" y="92.0" />
+            </edge>
+            <edge source="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.shareholder" target="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company">
+              <point x="0.0" y="-48.0" />
+              <point x="-61.75" y="147.0" />
+            </edge>
+            <edge source="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.company_category" target="42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.country">
+              <point x="0.0" y="-59.0" />
+              <point x="104.5" y="121.0" />
+              <point x="109.96875" y="121.0" />
+              <point x="-43.0" y="48.0" />
+            </edge>
+          </edges>
+          <settings layout="Hierarchic Group" zoom="0.8093525179856115" x="502.5" y="350.1644444444445" />
+          <SelectedNodes>
+            <node>42a11f38-8289-4aba-a099-4d2dbfde8ed2.TABLE:devlop-eat.shareholder</node>
+          </SelectedNodes>
+          <Categories>
+            <Category>Key columns</Category>
+            <Category>Columns</Category>
+          </Categories>
+        </state>
+      </provider>
     </entry>
   </component>
   <component name="masterDetails">

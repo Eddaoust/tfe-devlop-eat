@@ -36,12 +36,17 @@ class CompanyController extends Controller
     public function addCompany(Request $request, ObjectManager $manager)
     {
         $company = new Company();
-
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            foreach ($company->getShareholders() as $shareholder)
+            {
+                $shareholder->setCompany($company);
+                $manager->persist($shareholder);
+            }
+
             $manager->persist($company);
             $manager->flush();
 

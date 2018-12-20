@@ -7,6 +7,7 @@ use App\Entity\CompanyCategory;
 use App\Entity\Country;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -53,6 +54,10 @@ class CompanyType extends AbstractType
             ->add('registrationNum', TextType::class, $this->getConfiguration('Numero d\'enregistrement', 'Pour le Luxembourg'))
             ->add('bank', TextType::class, $this->getConfiguration('Banque', 'Nom de la banque'))
             ->add('bankAccount', TextType::class, $this->getConfiguration('Compte banquaire', 'Numero de compte banquaire'))
+            ->add('shareholders', CollectionType::class, [
+                'entry_type' => ShareholderType::class,
+                'allow_add' => true
+            ])
             ->add('Ajouter', SubmitType::class, [
                 'label' => 'Envoyer',
                 'attr' => [

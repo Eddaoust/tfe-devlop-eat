@@ -1,6 +1,30 @@
 {% extends 'company/company-template.html.twig' %}
 
+{% form_theme form _self %} {# Dans ce fichier, pour la variable form on utilise le theme personnalisé plus bas #}
+
 {% block company_body %}
     {{ form_start(form) }}
     {{ form_end(form) }}
+{% endblock %}
+
+{% block _company_shareholders_widget %} {# Theme personnalisé pour la balise avec l'id company_shareholders #}
+    <p>Vous pouvez ajouter des actionnaires</p>
+    {{ form_widget(form) }}
+    <div class="form-group">
+        <button type="button" id="add-shareholder" class="btn btn-success">Ajouter un actionnaire</button>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+    $('#add-shareholder').on('click', function() {
+        const index = $('#company_shareholders div.form-group').length;
+        const template = $('#company_shareholders').data('prototype').replace(/__name__/g, index);
+        $('#company_shareholders').append(template);
+    });
+
+
+
+
+    </script>
 {% endblock %}
