@@ -9,6 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 
 class CompanyController extends Controller
@@ -54,6 +55,68 @@ class CompanyController extends Controller
         }
 
         return $this->render('company/company_add.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @param Company $company
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/admin/company/{id}", name="company_one")
+     */
+    public function oneCompany(Company $company)
+    {
+        return $this->render('company/company_one.html.twig', [
+            'company' => $company
+        ]);
+    }
+
+    /**
+     * @param Company $company
+     * @param ObjectManager $manager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("/admin/company/delete/{id}", name="company_delete")
+     * @ParamConverter("company", options={"exclude": {"manager"}})
+     */
+    public function deleteCompany(Company $company, ObjectManager $manager)
+    {
+        $manager->remove($company);
+        $manager->flush();
+
+        return $this->redirectToRoute('company_list');
+        //TODO Impossible à supprimer si la société est project owner
+    }
+
+    /**
+     * @param Company $company
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/admin/company/update/{id}", name="company_update")
+     * @ParamConverter("company", options={"exclude": {"request","manager"}})
+     */
+    public function updateCompany(Company $company, Request $request, ObjectManager $manager)
+    {
+        $form = $this->createForm(CompanyType::class, $company);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            foreach ($company->getShareholders() as $shareholder)
+            {
+                $shareholder->setCompany($company);
+                $manager->persist($shareholder);
+            }
+
+            $manager->persist($company);
+            $manager->flush();
+
+            return $this->render('company/company_one.html.twig', [
+                'company' => $company
+            ]);
+        }
+
+        return $this->render('company/company_update.html.twig', [
             'form' => $form->createView()
         ]);
     }

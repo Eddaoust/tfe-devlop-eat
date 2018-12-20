@@ -20,15 +20,15 @@
         {% for company in companies %}
             <tr>
                 <th>{{ loop.index }}</th>
-                <th><a href="#">{{ company.name }}</a></th>
+                <th><a href="{{ path('company_one', {id: company.id}) }}">{{ company.name }}</a></th>
                 <th>{{ company.companyCategory.abbreviation }}</th>
                 <th>{{ company.country.code }}</th>
                 <th>{{ company.address }}</th>
                 <th>{{ company.city }}</th>
                 <th>{{ company.tvaNum }}</th>
                 <th>{{ company.bank }}</th>
-                <th class="text-center"><a href="#"><i class="fas fa-pen"></i></a></th>
-                <th class="text-center"><a href="#"><i class="fas fa-trash-alt"></i></a></th>
+                <th class="text-center"><a href="{{ path('company_update', {id: company.id}) }}"><i class="fas fa-pen"></i></a></th>
+                <th class="text-center"><a href="{{ path('company_delete', {id: company.id}) }}"><i class="fas fa-trash-alt"></i></a></th>
             </tr>
         {% endfor %}
         </tbody>

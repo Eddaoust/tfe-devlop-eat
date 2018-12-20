@@ -1,0 +1,15 @@
+{% extends 'company/company-template.html.twig' %}
+
+{% block company_body %}
+    <h1><span class="text-success">Nom du projet: </span>{{ company.name }} {{ company.companyCategory.abbreviation }}</h1><br>
+    <h3><span class="text-success">Pays: </span>{{ company.country.name }}</h3><br>
+    <p><span class="text-success">Localisation: </span>{{ company.address }}, {{ company.postalCode }} {{ company.city }}</p>
+    <p><span class="text-success">Phone: </span>{{ company.phone }}</p>
+    <p><span class="text-success">TVA: </span>{{ company.tvaNum }}</p>
+    <p><span class="text-success">Banque: </span>{{ company.bank }}</p><br>
+
+    <h3 class="text-success">Actionnaires: </h3>
+    {% for shareholder in company.shareholders %}
+        <p><span class="text-success">{{ shareholder.shareholder.name }}: </span>{{ shareholder.part }}%</p>
+    {% endfor %}
+{% endblock %}
