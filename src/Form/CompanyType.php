@@ -55,6 +55,7 @@ class CompanyType extends AbstractType
             ->add('bank', TextType::class, $this->getConfiguration('Banque', 'Nom de la banque'))
             ->add('bankAccount', TextType::class, $this->getConfiguration('Compte banquaire', 'Numero de compte banquaire'))
             ->add('shareholders', CollectionType::class, [
+                'label' => 'Actionnaire(s)',
                 'entry_type' => ShareholderType::class,
                 'allow_add' => true
             ])

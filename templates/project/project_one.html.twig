@@ -12,7 +12,7 @@
     <p><span class="text-success">Lots: </span>{{ project.lots }}</p><br>
     <h3 class="text-success">Partenaires: </h3>
     {% for shareholder in project.projectOwner.shareholders %}
-    <p><span class="text-success">Actionnaires: </span>{{ shareholder.company.name }} - {{ shareholder.part }}%</p>
+    <p><span class="text-success">Actionnaires: </span>{{ shareholder.shareholder.name }} - {{ shareholder.part }}%</p>
     {% endfor %}
     <p><span class="text-success">Architecte: </span>{{ project.architect.name }}</p>
     <p><span class="text-success">Entreprise générale: </span>{{ project.generalCompany.name }}</p>

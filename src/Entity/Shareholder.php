@@ -26,6 +26,11 @@ class Shareholder
      */
     private $part;
 
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\Company")
+     */
+    private $shareholder;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -51,6 +56,18 @@ class Shareholder
     public function setPart(?int $part): self
     {
         $this->part = $part;
+
+        return $this;
+    }
+
+    public function getShareholder(): ?Company
+    {
+        return $this->shareholder;
+    }
+
+    public function setShareholder(?Company $shareholder): self
+    {
+        $this->shareholder = $shareholder;
 
         return $this;
     }

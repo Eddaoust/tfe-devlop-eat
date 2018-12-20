@@ -21,7 +21,7 @@ class ShareholderType extends AbstractType
                     'placeholder' => 'Nombre de parts en %'
                 ]
             ])
-            ->add('company', EntityType::class, [
+            ->add('shareholder', EntityType::class, [
                 'label' => 'Actionnaire',
                 'class' => Company::class,
                 'choice_label' => 'name',
