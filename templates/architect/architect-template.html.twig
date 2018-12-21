@@ -1,0 +1,16 @@
+{% extends 'dashboard/dashboard.html.twig' %}
+
+{% block title %}Architecte{% endblock %}
+
+{% block dash_body %}
+    <div class="col-xl-10">
+        <div class="jumbotron mt-5">
+            <h1 class="display-6">Gestion des architectes</h1>
+            <p class="lead">Vous avez <strong class="text-success">{{ architectsCounter.getArchitectsCount() }}</strong> architectes enregistrés sur la plateforme.</p>
+            <hr class="my-4">
+
+            <a class="btn btn-success btn-lg" href="{{ path('architect_add') }}" role="button"><i class="fas fa-user-plus"></i> Ajouter un architecte</a>
+        </div>
+        {% block architect_body %}{% endblock %}
+    </div>
+{% endblock %}

@@ -19,6 +19,19 @@ class ArchitectRepository extends ServiceEntityRepository
         parent::__construct($registry, Architect::class);
     }
 
+    /**
+     * Get the count of all architect
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getCount()
+    {
+        return $this->createQueryBuilder('architect')
+            ->select('count(architect.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     // /**
     //  * @return Architect[] Returns an array of Architect objects
     //  */

@@ -7,3 +7,5 @@ twig:
         usersCounter: '@App\Service\UsersCounter'
         projectsCounter: '@App\Service\ProjectsCounter'
         companiesCounter: '@App\Service\CompaniesCounter'
+        architectsCounter: '@App\Service\ArchitectCounter'
+
