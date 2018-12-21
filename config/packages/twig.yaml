@@ -8,4 +8,5 @@ twig:
         projectsCounter: '@App\Service\ProjectsCounter'
         companiesCounter: '@App\Service\CompaniesCounter'
         architectsCounter: '@App\Service\ArchitectCounter'
+        genCompaniesCounter: '@App\Service\GenCompaniesCounter'
 

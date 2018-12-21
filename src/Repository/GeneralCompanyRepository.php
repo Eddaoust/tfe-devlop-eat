@@ -19,6 +19,19 @@ class GeneralCompanyRepository extends ServiceEntityRepository
         parent::__construct($registry, GeneralCompany::class);
     }
 
+    /**
+     * Get the count of all general companies
+     * @return mixed
+     * @throws \Doctrine\ORM\NonUniqueResultException
+     */
+    public function getCount()
+    {
+        return $this->createQueryBuilder('gen_comp')
+            ->select('count(gen_comp.id)')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
+
     // /**
     //  * @return GeneralCompany[] Returns an array of GeneralCompany objects
     //  */
