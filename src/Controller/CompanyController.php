@@ -4,12 +4,18 @@ namespace App\Controller;
 
 use App\Entity\Company;
 use App\Form\CompanyType;
+use App\Repository\CompanyCategoryRepository;
 use App\Repository\CompanyRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
 
 
 class CompanyController extends Controller
@@ -34,7 +40,7 @@ class CompanyController extends Controller
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @Route("/admin/company/add", name="company_add")
      */
-    public function addCompany(Request $request, ObjectManager $manager)
+    public function addCompany(Request $request, ObjectManager $manager, CompanyCategoryRepository $repo)
     {
         $company = new Company();
         $form = $this->createForm(CompanyType::class, $company);
@@ -104,8 +110,15 @@ class CompanyController extends Controller
         {
             foreach ($company->getShareholders() as $shareholder)
             {
-                $shareholder->setCompany($company);
-                $manager->persist($shareholder);
+                if (!$shareholder->getPart())
+                {
+                    $manager->remove($shareholder);
+                }
+                else
+                {
+                    $shareholder->setCompany($company);
+                    $manager->persist($shareholder);
+                }
             }
 
             $manager->persist($company);
@@ -119,5 +132,23 @@ class CompanyController extends Controller
         return $this->render('company/company_update.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @param $countryId
+     * @param CompanyCategoryRepository $repo
+     * @return JsonResponse
+     * @Route("/admin/company/ajax/{countryId}", name="company_ajax", methods={"GET"})
+     */
+    public function getCompanyCategory($countryId, CompanyCategoryRepository $repo)
+    {
+        $compCat = $repo->getCompanyCat($countryId);
+
+        $encoders = [new JsonEncoder()];
+        $normalizers = [(new ObjectNormalizer())];
+        $serializer = new Serializer($normalizers, $encoders);
+        $data = $serializer->serialize($compCat, 'json');
+
+        return new JsonResponse($data, 200, [], true);
     }
 }

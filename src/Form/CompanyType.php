@@ -7,6 +7,7 @@ use App\Entity\CompanyCategory;
 use App\Entity\Country;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -41,10 +42,9 @@ class CompanyType extends AbstractType
                 'placeholder' => 'Choisissez un pays'
             ])
             ->add('companyCategory', EntityType::class, [
-                'label' => 'Raison sociale',
                 'class' => CompanyCategory::class,
-                'choice_label' => 'abbreviation',
-                'placeholder' => 'Choisissez une raison sociale'
+                'choice_label' => 'name',
+                'placeholder' => 'Choisissez un type de société'
             ])
             ->add('address', TextType::class, $this->getConfiguration('Adresse', 'Entrez l\'adresse'))
             ->add('postalCode', TextType::class, $this->getConfiguration('Code Postal', 'Entrez le code postal'))

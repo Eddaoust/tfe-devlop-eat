@@ -19,6 +19,17 @@ class CompanyCategoryRepository extends ServiceEntityRepository
         parent::__construct($registry, CompanyCategory::class);
     }
 
+    public function getCompanyCat($country)
+    {
+        return $this->createQueryBuilder('companyCategory')
+                    ->select('companyCategory.id', 'companyCategory.abbreviation', 'companyCategory.name')
+                    ->leftJoin('companyCategory.country', 'country')
+                    ->andWhere('country.id = :countryId')
+                    ->setParameter('countryId', $country)
+                    ->getQuery()
+                    ->getResult();
+    }
+
     // /**
     //  * @return CompanyCategory[] Returns an array of CompanyCategory objects
     //  */

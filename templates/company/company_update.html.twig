@@ -4,6 +4,16 @@
 
 {% block company_body %}
     {{ form_start(form) }}
+    <div class="row">
+        <div class="col-6">{{ form_row(form.name) }}</div>
+        <div class="col-3">{{ form_row(form.country) }}</div>
+        <div class="col-3">
+            <label for="companyCategory">Type de société</label>
+            <select id="companyCategory" class="form-control" name="company[companyCategory]">
+                <option selected disabled>Choisissez un type de société...</option>
+            </select>
+        </div>
+    </div>
     {{ form_end(form) }}
 {% endblock %}
 
@@ -39,6 +49,8 @@
 
 {% block js %}
     <script>
+
+        // Ajout des actionnaires
         $('#add-shareholder').on('click', function() {
             const index = $('#company_shareholders div.form-group').length;
             const template = $('#company_shareholders').data('prototype').replace(/__name__/g, index);
@@ -53,6 +65,26 @@
             });
         }
         handleDeleteButtons();
+
+        // Ajax pour remplir le type de société par rapport au pays
+        $('#company_country').on('change', function () {
+            const url = 'http://127.0.0.1:8000/admin/company/ajax/';
+            const countryId = $('#company_country').val();
+            $.ajax({
+                url: url + countryId,
+                type: 'get',
+            })
+                .done(function (datas) {
+                    for(const option of $('#companyCategory option')){
+                        if (option.value.length < 8){
+                            option.remove();
+                        }
+                    }
+                    for(const data of datas){
+                        $('#companyCategory').append(`<option value="${data.abbreviation}">${data.abbreviation} - ${data.name}</option>`);
+                    }
+                })
+        });
 
     </script>
 {% endblock %}

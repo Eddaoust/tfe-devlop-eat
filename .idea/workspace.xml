@@ -2,15 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d51d9484-cc41-470c-98b8-78f892d7a619" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/Service/GenCompaniesCounter.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/general_company/genCompany_add.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/general_company/genCompany_list.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/general_company/genCompany_one.html.twig" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/templates/general_company/genCompany_update.html.twig" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config/packages/twig.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/config/packages/twig.yaml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Repository/GeneralCompanyRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/GeneralCompanyRepository.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/templates/dashboard/dashboard.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/dashboard/dashboard.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/CompanyController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/CompanyController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/CompanyType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/CompanyType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/CompanyCategoryRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/CompanyCategoryRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/base.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/base.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/company/company_add.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/company/company_add.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/company/company_update.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/company/company_update.html.twig" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -53,88 +51,65 @@
         <item name="devlop-eat@localhost" type="feb32156:DbDataSourceImpl" />
         <item name="schemas" type="d4e8921:DatabaseStructure$FamilyGroup" />
         <item name="devlop-eat: schema" type="76f4a085:MysqlImplModel$Schema" />
-        <item name="general_company: table" type="285a2a93:MysqlImplModel$Table" />
+        <item name="country: table" type="285a2a93:MysqlImplModel$Table" />
       </path>
     </expand>
     <select />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Controller/CompanyController.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="236">
+              <caret line="49" column="9" selection-start-line="49" selection-start-column="9" selection-end-line="49" selection-end-column="9" />
+              <folding>
+                <element signature="e#34#57#0#PHP" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/templates/company/company_add.html.twig">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="382">
+              <caret line="67" column="26" selection-start-line="67" selection-start-column="26" selection-end-line="67" selection-end-column="26" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/Controller/GeneralCompanyController.php">
+        <entry file="file://$PROJECT_DIR$/src/Form/CompanyType.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="722">
-              <caret line="101" column="27" selection-start-line="101" selection-start-column="27" selection-end-line="101" selection-end-column="27" />
-              <folding>
-                <element signature="e#34#64#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="146">
+              <caret line="43" column="53" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Form/GeneralCompanyType.php">
+        <entry file="file://$PROJECT_DIR$/templates/company/company_update.html.twig">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-74">
-              <caret line="10" column="57" selection-start-line="10" selection-start-column="57" selection-end-line="10" selection-end-column="57" />
-              <folding>
-                <element signature="e#28#58#0#PHP" expanded="true" />
-              </folding>
+            <state relative-caret-position="160">
+              <caret line="8" column="61" selection-start-line="8" selection-start-column="61" selection-end-line="8" selection-end-column="61" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/Form/ArchitectType.php">
+        <entry file="file://$PROJECT_DIR$/src/Repository/CompanyCategoryRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="89">
-              <caret line="6" selection-start-line="6" selection-end-line="6" selection-end-column="57" />
+            <state relative-caret-position="518">
+              <caret line="38" column="45" selection-start-line="38" selection-start-column="45" selection-end-line="38" selection-end-column="45" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/general_company/genCompany-template.html.twig">
+        <entry file="file://$PROJECT_DIR$/src/Repository/ProjectRepository.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="360">
-              <caret line="16" selection-start-line="16" selection-end-line="16" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/dashboard/dashboard.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="660">
-              <caret line="31" column="6" selection-start-line="31" selection-start-column="6" selection-end-line="31" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/general_company/genCompany_list.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="140">
-              <caret line="7" column="36" selection-start-line="7" selection-start-column="36" selection-end-line="7" selection-end-column="36" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/general_company/genCompany_one.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="80">
-              <caret line="4" selection-start-line="4" selection-end-line="4" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/templates/architect/architect_one.html.twig">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret selection-end-line="6" selection-end-column="14" />
-            </state>
+            <state relative-caret-position="-340" />
           </provider>
         </entry>
       </file>
@@ -146,8 +121,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/templates/user/user_list.html.twig" />
-        <option value="$PROJECT_DIR$/templates/user/update_user.html.twig" />
         <option value="$PROJECT_DIR$/src/Service/projectCounter.php" />
         <option value="$PROJECT_DIR$/src/Controller/UserController.php" />
         <option value="$PROJECT_DIR$/src/Service/ProjectsCounter.php" />
@@ -171,12 +144,8 @@
         <option value="$PROJECT_DIR$/src/DataFixtures/AppFixtures.php" />
         <option value="$PROJECT_DIR$/src/Form/ShareholderType.php" />
         <option value="$PROJECT_DIR$/templates/project/project_one.html.twig" />
-        <option value="$PROJECT_DIR$/templates/company/company_add.html.twig" />
-        <option value="$PROJECT_DIR$/src/Form/CompanyType.php" />
         <option value="$PROJECT_DIR$/templates/company/company_one.html.twig" />
         <option value="$PROJECT_DIR$/templates/company/company_list.html.twig" />
-        <option value="$PROJECT_DIR$/templates/company/company_update.html.twig" />
-        <option value="$PROJECT_DIR$/src/Controller/CompanyController.php" />
         <option value="$PROJECT_DIR$/src/Repository/ArchitectRepository.php" />
         <option value="$PROJECT_DIR$/src/Form/ArchitectType.php" />
         <option value="$PROJECT_DIR$/templates/architect/architect_list.html.twig" />
@@ -197,6 +166,12 @@
         <option value="$PROJECT_DIR$/templates/dashboard/dashboard.html.twig" />
         <option value="$PROJECT_DIR$/src/Form/GeneralCompanyType.php" />
         <option value="$PROJECT_DIR$/src/Controller/GeneralCompanyController.php" />
+        <option value="$PROJECT_DIR$/templates/base.html.twig" />
+        <option value="$PROJECT_DIR$/templates/company/company_update.html.twig" />
+        <option value="$PROJECT_DIR$/src/Repository/CompanyCategoryRepository.php" />
+        <option value="$PROJECT_DIR$/src/Controller/CompanyController.php" />
+        <option value="$PROJECT_DIR$/templates/company/company_add.html.twig" />
+        <option value="$PROJECT_DIR$/src/Form/CompanyType.php" />
       </list>
     </option>
   </component>
@@ -320,6 +295,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -336,36 +312,35 @@
               <item name="Devlop-Eat" type="b2602c69:ProjectViewProjectNode" />
               <item name="Devlop-Eat" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Controller" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Devlop-Eat" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Devlop-Eat" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="Form" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Devlop-Eat" type="b2602c69:ProjectViewProjectNode" />
               <item name="Devlop-Eat" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="Repository" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Devlop-Eat" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Devlop-Eat" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Devlop-Eat" type="b2602c69:ProjectViewProjectNode" />
               <item name="Devlop-Eat" type="462c0819:PsiDirectoryNode" />
               <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="architect" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Devlop-Eat" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Devlop-Eat" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="dashboard" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="Devlop-Eat" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Devlop-Eat" type="462c0819:PsiDirectoryNode" />
-              <item name="templates" type="462c0819:PsiDirectoryNode" />
-              <item name="general_company" type="462c0819:PsiDirectoryNode" />
+              <item name="company" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -420,7 +395,8 @@
       <workItem from="1545233897158" duration="5898000" />
       <workItem from="1545307301269" duration="6221000" />
       <workItem from="1545333658814" duration="105000" />
-      <workItem from="1545379612740" duration="5130000" />
+      <workItem from="1545379612740" duration="6508000" />
+      <workItem from="1545462285480" duration="9712000" />
     </task>
     <task id="LOCAL-00001" summary="Add app fixtures (old)">
       <created>1544616815795</created>
@@ -569,17 +545,24 @@
       <option name="project" value="LOCAL" />
       <updated>1545383515299</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="Ajout du CRUD entité GeneralCompany">
+      <created>1545385958036</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1545385958036</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="65575000" />
+    <option name="totallyTimeSpent" value="76665000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1680" height="1050" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.1923077" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.18620269" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -627,20 +610,10 @@
     <MESSAGE value="Modification entité Shareholder&#10;Gestion de l'ajout d'une société avec ses actionnaires" />
     <MESSAGE value="Fin du CRUD sur l'entité Company" />
     <MESSAGE value="Ajout du CRUD entité Architect" />
-    <option name="LAST_COMMIT_MESSAGE" value="Ajout du CRUD entité Architect" />
+    <MESSAGE value="Ajout du CRUD entité GeneralCompany" />
+    <option name="LAST_COMMIT_MESSAGE" value="Ajout du CRUD entité GeneralCompany" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/.gitignore">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="140">
-          <caret line="7" column="14" lean-forward="true" selection-start-line="7" selection-start-column="14" selection-end-line="7" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/.env">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$USER_HOME$/Desktop/UserFixtures.php" />
     <entry file="file://$USER_HOME$/.hyper.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1281">
@@ -648,23 +621,6 @@
           <folding>
             <element signature="n#!!doc" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Form/ProjectType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="51" column="16" selection-start-line="51" selection-start-column="16" selection-end-line="52" selection-end-column="62" />
-          <folding>
-            <element signature="e#28#53#0#PHP" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="621">
-          <caret line="36" column="30" selection-start-line="36" selection-start-column="30" selection-end-line="36" selection-end-column="30" />
         </state>
       </provider>
     </entry>
@@ -737,20 +693,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="das://42a11f38-8289-4aba-a099-4d2dbfde8ed2/schema/devlop-eat/table/shareholder">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://42a11f38-8289-4aba-a099-4d2dbfde8ed2/schema/devlop-eat/table/company">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/company/company_one.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="280">
@@ -765,37 +707,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/templates/company/company_update.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="9" column="26" selection-start-line="9" selection-start-column="26" selection-end-line="9" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="das://42a11f38-8289-4aba-a099-4d2dbfde8ed2/schema/devlop-eat/table/user">
-      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
-        <state>
-          <filtering enabled="true" />
-          <column-attributes>
-            <column name="roles" languageId="JSON" />
-          </column-attributes>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/Service/UsersCounter.php">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
           <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Controller/CompanyController.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1980">
-          <caret line="99" column="64" selection-start-line="99" selection-start-column="64" selection-end-line="99" selection-end-column="64" />
-          <folding>
-            <element signature="e#34#57#0#PHP" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -827,13 +742,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Form/CompanyType.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="506">
-          <caret line="62" column="16" lean-forward="true" selection-start-line="62" selection-start-column="16" selection-end-line="65" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/templates/company/company_list.html.twig">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="540">
@@ -848,13 +756,6 @@
           <folding>
             <element signature="e#34#57#0#PHP" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/templates/company/company_add.html.twig">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="360">
-          <caret line="18" column="14" selection-end-line="57" selection-end-column="14" />
         </state>
       </provider>
     </entry>
@@ -1017,11 +918,102 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Controller/GeneralCompanyController.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="722">
+        <state relative-caret-position="2020">
           <caret line="101" column="27" selection-start-line="101" selection-start-column="27" selection-end-line="101" selection-end-column="27" />
           <folding>
             <element signature="e#34#64#0#PHP" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://42a11f38-8289-4aba-a099-4d2dbfde8ed2/schema/devlop-eat/table/shareholder">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://42a11f38-8289-4aba-a099-4d2dbfde8ed2/schema/devlop-eat/table/user">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+          <column-attributes>
+            <column name="roles" languageId="JSON" />
+          </column-attributes>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/base.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="341">
+          <caret line="22" column="39" lean-forward="true" selection-start-line="22" selection-start-column="39" selection-end-line="22" selection-end-column="39" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://42a11f38-8289-4aba-a099-4d2dbfde8ed2/schema/devlop-eat/table/country">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Repository/ProjectRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-340" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/company/company_update.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="8" column="61" selection-start-line="8" selection-start-column="61" selection-end-line="8" selection-end-column="61" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Repository/CompanyCategoryRepository.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="518">
+          <caret line="38" column="45" selection-start-line="38" selection-start-column="45" selection-end-line="38" selection-end-column="45" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="das://42a11f38-8289-4aba-a099-4d2dbfde8ed2/schema/devlop-eat/table/company">
+      <provider selected="true" editor-type-id="com.intellij.database.editor.DatabaseTableFileEditorProvider">
+        <state>
+          <filtering enabled="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Controller/CompanyController.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="236">
+          <caret line="49" column="9" selection-start-line="49" selection-start-column="9" selection-end-line="49" selection-end-column="9" />
+          <folding>
+            <element signature="e#34#57#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Form/ProjectType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="462">
+          <caret line="51" column="16" selection-start-line="51" selection-start-column="16" selection-end-line="52" selection-end-column="62" />
+          <folding>
+            <element signature="e#28#53#0#PHP" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/company/company_add.html.twig">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="382">
+          <caret line="67" column="26" selection-start-line="67" selection-start-column="26" selection-end-line="67" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Form/CompanyType.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="146">
+          <caret line="43" column="53" selection-start-line="43" selection-start-column="53" selection-end-line="43" selection-end-column="53" />
         </state>
       </provider>
     </entry>
