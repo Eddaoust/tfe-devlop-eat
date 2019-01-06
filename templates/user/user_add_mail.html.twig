@@ -1,0 +1,10 @@
+{% extends 'user/user-template.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block user_body %}
+    <form method="post" action="{{ path('user_add_mail') }}">
+        <input type="email" name="email" class="form-control" placeholder="Entrez l'email de la personne à inviter">
+        <input type="submit" class="btn btn-success" value="Envoyer">
+    </form>
+{% endblock %}

@@ -64,7 +64,6 @@ class UserController extends Controller
         ]);
     }
 
-
     /**
      * @param User $user
      * @param Request $request
@@ -103,5 +102,27 @@ class UserController extends Controller
         $manager->flush();
 
         return $this->redirectToRoute('user_list');
+    }
+
+    /**
+     * @Route("/admin/user/addMail", name="user_add_mail")
+     */
+    public function addUserMail(\Swift_Mailer $mailer, Request $request)
+    {
+        if($request->request->get('email'))
+        {
+            //TODO Finaliser l'inscription par mail
+            $message = (new \Swift_Message('Hello Mail'))
+                ->setFrom('eddst.webdev@gmail.com')
+                ->setTo($request->request->get('email'))
+                ->setBody(
+                    $this->renderView('user/user_add_mail.html.twig'),
+                    'text/html'
+                );
+
+            $mailer->send($message);
+            return $this->redirectToRoute('user_list');
+        }
+        return $this->render('user/user_add_mail.html.twig');
     }
 }
