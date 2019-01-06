@@ -130,7 +130,8 @@ class CompanyController extends Controller
         }
 
         return $this->render('company/company_update.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'company' => $company
         ]);
     }
 
@@ -138,7 +139,7 @@ class CompanyController extends Controller
      * @param $countryId
      * @param CompanyCategoryRepository $repo
      * @return JsonResponse
-     * @Route("/admin/company/ajax/{countryId}", name="company_ajax", methods={"GET"})
+     * @Route("/admin/company/category/ajax/{countryId}", name="company_category_ajax", methods={"GET"})
      */
     public function getCompanyCategory($countryId, CompanyCategoryRepository $repo)
     {

@@ -4,6 +4,7 @@
 
 {% block company_body %}
     {{ form_start(form) }}
+    <input type="hidden" value="{{ company.companyCategory.id }}" id="companyCategoryToCheck">
     <div class="row">
         <div class="col-6">{{ form_row(form.name) }}</div>
         <div class="col-3">{{ form_row(form.country) }}</div>
@@ -50,25 +51,45 @@
 {% block js %}
     <script>
 
-        // Ajout des actionnaires
-        $('#add-shareholder').on('click', function() {
-            const index = $('#company_shareholders div.form-group').length;
-            const template = $('#company_shareholders').data('prototype').replace(/__name__/g, index);
-            $('#company_shareholders').append(template);
-            handleDeleteButtons();
-        });
-
-        function handleDeleteButtons(){
-            $('button[data-action="delete"]').on('click', function () {
-                const target = this.dataset.target;
-                $(target).remove();
+        $(function() {
+            // Ajout des actionnaires
+            $('#add-shareholder').on('click', function() {
+                const index = $('#company_shareholders div.form-group').length;
+                const template = $('#company_shareholders').data('prototype').replace(/__name__/g, index);
+                $('#company_shareholders').append(template);
+                handleDeleteButtons();
             });
-        }
-        handleDeleteButtons();
 
-        // Ajax pour remplir le type de société par rapport au pays
-        $('#company_country').on('change', function () {
-            const url = 'http://127.0.0.1:8000/admin/company/ajax/';
+            function handleDeleteButtons(){
+                $('button[data-action="delete"]').on('click', function () {
+                    const target = this.dataset.target;
+                    $(target).remove();
+                });
+            }
+            handleDeleteButtons();
+
+            // Ajax pour remplir le type de société par rapport au pays
+            $('#company_country').on('change', function () {
+                const url = 'http://127.0.0.1:8000/admin/company/category/ajax/';
+                const countryId = $('#company_country').val();
+                $.ajax({
+                    url: url + countryId,
+                    type: 'get',
+                })
+                    .done(function (datas) {
+                        for(const option of $('#companyCategory option')){
+                            if (option.value.length < 8){
+                                option.remove();
+                            }
+                        }
+                        for(const data of datas){
+                            $('#companyCategory').append(`<option value="${data.abbreviation}">${data.abbreviation} - ${data.name}</option>`);
+                        }
+                    })
+            });
+
+            // Event au chargement de la page pour sélectionner la bonne catégorie de société
+            const url = 'http://127.0.0.1:8000/admin/company/category/ajax/';
             const countryId = $('#company_country').val();
             $.ajax({
                 url: url + countryId,
@@ -81,10 +102,16 @@
                         }
                     }
                     for(const data of datas){
-                        $('#companyCategory').append(`<option value="${data.abbreviation}">${data.abbreviation} - ${data.name}</option>`);
+                        if(data.id == $('#companyCategoryToCheck').val()){
+                            // Sélection du champs présent en db
+                            $('#companyCategory').append(`<option selected value="${data.abbreviation}">${data.abbreviation} - ${data.name}</option>`)
+                        } else {
+                            $('#companyCategory').append(`<option value="${data.abbreviation}">${data.abbreviation} - ${data.name}</option>`);
+                        }
                     }
                 })
-        });
+        })
+
 
     </script>
 {% endblock %}

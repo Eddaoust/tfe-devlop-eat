@@ -72,9 +72,10 @@
                 option.remove();
             }
         }
+
     // Ajax pour remplir le type de société par rapport au pays
         $('#company_country').on('change', function () {
-            const url = 'http://127.0.0.1:8000/admin/company/ajax/';
+            const url = 'http://127.0.0.1:8000/admin/company/category/ajax/';
             const countryId = $('#company_country').val();
             $.ajax({
                 url: url + countryId,
