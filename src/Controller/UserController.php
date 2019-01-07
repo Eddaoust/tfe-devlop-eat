@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Form\UserUpdateType;
 use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -82,7 +83,7 @@ class UserController extends Controller
      */
     public function updateUser(User $user, Request $request, ObjectManager $manager)
     {
-        $form = $this->createForm(UserType::class, $user);
+        $form = $this->createForm(UserUpdateType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
