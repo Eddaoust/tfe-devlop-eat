@@ -8,9 +8,11 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
 
 class UserController extends Controller
 {
@@ -34,34 +36,40 @@ class UserController extends Controller
      * @param UserPasswordEncoderInterface $encoder
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
      * @throws \Exception
-     * @Route("/admin/user/add", name="user_add")
+     * @Route("/user/add", name="user_add")
      */
     public function addUser(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
     {
-        $user = new User();
-
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid())
+        // Todo Afiner la méthode avec le token
+        if($request->query->get('token'))
         {
-            $file = $form['img']->getData();
-            if (!is_null($file))
+            $user = new User();
+
+            $form = $this->createForm(UserType::class, $user);
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted() && $form->isValid())
             {
-                $file->move('img/user-profil', $file->getClientOriginalName());
-                $user->setImg($file->getClientOriginalName());
+                $file = $form['img']->getData();
+                if (!is_null($file))
+                {
+                    $file->move('img/user-profil', $file->getClientOriginalName());
+                    $user->setImg($file->getClientOriginalName());
+                }
+                $user->setPassword($encoder->encodePassword($user, $user->getPassword()))
+                    ->setCreated(new \DateTime('now'));
+                $manager->persist($user);
+                $manager->flush();
+
+                return $this->redirectToRoute('home');
             }
-            $user->setPassword($encoder->encodePassword($user, $user->getPassword()))
-                ->setCreated(new \DateTime('now'));
-            $manager->persist($user);
-            $manager->flush();
 
-            return $this->redirectToRoute('user_list');
+            return $this->render('user/user_add.html.twig', [
+                'form' => $form->createView()
+            ]);
+        } else {
+            return new Response('Accès refusé');
         }
-
-        return $this->render('user/user_add.html.twig', [
-            'form' => $form->createView()
-        ]);
     }
 
     /**
@@ -109,6 +117,9 @@ class UserController extends Controller
      */
     public function addUserMail(\Swift_Mailer $mailer, Request $request)
     {
+        $user = $this->getUser();
+        $generator = new UriSafeTokenGenerator(256);
+        $token = $generator->generateToken();
         if($request->request->get('email'))
         {
             //TODO Finaliser l'inscription par mail
@@ -116,7 +127,10 @@ class UserController extends Controller
                 ->setFrom('eddst.webdev@gmail.com')
                 ->setTo($request->request->get('email'))
                 ->setBody(
-                    $this->renderView('user/user_add_mail.html.twig'),
+                    $this->renderView('user/user_add_link.html.twig', [
+                        'user' => $user,
+                        'token' => $token
+                    ]),
                     'text/html'
                 );
 
