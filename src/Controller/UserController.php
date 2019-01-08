@@ -112,7 +112,7 @@ class UserController extends Controller
             $manager->flush();
 
             $message = (new \Swift_Message('Invitation pour Devlop Eat'))
-                ->setFrom('eddst.webdev@gmail.com')
+                ->setFrom('devlopeat@eddaoust.com')// devlopeat@eddaoust.com "Changer lors Push en ligne"
                 ->setTo($user->getEmail())
                 ->setBody(
                     $this->renderView('user/user_add_link.html.twig', [
@@ -147,21 +147,29 @@ class UserController extends Controller
     {
         $user = $userRepo->find($id);
         $invitation = $invitRepo->findOneBy(['user' => $id]);
-        $form = $this->createForm(PasswordResetType::class, $user);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid() && $invitation->getToken() === $token)
+        if(!empty($invitation) && $invitation->getToken() === $token)
         {
-            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
-            $manager->remove($invitation);
-            $manager->persist($user);
-            $manager->flush();
+            $form = $this->createForm(PasswordResetType::class, $user);
+            $form->handleRequest($request);
 
+            if($form->isSubmitted() && $form->isValid())
+            {
+                $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+                //TODO gérer un remove d'office si pas de réponse après un temps donné
+                $manager->remove($invitation);
+                $manager->persist($user);
+                $manager->flush();
+
+                return $this->redirectToRoute('home');
+            }
+
+            return $this->render('user/user_password.html.twig', [
+                'form' => $form->createView()
+            ]);
+        }
+        else
+        {
             return $this->redirectToRoute('home');
         }
-
-        return $this->render('user/user_password.html.twig', [
-            'form' => $form->createView()
-        ]);
     }
 }
