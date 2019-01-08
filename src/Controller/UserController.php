@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\Invitation;
 use App\Entity\User;
-use App\Form\UserType;
+use App\Form\PasswordResetType;
 use App\Form\UserUpdateType;
+use App\Repository\InvitationRepository;
 use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -32,48 +34,6 @@ class UserController extends Controller
     }
 
     /**
-     * @param Request $request
-     * @param ObjectManager $manager
-     * @param UserPasswordEncoderInterface $encoder
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
-     * @throws \Exception
-     * @Route("/user/add", name="user_add")
-     */
-    public function addUser(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
-    {
-        // Todo Afiner la méthode avec le token
-        if($request->query->get('token'))
-        {
-            $user = new User();
-
-            $form = $this->createForm(UserType::class, $user);
-            $form->handleRequest($request);
-
-            if ($form->isSubmitted() && $form->isValid())
-            {
-                $file = $form['img']->getData();
-                if (!is_null($file))
-                {
-                    $file->move('img/user-profil', $file->getClientOriginalName());
-                    $user->setImg($file->getClientOriginalName());
-                }
-                $user->setPassword($encoder->encodePassword($user, $user->getPassword()))
-                    ->setCreated(new \DateTime('now'));
-                $manager->persist($user);
-                $manager->flush();
-
-                return $this->redirectToRoute('home');
-            }
-
-            return $this->render('user/user_add.html.twig', [
-                'form' => $form->createView()
-            ]);
-        } else {
-            return new Response('Accès refusé');
-        }
-    }
-
-    /**
      * @param User $user
      * @param Request $request
      * @param ObjectManager $manager
@@ -88,8 +48,6 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            //TODO Check d'image de profil
-            //TODO Password pré rempli
             $manager->persist($user);
             $manager->flush();
 
@@ -114,23 +72,52 @@ class UserController extends Controller
     }
 
     /**
-     * @Route("/admin/user/addMail", name="user_add_mail")
+     * @param \Swift_Mailer $mailer
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @param UserPasswordEncoderInterface $encoder
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Exception
+     * @Route("/admin/user/add", name="user_add")
      */
-    public function addUserMail(\Swift_Mailer $mailer, Request $request)
+    public function addUserMail(\Swift_Mailer $mailer, Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
     {
-        $user = $this->getUser();
-        $generator = new UriSafeTokenGenerator(256);
-        $token = $generator->generateToken();
-        if($request->request->get('email'))
+        $user = new User();
+        $form = $this->createForm(UserUpdateType::class, $user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
         {
-            //TODO Finaliser l'inscription par mail
-            $message = (new \Swift_Message('Hello Mail'))
+            $file = $form['img']->getData();
+            if (!is_null($file))
+            {
+                $file->move('img/user-profil', $file->getClientOriginalName());
+                $user->setImg($file->getClientOriginalName());
+            }
+
+            $generator = new UriSafeTokenGenerator(256);
+            $token = $generator->generateToken();
+
+            $user->setPassword($encoder->encodePassword($user, $token.'fakePassword'))
+                ->setRoles(['ROLE_USER'])
+                ->setCreated(new \DateTime('now'));
+
+            $invitation = new Invitation();
+            $invitation->setUser($user);
+            $invitation->setToken($token);
+            $invitation->setSendDate(new \DateTime('now'));
+
+            $manager->persist($user);
+            $manager->persist($invitation);
+            $manager->flush();
+
+            $message = (new \Swift_Message('Invitation pour Devlop Eat'))
                 ->setFrom('eddst.webdev@gmail.com')
-                ->setTo($request->request->get('email'))
+                ->setTo($user->getEmail())
                 ->setBody(
                     $this->renderView('user/user_add_link.html.twig', [
-                        'user' => $user,
-                        'token' => $token
+                        'token' => $token,
+                        'id' => $user->getId()
                     ]),
                     'text/html'
                 );
@@ -138,6 +125,43 @@ class UserController extends Controller
             $mailer->send($message);
             return $this->redirectToRoute('user_list');
         }
-        return $this->render('user/user_add_mail.html.twig');
+
+        return $this->render('user/user_add.html.twig', [
+            'form' => $form->createView()
+        ]);
+
+    }
+
+    /**
+     * @param UserRepository $userRepo
+     * @param InvitationRepository $invitRepo
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @param UserPasswordEncoderInterface $encoder
+     * @param $id
+     * @param $token
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @Route("/user/reset-password/{id}/{token}", name="user_reset_password")
+     */
+    public function resetPassword(UserRepository $userRepo, InvitationRepository $invitRepo, Request $request,ObjectManager $manager, UserPasswordEncoderInterface $encoder ,$id, $token)
+    {
+        $user = $userRepo->find($id);
+        $invitation = $invitRepo->findOneBy(['user' => $id]);
+        $form = $this->createForm(PasswordResetType::class, $user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid() && $invitation->getToken() === $token)
+        {
+            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+            $manager->remove($invitation);
+            $manager->persist($user);
+            $manager->flush();
+
+            return $this->redirectToRoute('home');
+        }
+
+        return $this->render('user/user_password.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

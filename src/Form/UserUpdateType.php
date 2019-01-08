@@ -18,10 +18,17 @@ class UserUpdateType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class, ['label' => 'Email'])
-            ->add('firstName', TextType::class, ['label' => 'Prénom'])
-            ->add('lastName', TextType::class, ['label' => 'Nom'])
+            ->add('firstName', TextType::class, [
+                'label' => 'Prénom',
+                'required' => false
+            ])
+            ->add('lastName', TextType::class, [
+                'label' => 'Nom',
+                'required' => false
+            ])
             ->add('birthdate', BirthdayType::class, [
                 'label' => 'Date de naissance',
+                'required' => false,
                 'format' => 'dd-MM-yyyy',
                 'placeholder' => [
                     'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
@@ -32,7 +39,7 @@ class UserUpdateType extends AbstractType
                 'required' => false
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Envoyer',
+                'label' => 'Envoyer l\'invitation',
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]
