@@ -16,7 +16,7 @@ class ArchitectController extends Controller
     /**
      * @param ArchitectRepository $repo
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/admin/architect", name="architect_list")
+     * @Route("/log/architect", name="architect_list")
      */
     public function listProjects(ArchitectRepository $repo)
     {
@@ -56,7 +56,7 @@ class ArchitectController extends Controller
     /**
      * @param Architect $architect
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/admin/architect/{id}", name="architect_one")
+     * @Route("/log/architect/{id}", name="architect_one")
      */
     public function oneProject(Architect $architect)
     {

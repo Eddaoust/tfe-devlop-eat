@@ -22,7 +22,7 @@ class UserController extends Controller
     /**
      * @param UserRepository $repository
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/admin/user", name="user_list")
+     * @Route("/log/user", name="user_list")
      */
     public function listUsers(UserRepository $repo)
     {
@@ -141,7 +141,7 @@ class UserController extends Controller
      * @param $id
      * @param $token
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @Route("/user/reset-password/{id}/{token}", name="user_reset_password")
+     * @Route("/reset-password/{id}/{token}", name="user_reset_password")
      */
     public function resetPassword(UserRepository $userRepo, InvitationRepository $invitRepo, Request $request,ObjectManager $manager, UserPasswordEncoderInterface $encoder ,$id, $token)
     {

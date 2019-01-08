@@ -16,7 +16,7 @@ class ProjectController extends Controller
     /**
      * @param ProjectRepository $repo
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/admin/project", name="project_list")
+     * @Route("/log/project", name="project_list")
      */
     public function listProjects(ProjectRepository $repo)
     {
@@ -57,7 +57,7 @@ class ProjectController extends Controller
     /**
      * @param Project $project
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/admin/project/{id}", name="project_one")
+     * @Route("/log/project/{id}", name="project_one")
      */
     public function oneProject(Project $project)
     {

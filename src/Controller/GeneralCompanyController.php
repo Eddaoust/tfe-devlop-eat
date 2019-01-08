@@ -16,7 +16,7 @@ class GeneralCompanyController extends Controller
     /**
      * @param GeneralCompanyRepository $repo
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/admin/genCompany", name="genCompany_list")
+     * @Route("/log/genCompany", name="genCompany_list")
      */
     public function listGenCompanies(GeneralCompanyRepository $repo)
     {
@@ -56,7 +56,7 @@ class GeneralCompanyController extends Controller
     /**
      * @param GeneralCompany $genCompany
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/admin/genCompany/{id}", name="genCompany_one")
+     * @Route("/log/genCompany/{id}", name="genCompany_one")
      */
     public function oneGenCompany(GeneralCompany $genCompany)
     {

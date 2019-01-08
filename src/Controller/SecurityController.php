@@ -16,12 +16,12 @@ class SecurityController extends Controller
     }
 
     /**
-     * @Route("/login", name="login")
+     * @Route("/log/login", name="login")
      */
     public function login(){}
 
     /**
-     * @Route("/logout", name="logout")
+     * @Route("/log/logout", name="logout")
      */
     public function logout(){}
 }

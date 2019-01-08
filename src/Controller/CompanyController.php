@@ -23,7 +23,7 @@ class CompanyController extends Controller
     /**
      * @param CompanyRepository $repo
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/admin/company", name="company_list")
+     * @Route("/log/company", name="company_list")
      */
     public function listCompany(CompanyRepository $repo)
     {
@@ -68,7 +68,7 @@ class CompanyController extends Controller
     /**
      * @param Company $company
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/admin/company/{id}", name="company_one")
+     * @Route("/log/company/{id}", name="company_one")
      */
     public function oneCompany(Company $company)
     {
