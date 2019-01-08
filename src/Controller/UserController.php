@@ -112,7 +112,7 @@ class UserController extends Controller
             $manager->flush();
 
             $message = (new \Swift_Message('Invitation pour Devlop Eat'))
-                ->setFrom('devlopeat@eddaoust.com')// devlopeat@eddaoust.com "Changer lors Push en ligne"
+                ->setFrom('eddst.webdev@gmail.com')// devlopeat@eddaoust.com "Changer lors Push en ligne"
                 ->setTo($user->getEmail())
                 ->setBody(
                     $this->renderView('user/user_add_link.html.twig', [
@@ -141,31 +141,50 @@ class UserController extends Controller
      * @param $id
      * @param $token
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Exception
      * @Route("/reset-password/{id}/{token}", name="user_reset_password")
      */
     public function resetPassword(UserRepository $userRepo, InvitationRepository $invitRepo, Request $request,ObjectManager $manager, UserPasswordEncoderInterface $encoder ,$id, $token)
     {
         $user = $userRepo->find($id);
         $invitation = $invitRepo->findOneBy(['user' => $id]);
+        // Test de la présence d'un token
         if(!empty($invitation) && $invitation->getToken() === $token)
         {
-            $form = $this->createForm(PasswordResetType::class, $user);
-            $form->handleRequest($request);
+            // Définition du temps de validité du token
+            $invitTimeOut = date('Y-m-d H:i:s', strtotime("+1 minute", strtotime($invitation->getSendDate()->format('Y-m-d H:i:s'))));
+            $dateNow = date('Y-m-d H:i:s');
 
-            if($form->isSubmitted() && $form->isValid())
+            // Si le token est valide dans le timing
+            if(strtotime($dateNow) < strtotime($invitTimeOut))
             {
-                $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
-                //TODO gérer un remove d'office si pas de réponse après un temps donné
+                $form = $this->createForm(PasswordResetType::class, $user);
+                $form->handleRequest($request);
+
+                if($form->isSubmitted() && $form->isValid())
+                {
+                    $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+                    //TODO gérer un remove d'office si pas de réponse après un temps donné
+                    $manager->remove($invitation);
+                    $manager->persist($user);
+                    $manager->flush();
+
+                    return $this->redirectToRoute('home');
+                }
+
+                return $this->render('user/user_password.html.twig', [
+                    'form' => $form->createView()
+                ]);
+            }
+            else
+            {
+                // Si le token n'est plus valide on efface l'user et l'invitation
+                $manager->remove($user);
                 $manager->remove($invitation);
-                $manager->persist($user);
                 $manager->flush();
 
                 return $this->redirectToRoute('home');
             }
-
-            return $this->render('user/user_password.html.twig', [
-                'form' => $form->createView()
-            ]);
         }
         else
         {
