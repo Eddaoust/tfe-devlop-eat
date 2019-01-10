@@ -17,12 +17,14 @@ class ShareholderType extends AbstractType
         $builder
             ->add('part', IntegerType::class, [
                 'label' => 'Parts',
+                'required' => true,
                 'attr' => [
                     'placeholder' => 'Nombre de parts en %'
                 ]
             ])
             ->add('shareholder', EntityType::class, [
                 'label' => 'Actionnaire',
+                'required' => true,
                 'class' => Company::class,
                 'choice_label' => 'name',
                 'placeholder' => 'Choisissez un actionnaire'

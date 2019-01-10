@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CompanyCategoryRepository")
@@ -21,16 +22,25 @@ class CompanyCategory
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Country", inversedBy="companyCategories")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $country;
 
     /**
      * @ORM\Column(type="string", length=10)
+     * @Assert\Type(
+     *     type="string",
+     *     message="Vous devez entrer une chaine de caractère."
+     * )
      */
     private $abbreviation;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Type(
+     *     type="string",
+     *     message="Vous devez entrer une chaine de caractère."
+     * )
      */
     private $name;
 

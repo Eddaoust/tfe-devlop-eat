@@ -20,6 +20,7 @@ class PasswordResetType extends AbstractType
     {
         return [
             'label' => $label,
+            'required' => true,
             'attr' => [
                 'placeholder' => $placeholder
             ]

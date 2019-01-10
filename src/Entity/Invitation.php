@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\InvitationRepository")
@@ -23,11 +24,16 @@ class Invitation
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type(
+     *     type="string",
+     *     message="Vous devez entrer une chaine de caractère."
+     * )
      */
     private $token;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Date
      */
     private $sendDate;
 

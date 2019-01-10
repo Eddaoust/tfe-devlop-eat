@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ProjectRepository")
@@ -18,67 +19,115 @@ class Project
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 50,
+     *     minMessage = "Votre nom de projet doit faire au moins 2 caractères",
+     *     maxMessage = "Votre nom de projet doit faire moins de 50 caractères"
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *     min = 8,
+     *     max = 100,
+     *     minMessage = "L'adresse doit faire au moins 8 caractères",
+     *     maxMessage = "L'adresse doit faire moins de 100 caractères"
+     * )
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 10,
+     *     minMessage = "Le code postal doit faire au moins 2 caractères",
+     *     maxMessage = "Le code postal doit faire moins de 10 caractères"
+     * )
      */
     private $postalCode;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 20,
+     *     minMessage = "La ville doit faire au moins 2 caractères",
+     *     maxMessage = "La ville doit faire moins de 20 caractères"
+     * )
      */
     private $city;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Type(
+     *     type="string",
+     *     message="Vous devez entrer une chaine de caractère."
+     * )
      */
     private $description;
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Assert\Type(
+     *     type="string",
+     *     message="Vous devez entrer une chaine de caractère."
+     * )
      */
     private $pointOfInterest;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Type(
+     *     type="integer",
+     *     message="Vous devez entrer un nombre entier."
+     * )
      */
     private $fieldSize;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Type(
+     *     type="integer",
+     *     message="Vous devez entrer un nombre entier."
+     * )
      */
     private $turnover;
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Type(
+     *     type="integer",
+     *     message="Vous devez entrer un nombre entier."
+     * )
      */
     private $lots;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Assert\Date
      */
     private $created;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Company", inversedBy="projects")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $projectOwner;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Architect", inversedBy="projects")
+     * @Assert\Valid()
      */
     private $architect;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\GeneralCompany", inversedBy="projects")
+     * @Assert\Valid()
      */
     private $generalCompany;
 

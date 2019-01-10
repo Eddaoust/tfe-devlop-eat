@@ -9,6 +9,7 @@
         <div class="col-3">{{ form_row(form.country) }}</div>
         <div class="col-3">
             {{ form_row(form.companyCategory) }}
+            {{ form_errors(form.companyCategory) }}
             {#<label for="company_companyCategory">Type de société</label>
             <select id="company_companyCategory" class="form-control" name="company[companyCategory]">
                 <option selected disabled>Choisissez un type de société...</option>
@@ -34,8 +35,8 @@
         <div class="row">
             <div class="col-10">
                 <div class="row">
-                    <div class="col">{{ form_widget(form.shareholder) }}</div>
-                    <div class="col">{{ form_widget(form.part) }}</div>
+                    <div class="col">{{ form_widget(form.shareholder) }}{{ form_errors(form.shareholder) }}</div>
+                    <div class="col">{{ form_widget(form.part) }}{{ form_errors(form.part) }}</div>
                 </div>
             </div>
             <div class="col-2">

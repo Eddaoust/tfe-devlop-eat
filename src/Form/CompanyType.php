@@ -21,10 +21,11 @@ class CompanyType extends AbstractType
      * @param $placeholder
      * @return array
      */
-    private function getConfiguration($label, $placeholder)
+    private function getConfiguration($label, $required, $placeholder)
     {
         return [
             'label' => $label,
+            'required' => $required,
             'attr' => [
                 'placeholder' => $placeholder
             ]
@@ -34,7 +35,7 @@ class CompanyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, $this->getConfiguration('Nom', 'Entrez le nom de la société'))
+            ->add('name', TextType::class, $this->getConfiguration('Nom', true, 'Entrez le nom de la société'))
             ->add('country', EntityType::class, [
                 'label' => 'Pays',
                 'class' => Country::class,
@@ -46,14 +47,14 @@ class CompanyType extends AbstractType
                 'choice_label' => 'name',
                 'placeholder' => 'Choisissez un type de société'
             ])
-            ->add('address', TextType::class, $this->getConfiguration('Adresse', 'Entrez l\'adresse'))
-            ->add('postalCode', TextType::class, $this->getConfiguration('Code Postal', 'Entrez le code postal'))
-            ->add('city', TextType::class, $this->getConfiguration('Ville', 'Entrez la ville'))
-            ->add('phone', TextType::class, $this->getConfiguration('Téléphone', 'Entrez le numéro de téléphone'))
-            ->add('tvaNum', TextType::class, $this->getConfiguration('Numéro de TVA', 'Entrez le numéro de téléphone'))
-            ->add('registrationNum', TextType::class, $this->getConfiguration('Numero d\'enregistrement', 'Pour le Luxembourg'))
-            ->add('bank', TextType::class, $this->getConfiguration('Banque', 'Nom de la banque'))
-            ->add('bankAccount', TextType::class, $this->getConfiguration('Compte banquaire', 'Numero de compte banquaire'))
+            ->add('address', TextType::class, $this->getConfiguration('Adresse', false, 'Entrez l\'adresse'))
+            ->add('postalCode', TextType::class, $this->getConfiguration('Code Postal', false, 'Entrez le code postal'))
+            ->add('city', TextType::class, $this->getConfiguration('Ville', false, 'Entrez la ville'))
+            ->add('phone', TextType::class, $this->getConfiguration('Téléphone', false, 'Entrez le numéro de téléphone'))
+            ->add('tvaNum', TextType::class, $this->getConfiguration('Numéro de TVA', false, 'Entrez le numéro de téléphone'))
+            ->add('registrationNum', TextType::class, $this->getConfiguration('Numero d\'enregistrement', false, 'Pour le Luxembourg'))
+            ->add('bank', TextType::class, $this->getConfiguration('Banque', false, 'Nom de la banque'))
+            ->add('bankAccount', TextType::class, $this->getConfiguration('Compte banquaire',false, 'Numero de compte banquaire'))
             ->add('shareholders', CollectionType::class, [
                 'label' => 'Actionnaire(s)',
                 'entry_type' => ShareholderType::class,

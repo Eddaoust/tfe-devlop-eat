@@ -25,6 +25,9 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
+     * @Assert\Email(
+     *     message="Adresse Email non valide"
+     * )
      */
     private $email;
 
@@ -47,26 +50,50 @@ class User implements UserInterface
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 50,
+     *     minMessage = "Votre prénom doit faire au moins 2 caractères",
+     *     maxMessage = "Votre prénom doit faire moins de 50 caractères"
+     * )
      */
     private $firstName;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 50,
+     *     minMessage = "Votre prénom doit faire au moins 2 caractères",
+     *     maxMessage = "Votre prénom doit faire moins de 50 caractères"
+     * )
      */
     private $lastName;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Date(
+     *     message = "Date non valide"
+     * )
      */
     private $birthdate;
 
     /**
      * @ORM\Column(type="datetime", nullable=false)
+     * @Assert\Date
      */
     private $created;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Image(
+     *     maxSize = "1024k",
+     *     maxSizeMessage = "L'image est trop lourde ({{ size }} {{ suffix }}). Le poid maximum est de {{ limit }} {{ suffix }}.",
+     *     minRatio = 0.5,
+     *     maxRatio = 1.5,
+     *     minRatioMessage = "Le ratio (largeur/hauteur) est trop petit ({ratio}). Le ratio minimum est de {min_ratio}",
+     *     maxRatioMessage = "Le ratio (largeur/hauteur) est trop grand ({ratio}). Le ratio maximum est de {max_ratio}"
+     * )
      */
     private $img;
 

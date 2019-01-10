@@ -12,19 +12,31 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
-class UserUpdateType extends AbstractType
+class UserAddType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('email', EmailType::class, ['label' => 'Email'])
+            ->add('email', EmailType::class, [
+                'label' => 'Email',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Entrez une adresse email'
+                ]
+            ])
             ->add('firstName', TextType::class, [
                 'label' => 'Prénom',
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Entrez un prénom'
+                ]
             ])
             ->add('lastName', TextType::class, [
                 'label' => 'Nom',
-                'required' => false
+                'required' => false,
+                'attr' => [
+                    'placeholder' => 'Entrez un nom'
+                ]
             ])
             ->add('birthdate', BirthdayType::class, [
                 'label' => 'Date de naissance',
@@ -36,11 +48,10 @@ class UserUpdateType extends AbstractType
             ])
             ->add('img', FileType::class, [
                 'label' => 'Image de profil',
-                'required' => false,
-                'data_class' => null
+                'required' => false
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Mettre à jour',
+                'label' => 'Envoyer l\'invitation',
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]

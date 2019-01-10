@@ -17,10 +17,11 @@ class ArchitectType extends AbstractType
      * @param $placeholder
      * @return array
      */
-    private function getConfiguration($label, $placeholder)
+    private function getConfiguration($label, $required, $placeholder)
     {
         return [
             'label' => $label,
+            'required' => $required,
             'attr' => [
                 'placeholder' => $placeholder
             ]
@@ -30,12 +31,12 @@ class ArchitectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, $this->getConfiguration('Nom', 'Nom de l\'architecte'))
-            ->add('address', TextType::class, $this->getConfiguration('Adresse', 'Entrez l\'adresse'))
-            ->add('postalCode', TextType::class, $this->getConfiguration('Code Postal', 'Entrez le code postal'))
-            ->add('city', TextType::class, $this->getConfiguration('Ville', 'Entrez la ville'))
-            ->add('phone', TextType::class, $this->getConfiguration('Téléphone', 'Entrez le numero'))
-            ->add('email', EmailType::class, $this->getConfiguration('Email', 'Entrez l\'adresse email'))
+            ->add('name', TextType::class, $this->getConfiguration('Nom', true, 'Nom de l\'architecte'))
+            ->add('address', TextType::class, $this->getConfiguration('Adresse', false, 'Entrez l\'adresse'))
+            ->add('postalCode', TextType::class, $this->getConfiguration('Code Postal', false, 'Entrez le code postal'))
+            ->add('city', TextType::class, $this->getConfiguration('Ville', false, 'Entrez la ville'))
+            ->add('phone', TextType::class, $this->getConfiguration('Téléphone', false, 'Entrez le numero'))
+            ->add('email', EmailType::class, $this->getConfiguration('Email', true, 'Entrez l\'adresse email'))
             ->add('submit', SubmitType::class, [
                 'label' => 'Envoyer',
                 'attr' => [

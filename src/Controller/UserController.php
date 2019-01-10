@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Invitation;
 use App\Entity\User;
 use App\Form\PasswordResetType;
+use App\Form\UserAddType;
 use App\Form\UserUpdateType;
 use App\Repository\InvitationRepository;
 use App\Repository\UserRepository;
@@ -48,6 +49,14 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            $file = $form['img']->getData();
+            //TODO Problème lors de l'encodage d'ume image trop grosse
+            if (!is_null($file))
+            {
+                $file->move('img/user-profil', $file->getClientOriginalName());
+                $user->setImg($file->getClientOriginalName());
+            }
+
             $manager->persist($user);
             $manager->flush();
 
@@ -80,10 +89,10 @@ class UserController extends Controller
      * @throws \Exception
      * @Route("/admin/user/add", name="user_add")
      */
-    public function addUserMail(\Swift_Mailer $mailer, Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
+    public function addUser(\Swift_Mailer $mailer, Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
     {
         $user = new User();
-        $form = $this->createForm(UserUpdateType::class, $user);
+        $form = $this->createForm(UserAddType::class, $user);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
@@ -164,7 +173,6 @@ class UserController extends Controller
                 if($form->isSubmitted() && $form->isValid())
                 {
                     $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
-                    //TODO gérer un remove d'office si pas de réponse après un temps donné
                     $manager->remove($invitation);
                     $manager->persist($user);
                     $manager->flush();

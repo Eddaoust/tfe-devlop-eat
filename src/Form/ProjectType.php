@@ -24,10 +24,11 @@ class ProjectType extends AbstractType
      * @param $placeholder
      * @return array
      */
-    private function getConfiguration($label, $placeholder)
+    private function getConfiguration($label, $required, $placeholder)
     {
         return [
             'label' => $label,
+            'required' => $required,
             'attr' => [
                 'placeholder' => $placeholder
             ]
@@ -37,15 +38,15 @@ class ProjectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, $this->getConfiguration('Nom', 'Entrez le nom du projet'))
-            ->add('address', TextType::class, $this->getConfiguration('Adresse', 'Entrez l\'adresse du projet'))
-            ->add('postalCode', TextType::class, $this->getConfiguration('Code postal', 'Entrez le code postal du projet'))
-            ->add('city', TextType::class, $this->getConfiguration('Ville', 'Entrez la ville du projet'))
-            ->add('description', TextareaType::class, $this->getConfiguration('Description', 'Description du projet'))
-            ->add('pointOfInterest', TextareaType::class, $this->getConfiguration('Point d\'intérêt', 'Ajoutez les points d\'intérêts'))
-            ->add('fieldSize', IntegerType::class, $this->getConfiguration('Dimension du terrain', 'Dimension du terrai en are'))
-            ->add('turnover', MoneyType::class, $this->getConfiguration('Chiffre d\'affaire', 'Chiffre d\'affaire'))
-            ->add('lots', IntegerType::class, $this->getConfiguration('Lots', 'Nombres de lots'))
+            ->add('name', TextType::class, $this->getConfiguration('Nom', true, 'Entrez le nom du projet'))
+            ->add('address', TextType::class, $this->getConfiguration('Adresse', false, 'Entrez l\'adresse du projet'))
+            ->add('postalCode', TextType::class, $this->getConfiguration('Code postal', false, 'Entrez le code postal du projet'))
+            ->add('city', TextType::class, $this->getConfiguration('Ville', false, 'Entrez la ville du projet'))
+            ->add('description', TextareaType::class, $this->getConfiguration('Description', false, 'Description du projet'))
+            ->add('pointOfInterest', TextareaType::class, $this->getConfiguration('Point d\'intérêt', false, 'Ajoutez les points d\'intérêts'))
+            ->add('fieldSize', IntegerType::class, $this->getConfiguration('Dimension du terrain', false, 'Dimension du terrai en are'))
+            ->add('turnover', MoneyType::class, $this->getConfiguration('Chiffre d\'affaire', false, 'Chiffre d\'affaire'))
+            ->add('lots', IntegerType::class, $this->getConfiguration('Lots', false, 'Nombres de lots'))
             ->add('projectOwner', EntityType::class, [
                 'label' => 'Project owner',
                 'class' => Company::class,

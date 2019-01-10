@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\ShareholderRepository")
@@ -23,6 +24,12 @@ class Shareholder
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Range(
+     *      min = 0,
+     *      max = 100,
+     *      minMessage = "Vous devez entrer un nombre entier entre 0 et 100",
+     *      maxMessage = "Vous devez entrer un nombre entier entre 0 et 100"
+     * )
      */
     private $part;
 

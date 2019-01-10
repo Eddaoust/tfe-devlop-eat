@@ -90,7 +90,6 @@ class CompanyController extends Controller
         $manager->flush();
 
         return $this->redirectToRoute('company_list');
-        //TODO Impossible à supprimer si la société est project owner
     }
 
     /**

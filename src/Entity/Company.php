@@ -5,6 +5,7 @@ namespace App\Entity;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CompanyRepository")
@@ -20,68 +21,122 @@ class Company
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 50,
+     *     minMessage = "Le nom de l'entreprise doit faire au moins 2 caractères",
+     *     maxMessage = "Le nom de l'entreprise doit faire moins de 50 caractères"
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *     min = 8,
+     *     max = 100,
+     *     minMessage = "L'adresse doit faire au moins 8 caractères",
+     *     maxMessage = "L'adresse doit faire moins de 100 caractères"
+     * )
      */
     private $address;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 10,
+     *     minMessage = "Le code postal doit faire au moins 2 caractères",
+     *     maxMessage = "Le code postal doit faire moins de 10 caractères"
+     * )
      */
     private $postalCode;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *     min = 2,
+     *     max = 20,
+     *     minMessage = "La ville doit faire au moins 2 caractères",
+     *     maxMessage = "La ville doit faire moins de 20 caractères"
+     * )
      */
     private $city;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *     min = 8,
+     *     max = 20,
+     *     minMessage = "Le numéro de téléphone doit faire au moins 8 caractères",
+     *     maxMessage = "Le numéro de téléphone doit faire moins de 20 caractères"
+     * )
      */
     private $phone;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *     min = 8,
+     *     max = 20,
+     *     minMessage = "Le numéro TVA doit faire au moins 8 caractères",
+     *     maxMessage = "Le numéro TVA doit faire moins de 20 caractères"
+     * )
      */
     private $tvaNum;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Length(
+     *     min = 8,
+     *     max = 20,
+     *     minMessage = "Le numéro d'enregistrement doit faire au moins 8 caractères",
+     *     maxMessage = "Le numéro d'enregistrement doit faire moins de 20 caractères"
+     * )
      */
     private $registrationNum;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Type(
+     *     type="string",
+     *     message="Vous devez entrer une chaine de caractère."
+     * )
+     *
      */
     private $bank;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\Iban(
+     *     message="Entrez un numéro de compte international valide (IBAN)."
+     * )
      */
     private $bankAccount;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Country", inversedBy="companies")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $country;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\CompanyCategory", inversedBy="companies")
      * @ORM\JoinColumn(nullable=false)
+     * @Assert\Valid()
      */
     private $companyCategory;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Shareholder", mappedBy="company")
+     * @Assert\Valid()
      */
     private $shareholders;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="projectOwner")
+     * @Assert\Valid()
      */
     private $projects;
 
