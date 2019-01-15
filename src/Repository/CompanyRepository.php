@@ -32,6 +32,7 @@ class CompanyRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+
     // /**
     //  * @return Company[] Returns an array of Company objects
     //  */

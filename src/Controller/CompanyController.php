@@ -6,6 +6,7 @@ use App\Entity\Company;
 use App\Form\CompanyType;
 use App\Repository\CompanyCategoryRepository;
 use App\Repository\CompanyRepository;
+use App\Repository\ProjectRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -148,6 +149,23 @@ class CompanyController extends Controller
         $normalizers = [(new ObjectNormalizer())];
         $serializer = new Serializer($normalizers, $encoders);
         $data = $serializer->serialize($compCat, 'json');
+
+        return new JsonResponse($data, 200, [], true);
+    }
+
+    /**
+     * @param CompanyRepository $repo
+     * @return JsonResponse
+     * @Route("/admin/company/get-projects/ajax", name="company_project_name_ajax", methods={"GET"})
+     */
+    public function getCompanyProjectName(ProjectRepository $repo)
+    {
+        $companyProjects = $repo->getCompanyProjectName();
+
+        $encoders = [new JsonEncoder()];
+        $normalizers = [(new ObjectNormalizer())];
+        $serializer = new Serializer($normalizers, $encoders);
+        $data = $serializer->serialize($companyProjects, 'json');
 
         return new JsonResponse($data, 200, [], true);
     }

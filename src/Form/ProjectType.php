@@ -38,7 +38,7 @@ class ProjectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, $this->getConfiguration('Nom', true, 'Entrez le nom du projet'))
+            ->add('name', TextType::class, $this->getConfiguration('Nom *', true, 'Entrez le nom du projet'))
             ->add('address', TextType::class, $this->getConfiguration('Adresse', false, 'Entrez l\'adresse du projet'))
             ->add('postalCode', TextType::class, $this->getConfiguration('Code postal', false, 'Entrez le code postal du projet'))
             ->add('city', TextType::class, $this->getConfiguration('Ville', false, 'Entrez la ville du projet'))
@@ -48,19 +48,21 @@ class ProjectType extends AbstractType
             ->add('turnover', MoneyType::class, $this->getConfiguration('Chiffre d\'affaire', false, 'Chiffre d\'affaire'))
             ->add('lots', IntegerType::class, $this->getConfiguration('Lots', false, 'Nombres de lots'))
             ->add('projectOwner', EntityType::class, [
-                'label' => 'Project owner',
+                'label' => 'Project owner *',
                 'class' => Company::class,
                 'choice_label' => 'name',
                 'placeholder' => 'Choisissez un project owner'
             ])
             ->add('architect', EntityType::class, [
                 'label' => 'Architecte',
+                'required' => false,
                 'class' => Architect::class,
                 'choice_label' => 'name',
                 'placeholder' => 'Choisissez un architecte'
             ])
             ->add('generalCompany', EntityType::class, [
                 'label' => 'Entreprise générale',
+                'required' => false,
                 'class' => GeneralCompany::class,
                 'choice_label' => 'name',
                 'placeholder' => 'Choisissez une entreprise générale'

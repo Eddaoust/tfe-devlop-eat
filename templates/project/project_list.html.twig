@@ -9,8 +9,6 @@
             <th scope="col">Project Owner</th>
             <th scope="col">Addresse</th>
             <th scope="col">Ville</th>
-            <th scope="col">Architecte</th>
-            <th scope="col">Entr. Générale</th>
             <th scope="col">Création</th>
             <th scope="col">Modifier</th>
             <th scope="col">Supprimer</th>
@@ -24,8 +22,6 @@
                 <th>{{ project.projectOwner.name }}</th>
                 <th>{{ project.address }}</th>
                 <th>{{ project.city }}</th>
-                <th>{{ project.architect.name }}</th>
-                <th>{{ project.generalCompany.name }}</th>
                 <th>{{ project.created | date('d/m/Y') }}</th>
                 <th class="text-center"><a href="{{ path('project_update', {id: project.id}) }}"><i class="fas fa-pen"></i></a></th>
                 <th class="text-center"><a href="{{ path('project_delete', {id: project.id}) }}"><i class="fas fa-trash-alt"></i></a></th>

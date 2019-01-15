@@ -48,6 +48,18 @@ class ProjectRepository extends ServiceEntityRepository
                     ->getQuery()
                     ->getResult();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getCompanyProjectName()
+    {
+        return $this->createQueryBuilder('project')
+            ->select('project.name', 'projectOwner.id')
+            ->leftJoin('project.projectOwner', 'projectOwner')
+            ->getQuery()
+            ->getResult();
+    }
     // /**
     //  * @return Project[] Returns an array of Project objects
     //  */

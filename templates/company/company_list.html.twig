@@ -28,9 +28,41 @@
                 <th>{{ company.tvaNum }}</th>
                 <th>{{ company.bank }}</th>
                 <th class="text-center"><a href="{{ path('company_update', {id: company.id}) }}"><i class="fas fa-pen"></i></a></th>
-                <th class="text-center"><a href="{{ path('company_delete', {id: company.id}) }}"><i class="fas fa-trash-alt"></i></a></th>
+                <th class="text-center"><a href="{{ path('company_delete', {id: company.id}) }}" class="company-delete" id="{{ company.id }}" data-toggle="tooltip" data-placement="left" data-html="true" title=""><i class="fas fa-trash-alt"></i></a></th>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(function() {
+
+            $('[data-toggle="tooltip"]').tooltip()
+
+            const deleteBtnList = $('.company-delete')
+
+            $.ajax({
+                type: 'get',
+                url: 'http://127.0.0.1:8000/admin/company/get-projects/ajax'
+            }).done(function(datas) {
+                for(const deleteBtn of deleteBtnList){
+                    const obj = $.grep(datas, function(obj){return obj.id == deleteBtn.id;});
+                    if(obj.length > 0){
+                        console.log(obj)
+                        deleteBtn.href = 'javascript:void(0)'
+                        deleteBtn.classList = 'company-delete text-secondary'
+                        deleteBtn.style.cursor = 'not-allowed'
+                        let tooltipStr = 'Projets: '
+                        for(const name of obj){
+                            tooltipStr += name.name + ', '
+                        }
+                        deleteBtn.title = tooltipStr
+                    }
+                }
+            })
+        })
+
+    </script>
 {% endblock %}
