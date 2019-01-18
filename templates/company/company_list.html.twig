@@ -28,7 +28,7 @@
                 <th>{{ company.tvaNum }}</th>
                 <th>{{ company.bank }}</th>
                 <th class="text-center"><a href="{{ path('company_update', {id: company.id}) }}"><i class="fas fa-pen"></i></a></th>
-                <th class="text-center"><a href="{{ path('company_delete', {id: company.id}) }}" class="company-delete" id="{{ company.id }}" data-toggle="tooltip" data-placement="left" data-html="true" title=""><i class="fas fa-trash-alt"></i></a></th>
+                <th class="text-center"><a href="{{ path('company_delete', {id: company.id}) }}" class="item-delete" id="{{ company.id }}" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></a></th>
             </tr>
         {% endfor %}
         </tbody>
@@ -39,30 +39,28 @@
     <script>
         $(function() {
 
-            $('[data-toggle="tooltip"]').tooltip()
 
-            const deleteBtnList = $('.company-delete')
+            const deleteBtnList = $('.item-delete')
+            $('[data-toggle="tooltip"]').tooltip()
 
             $.ajax({
                 type: 'get',
                 url: 'http://127.0.0.1:8000/admin/company/get-projects/ajax'
             }).done(function(datas) {
                 for(const deleteBtn of deleteBtnList){
-                    const obj = $.grep(datas, function(obj){return obj.id == deleteBtn.id;});
-                    if(obj.length > 0){
-                        console.log(obj)
+                    const inactiveLine = $.grep(datas, function(obj){return obj.id == deleteBtn.id;});
+                    if(inactiveLine.length > 0){
                         deleteBtn.href = 'javascript:void(0)'
                         deleteBtn.classList = 'company-delete text-secondary'
                         deleteBtn.style.cursor = 'not-allowed'
-                        let tooltipStr = 'Projets: '
-                        for(const name of obj){
-                            tooltipStr += name.name + ', '
+                        let tooltipStr = 'Suppression impossible car société utilisé dans les projest suivants:\n '
+                        for(const company of inactiveLine){
+                            tooltipStr += company.name + ',\n '
                         }
                         deleteBtn.title = tooltipStr
                     }
                 }
             })
         })
-
     </script>
 {% endblock %}

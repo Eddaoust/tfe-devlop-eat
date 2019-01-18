@@ -25,9 +25,39 @@
                 <th>{{ architect.phone }}</th>
                 <th>{{ architect.email }}</th>
                 <th class="text-center"><a href="{{ path('architect_update', {id: architect.id}) }}"><i class="fas fa-pen"></i></a></th>
-                <th class="text-center"><a href="{{ path('architect_delete', {id: architect.id}) }}"><i class="fas fa-trash-alt"></i></a></th>
+                <th class="text-center"><a href="{{ path('architect_delete', {id: architect.id}) }}" class="item-delete" id="{{ architect.id }}" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></a></th>
             </tr>
         {% endfor %}
         </tbody>
     </table>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(function() {
+
+
+            const deleteBtnList = $('.item-delete')
+            $('[data-toggle="tooltip"]').tooltip()
+
+            $.ajax({
+                type: 'get',
+                url: 'http://127.0.0.1:8000/admin/architect/get-projects/ajax'
+            }).done(function(datas) {
+                for(const deleteBtn of deleteBtnList){
+                    const inactiveLine = $.grep(datas, function(obj){return obj.id == deleteBtn.id;});
+                    if(inactiveLine.length > 0){
+                        deleteBtn.href = 'javascript:void(0)'
+                        deleteBtn.classList = 'company-delete text-secondary'
+                        deleteBtn.style.cursor = 'not-allowed'
+                        let tooltipStr = 'Suppression impossible car société utilisé dans les projest suivants:\n '
+                        for(const company of inactiveLine){
+                            tooltipStr += company.name + ',\n '
+                        }
+                        deleteBtn.title = tooltipStr
+                    }
+                }
+            })
+        })
+    </script>
 {% endblock %}

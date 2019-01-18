@@ -10,6 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Repository\ProjectRepository;
 
 class ArchitectController extends Controller
 {
@@ -106,5 +111,21 @@ class ArchitectController extends Controller
         return $this->render('architect/architect_update.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @return JsonResponse
+     * @Route("/admin/architect/get-projects/ajax", name="architect_project_name_ajax", methods={"GET"})
+     */
+    public function getArchitectProjectName(ProjectRepository $repo)
+    {
+        $architectProjects = $repo->getArchitectCompanyName();
+
+        $encoders = [new JsonEncoder()];
+        $normalizers = [(new ObjectNormalizer())];
+        $serializer = new Serializer($normalizers, $encoders);
+        $data = $serializer->serialize($architectProjects, 'json');
+
+        return new JsonResponse($data, 200, [], true);
     }
 }

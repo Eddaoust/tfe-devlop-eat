@@ -10,6 +10,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Repository\ProjectRepository;
 
 class GeneralCompanyController extends Controller
 {
@@ -106,5 +111,21 @@ class GeneralCompanyController extends Controller
         return $this->render('general_company/genCompany_update.html.twig', [
             'form' => $form->createView()
         ]);
+    }
+
+    /**
+     * @return JsonResponse
+     * @Route("/admin/general-company/get-projects/ajax", name="genCompany_project_name_ajax", methods={"GET"})
+     */
+    public function getCompaniesGenCompanyName(ProjectRepository $repo)
+    {
+        $genCompanyProjects = $repo->getCompaniesGenCompanyName();
+
+        $encoders = [new JsonEncoder()];
+        $normalizers = [(new ObjectNormalizer())];
+        $serializer = new Serializer($normalizers, $encoders);
+        $data = $serializer->serialize($genCompanyProjects, 'json');
+
+        return new JsonResponse($data, 200, [], true);
     }
 }
