@@ -161,7 +161,7 @@ class UserController extends Controller
         if(!empty($invitation) && $invitation->getToken() === $token)
         {
             // Définition du temps de validité du token
-            $invitTimeOut = date('Y-m-d H:i:s', strtotime("+1 minute", strtotime($invitation->getSendDate()->format('Y-m-d H:i:s'))));
+            $invitTimeOut = date('Y-m-d H:i:s', strtotime("+10 minute", strtotime($invitation->getSendDate()->format('Y-m-d H:i:s'))));
             $dateNow = date('Y-m-d H:i:s');
 
             // Si le token est valide dans le timing

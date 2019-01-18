@@ -26,7 +26,7 @@ security:
 
             logout:
                 path: logout
-                target: home
+                target: login
 
             # activate different ways to authenticate
 

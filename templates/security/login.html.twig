@@ -16,10 +16,13 @@
                         Connexion
                     </div>
                     <div class="card-body">
+                        {% if hasError %}
+                            <div class="alert alert-danger mt-5">Email ou mot de passe invalide, veuillez recommencer</div>
+                        {% endif %}
                         <img src="{{ asset('img/logo/devlop-logo.svg') }}" class="card-title" width="80" alt="Devlop logo">
                         <form method="post" action="{{ path('login') }}">
                             <div class="form-group">
-                                <input type="email" class="form-control" name="_username" id="mail" placeholder="Entrez votre email">
+                                <input type="email" class="form-control" name="_username" id="mail" placeholder="Entrez votre email" value="{{ email }}">
                             </div>
                             <div class="form-group">
                                 <input type="password" class="form-control" id="password" name="_password" placeholder="Entrez votre mot de passe">
