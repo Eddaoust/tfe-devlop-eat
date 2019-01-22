@@ -53,7 +53,7 @@
                         deleteBtn.href = 'javascript:void(0)'
                         deleteBtn.classList = 'company-delete text-secondary'
                         deleteBtn.style.cursor = 'not-allowed'
-                        let tooltipStr = 'Suppression impossible car société utilisé dans les projest suivants:\n '
+                        let tooltipStr = 'Suppression impossible car la société est utilisé dans les projest suivants:\n '
                         for(const company of inactiveLine){
                             tooltipStr += company.name + ',\n '
                         }
