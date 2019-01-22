@@ -4,8 +4,110 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "bd7e891b39a2cdcccaa4af47cffbef84",
+    "content-hash": "e301f824338fb9c0b17d8a6179c6f89d",
     "packages": [
+        {
+            "name": "ddeboer/vatin",
+            "version": "2.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ddeboer/vatin.git",
+                "reference": "91281f32ee15eeca8c7501ed683e116865909218"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ddeboer/vatin/zipball/91281f32ee15eeca8c7501ed683e116865909218",
+                "reference": "91281f32ee15eeca8c7501ed683e116865909218",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.6.0"
+            },
+            "require-dev": {
+                "ext-soap": "*",
+                "phpunit/phpunit": "^5.7 || ^6.5"
+            },
+            "suggest": {
+                "ext-soap": "Required if you want to check the VAT number via VIES"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ddeboer\\Vatin\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David de Boer",
+                    "email": "david@ddeboer.nl",
+                    "homepage": "https://github.com/ddeboer"
+                },
+                {
+                    "name": "Community contributions",
+                    "homepage": "https://github.com/ddeboer/vatin/contributors"
+                }
+            ],
+            "description": "Validate VAT identification numbers",
+            "keywords": [
+                "btw",
+                "tax",
+                "vat",
+                "vies"
+            ],
+            "time": "2019-01-05T14:49:26+00:00"
+        },
+        {
+            "name": "ddeboer/vatin-bundle",
+            "version": "2.1.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ddeboer/vatin-bundle.git",
+                "reference": "ababf94f2c6d70261dc7fe3738baf960ca7506da"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ddeboer/vatin-bundle/zipball/ababf94f2c6d70261dc7fe3738baf960ca7506da",
+                "reference": "ababf94f2c6d70261dc7fe3738baf960ca7506da",
+                "shasum": ""
+            },
+            "require": {
+                "ddeboer/vatin": "^2.0",
+                "symfony/framework-bundle": "^2.7.8 || ^3.0 || ^4.0",
+                "symfony/validator": "^2.7 || ^3.0 || ^4.0"
+            },
+            "require-dev": {
+                "doctrine/annotations": "^1.2",
+                "phpunit/phpunit": "^4.0 || ^5.0",
+                "symfony/yaml": "^2.7 || ^3.0 || ^4.0"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "Ddeboer\\VatinBundle\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "David de Boer",
+                    "email": "david@ddeboer.nl"
+                }
+            ],
+            "description": "Symfony bundle for the VATIN library",
+            "keywords": [
+                "btw",
+                "tax",
+                "vat"
+            ],
+            "time": "2018-01-15T10:40:50+00:00"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.6.0",
@@ -944,12 +1046,12 @@
             "version": "v2.6.3",
             "source": {
                 "type": "git",
-                "url": "https://github.com/doctrine/doctrine2.git",
+                "url": "https://github.com/doctrine/orm.git",
                 "reference": "434820973cadf2da2d66e7184be370084cc32ca8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/doctrine/doctrine2/zipball/434820973cadf2da2d66e7184be370084cc32ca8",
+                "url": "https://api.github.com/repos/doctrine/orm/zipball/434820973cadf2da2d66e7184be370084cc32ca8",
                 "reference": "434820973cadf2da2d66e7184be370084cc32ca8",
                 "shasum": ""
             },

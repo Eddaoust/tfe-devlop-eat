@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Ddeboer\VatinBundle\Validator\Constraints\Vatin;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\CompanyRepository")
@@ -76,11 +77,8 @@ class Company
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Length(
-     *     min = 8,
-     *     max = 20,
-     *     minMessage = "Le numéro TVA doit faire au moins 8 caractères",
-     *     maxMessage = "Le numéro TVA doit faire moins de 20 caractères"
+     * @Vatin(
+     *     message = "Veuillez entrer un numéro de TVA valide"
      * )
      */
     private $tvaNum;
