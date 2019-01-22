@@ -6,6 +6,7 @@
         <tr>
             <th scope="col">Profile</th>
             <th scope="col">Email</th>
+            <th scope="col">Role</th>
             <th scope="col">Prénom</th>
             <th scope="col">Nom</th>
             <th scope="col">Naissance</th>
@@ -19,6 +20,13 @@
             <tr>
                 <th class="text-center"><img src="{{ user.img ? asset('img/user-profil/') ~ user.img : asset('img/user-profil/default.png') }}" alt="user profil" width="20"></th>
                 <th>{{ user.email }}</th>
+                <th>
+                    {% if user.roles[0] == 'ROLE_ADMIN' %}
+                        Administrateur
+                    {% elseif user.roles[0] == 'ROLE_USER' %}
+                        Utilisateur
+                    {% endif %}
+                </th>
                 <th>{{ user.firstName }}</th>
                 <th>{{ user.lastName }}</th>
                 <th>{{ user.birthdate | date('d/m/Y') }}</th>
