@@ -6,11 +6,12 @@
 
     <link rel="stylesheet" href="{{ asset('css/bootstrap.css') }}">
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="{{ asset('css/sb-admin.css') }}">
     {% block stylesheets %}{% endblock %}
     <title>Devlop Eat - {% block title %}{% endblock %}</title>
 </head>
 <body>
-
+{#
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="{{ path('login') }}">
         <img src="{{ asset('img/logo/devlop-logo.svg') }}" width="80" alt="Devlop logo">
@@ -47,6 +48,23 @@
             <a class="btn btn-success ml-2" href="{{ path('logout') }}"><i class="fas fa-sign-out-alt mr-1"></i>Déconnexion</a>
         {% endif %}
     </div>
+</nav>#}
+<nav class="navbar navbar-expand navbar-dark bg-light static-top">
+    <a class="navbar-brand mr-1" href="{{ path('login') }}"><img src="{{ asset('img/logo/devlop-logo.svg') }}" width="80" alt="Devlop logo"></a>
+    <button class="btn btn-link btn-sm text-dark order-1 order-sm-0" id="sidebarToggle" href="#">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Navbar -->
+    {% if app.user %}
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item dropdown no-arrow mx-1">
+                <div class="profil-img">
+                    <img src="{{ app.user.img ? asset('img/user-profil/') ~ app.user.img : asset('img/user-profil/default.png') }}" style="height: 36px;width: 36px;border-radius: 90px;background-color: white; border: solid 1px #5E9D4D;">
+                </div>
+            </li>
+        </ul>
+    {% endif %}
 </nav>
 
 {% block body %}{% endblock %}
@@ -56,6 +74,7 @@
 <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="{{ asset('js/sb-admin.js') }}"
 {% block js %}{% endblock %}
 </body>
 </html>

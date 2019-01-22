@@ -49,6 +49,7 @@ class CompanyController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            //TODO Pas d'enregistrement, probleme de nom d'input en JS
             foreach ($company->getShareholders() as $shareholder)
             {
                 $shareholder->setCompany($company);
@@ -87,6 +88,10 @@ class CompanyController extends Controller
      */
     public function deleteCompany(Company $company, ObjectManager $manager)
     {
+        foreach ($company->getShareholders() as $shareholder)
+        {
+            $manager->remove($shareholder);
+        }
         $manager->remove($company);
         $manager->flush();
 
