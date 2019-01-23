@@ -3,11 +3,9 @@
 {% block title %}Utilisateurs{% endblock %}
 
 {% block dash_body %}
-    <div class="col-xl-10">
-        <div class="jumbotron mt-5">
+        <div class="jumbotron">
             <h1 class="display-6">Gestion des utilisateurs</h1>
             <p class="lead">Vous avez <strong class="text-success">{{ usersCounter.getUsersCount() }}</strong> utilisateurs enregistrés sur la plateforme.</p>
         </div>
     {% block user_body %}{% endblock %}
-    </div>
 {% endblock %}

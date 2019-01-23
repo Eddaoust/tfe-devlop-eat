@@ -11,44 +11,7 @@
     <title>Devlop Eat - {% block title %}{% endblock %}</title>
 </head>
 <body>
-{#
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="{{ path('login') }}">
-        <img src="{{ asset('img/logo/devlop-logo.svg') }}" width="80" alt="Devlop logo">
-    </a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        {% if app.user %}
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link text-success" href="{{ path('dashboard') }}"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
-            </li>
-            <li class="nav-item active">
-                <a class="nav-link text-success" href="{{ path('user_list') }}"><i class="fas fa-users-cog"></i> Utilisateurs</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-success" href="{{ path('project_list') }}"><i class="fas fa-building"></i> Projets</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-success" href="{{ path('company_list') }}"><i class="fas fa-industry"></i> Sociétés</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-success" href="{{ path('architect_list') }}"><i class="fas fa-drafting-compass"></i> Architectes</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link text-success" href="{{ path('genCompany_list') }}"><i class="fas fa-hammer"></i> Entreprises générales</a>
-            </li>
-        </ul>
-            <div class="profil-img">
-                <img src="{{ app.user.img ? asset('img/user-profil/') ~ app.user.img : asset('img/user-profil/default.png') }}" style="height: 36px;width: 36px;border-radius: 90px;background-color: white; border: solid 1px #5E9D4D;">
-            </div>
-            <a class="btn btn-success ml-2" href="{{ path('logout') }}"><i class="fas fa-sign-out-alt mr-1"></i>Déconnexion</a>
-        {% endif %}
-    </div>
-</nav>#}
 <nav class="navbar navbar-expand navbar-dark bg-light static-top">
     <a class="navbar-brand mr-1" href="{{ path('login') }}"><img src="{{ asset('img/logo/devlop-logo.svg') }}" width="80" alt="Devlop logo"></a>
     <button class="btn btn-link btn-sm text-dark order-1 order-sm-0" id="sidebarToggle" href="#">
