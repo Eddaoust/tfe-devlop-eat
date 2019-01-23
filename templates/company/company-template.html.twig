@@ -4,10 +4,12 @@
 
 {% block dash_body %}
     <div class="col-xl-10">
-        <div class="jumbotron mt-5">
-            <h1 class="display-6">Gestion des sociétés</h1>
-            <p class="lead">Vous avez <strong class="text-success">{{ companiesCounter.getCompaniesCount() }}</strong> sociétés enregistrés sur la plateforme.</p>
+        <div class="container-fluid">
+            <div class="jumbotron mt-5">
+                <h1 class="display-6">Gestion des sociétés</h1>
+                <p class="lead">Vous avez <strong class="text-success">{{ companiesCounter.getCompaniesCount() }}</strong> sociétés enregistrés sur la plateforme.</p>
+            </div>
+            {% block company_body %}{% endblock %}
         </div>
-        {% block company_body %}{% endblock %}
     </div>
 {% endblock %}
