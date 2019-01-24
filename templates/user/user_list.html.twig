@@ -1,7 +1,11 @@
 {% extends 'user/user-template.html.twig' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
+{% endblock %}
+
 {% block user_body %}
-    <table class="table table-hover table-bordered">
+    <table id="table_id" class="table table-hover table-bordered">
         <thead>
         <tr>
             <th scope="col">Profile</th>
@@ -37,4 +41,25 @@
         {% endfor %}
         </tbody>
     </table>
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
+    <script>
+        $(function () {
+            $('#table_id').DataTable({
+                'language': {
+                    "lengthMenu": "Afficher _MENU_ éléments par page",
+                    "search": "Recherche: ",
+                    "info": "Affichage de _START_ à _END_ sur un total de _TOTAL_ éléments",
+                    "paginate": {
+                        "first":      "Première",
+                        "last":       "Dernière",
+                        "next":       "Suivant",
+                        "previous":   "Précédent"
+                    }
+                }
+            })
+        })
+    </script>
 {% endblock %}

@@ -1,7 +1,11 @@
 {% extends 'company/company-template.html.twig' %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
+{% endblock %}
+
 {% block company_body %}
-    <table class="table table-hover table-bordered">
+    <table id="table_id" class="table table-hover table-bordered">
         <thead>
         <tr>
             <th scope="col">#</th>
@@ -36,10 +40,13 @@
 {% endblock %}
 
 {% block js %}
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
     <script>
+
         $(function() {
 
 
+            // Info de suppression sur les boutons delete
             const deleteBtnList = $('.item-delete')
             $('[data-toggle="tooltip"]').tooltip()
 
@@ -48,6 +55,7 @@
                 url: 'http://127.0.0.1:8000/admin/company/get-projects/ajax'
             }).done(function(datas) {
                 for(const deleteBtn of deleteBtnList){
+                    console.log(deleteBtn)
                     const inactiveLine = $.grep(datas, function(obj){return obj.id == deleteBtn.id;});
                     if(inactiveLine.length > 0){
                         deleteBtn.href = 'javascript:void(0)'
@@ -58,6 +66,21 @@
                             tooltipStr += company.name + ',\n '
                         }
                         deleteBtn.title = tooltipStr
+                    }
+                }
+            })
+
+            // Initialisation de DataTables
+            $('#table_id').DataTable({
+                'language': {
+                    "lengthMenu": "Afficher _MENU_ éléments par page",
+                    "search": "Recherche: ",
+                    "info": "Affichage de _START_ à _END_ sur un total de _TOTAL_ éléments",
+                    "paginate": {
+                        "first":      "Première",
+                        "last":       "Dernière",
+                        "next":       "Suivant",
+                        "previous":   "Précédent"
                     }
                 }
             })
