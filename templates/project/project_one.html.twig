@@ -1,20 +1,60 @@
 {% extends 'project/project-template.html.twig' %}
 
 {% block project_body %}
-    <h1><span class="text-success">Nom du projet: </span>{{ project.name }}</h1><br>
-    <h3><span class="text-success">Project Owner: </span>{{ project.projectOwner.name }} {{ project.projectOwner.companyCategory.abbreviation }} - {{ project.projectOwner.country.name }}</h3><br>
-    <p><span class="text-success">Localisation: </span>{{ project.address }}, {{ project.postalCode }} {{ project.city }}</p>
-    <p><span class="text-success">Description: </span>{{ project.description }}</p>
-    <p><span class="text-success">Point d'intérêt: </span>{{ project.pointOfInterest }}</p><br>
-    <h3 class="text-success">Chiffres: </h3>
-    <p><span class="text-success">Terrain: </span>{{ project.fieldSize }} ares</p>
-    <p><span class="text-success">Chiffre d'affaire: </span>{{ project.turnover }} &euro;</p>
-    <p><span class="text-success">Lots: </span>{{ project.lots }}</p><br>
-    <h3 class="text-success">Partenaires: </h3>
-    {% for shareholder in project.projectOwner.shareholders %}
-    <p><span class="text-success">Actionnaires: </span>{{ shareholder.shareholder.name }} - {{ shareholder.part }}%</p>
-    {% endfor %}
-    <p><span class="text-success">Architecte: </span>{{ project.architect.name }}</p>
-    <p><span class="text-success">Entreprise générale: </span>{{ project.generalCompany.name }}</p>
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-6">
+                            <h1 class="text-success">{{ project.name }}</h1>
+                        </div>
+                        <div class="col-6">
+                            <h3 class="pt-2">{{ project.projectOwner.name }} {{ project.projectOwner.companyCategory.abbreviation }} - {{ project.projectOwner.country.code }}</h3>
+                        </div>
+                    </div>
 
+                    <div class="description mt-2 ml-3">
+                        {% set descriptions = project.description | split('\n') %}
+                        {% for description in descriptions %}
+                            <p>{{ description }}</p>
+                        {% endfor %}
+                    </div>
+
+                    <h1 class="text-success">Localisation</h1>
+                    <div class="localisation mt-2 ml-3">
+                        <p>{{ project.address }}</p>
+                        <p>{{ project.postalCode }} {{ project.city }}</p>
+                    </div>
+
+                    <h1 class="text-success">Points d'intérêts</h1>
+                    <div class="point-interest mt-2 ml-3">
+                        {% set pointsInterest = project.pointOfInterest | split('\n') %}
+                        {% for point in pointsInterest %}
+                            <p>{{ point }}</p>
+                        {% endfor %}
+                    </div>
+
+                    <h1 class="text-success">Chiffres: </h1>
+                    <div class="numbers mt-2 ml-3">
+                        <p><i class="mr-2">Terrain</i>{{ project.fieldSize }} ares</p>
+                        <p><i class="mr-2">Chiffre d'affaire</i>{{ project.turnover }} &euro;</p>
+                        <p><i class="mr-2">Lots</i>{{ project.lots }}</p><br>
+                    </div>
+                    <h1 class="text-success">Partenaires: </h1>
+                    <div class="shareholders mt-2 ml-3">
+                        <p><i class="mr-2">Actionnaires</i></p>
+                        {% for shareholder in project.projectOwner.shareholders %}
+                            <p class="ml-5">{{ shareholder.shareholder.name }} - {{ shareholder.part }}%</p>
+                        {% endfor %}
+                        <p><i class="mr-2">Architecte</i></p>
+                        <p class="ml-5">{{ project.architect.name }}</p>
+                        <p><i class="mr-2">Entreprise Gén.</i></p>
+                        <p class="ml-5">{{ project.generalCompany.name }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-4"></div>
+        </div>
+    </div>
 {% endblock %}
