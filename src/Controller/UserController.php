@@ -177,7 +177,7 @@ class UserController extends Controller
                     $manager->persist($user);
                     $manager->flush();
 
-                    return $this->redirectToRoute('home');
+                    return $this->redirectToRoute('login');
                 }
 
                 return $this->render('user/user_password.html.twig', [
@@ -191,12 +191,12 @@ class UserController extends Controller
                 $manager->remove($invitation);
                 $manager->flush();
 
-                return $this->redirectToRoute('home');
+                return $this->redirectToRoute('login');
             }
         }
         else
         {
-            return $this->redirectToRoute('home');
+            return $this->redirectToRoute('login');
         }
     }
 }
