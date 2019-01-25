@@ -9,6 +9,7 @@ use App\Entity\Project;
 use App\Repository\CompanyRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -66,6 +67,11 @@ class ProjectType extends AbstractType
                 'class' => GeneralCompany::class,
                 'choice_label' => 'name',
                 'placeholder' => 'Choisissez une entreprise générale'
+            ])
+            ->add('projectImages', CollectionType::class, [
+                'entry_type' => ProjectImagesType::class,
+                'allow_add' => true,
+                'label' => 'Image du projet'
             ])
             ->add('Ajouter', SubmitType::class, [
                 'label' => 'Envoyer',

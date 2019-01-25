@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -130,6 +132,16 @@ class Project
      * @Assert\Valid()
      */
     private $generalCompany;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\ProjectImages", mappedBy="project")
+     */
+    private $projectImages;
+
+    public function __construct()
+    {
+        $this->projectImages = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -294,6 +306,37 @@ class Project
     public function setGeneralCompany(?GeneralCompany $generalCompany): self
     {
         $this->generalCompany = $generalCompany;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|ProjectImages[]
+     */
+    public function getProjectImages(): Collection
+    {
+        return $this->projectImages;
+    }
+
+    public function addProjectImage(ProjectImages $projectImage): self
+    {
+        if (!$this->projectImages->contains($projectImage)) {
+            $this->projectImages[] = $projectImage;
+            $projectImage->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProjectImage(ProjectImages $projectImage): self
+    {
+        if ($this->projectImages->contains($projectImage)) {
+            $this->projectImages->removeElement($projectImage);
+            // set the owning side to null (unless already changed)
+            if ($projectImage->getProject() === $this) {
+                $projectImage->setProject(null);
+            }
+        }
 
         return $this;
     }

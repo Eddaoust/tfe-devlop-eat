@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Project;
+use App\Entity\ProjectImages;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -42,6 +43,18 @@ class ProjectController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            foreach ($project->getProjectImages() as $index => $projectImage)
+            {
+                $projectImage->setProject($project)
+                            ->setTitle($request->files->get('project')['projectImages'][$index]['title']->getClientOriginalName());
+                $request
+                    ->files
+                    ->get('project')['projectImages'][$index]['title']
+                    ->move('img/project', $request->files->get('project')['projectImages'][$index]['title']
+                        ->getClientOriginalName());
+                $manager->persist($projectImage);
+            }
+
             $project->setCreated(new \DateTime('now'));
             $manager->persist($project);
             $manager->flush();

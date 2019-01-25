@@ -1,6 +1,55 @@
 {% extends 'project/project-template.html.twig' %}
 
+{% form_theme form _self %}
+
 {% block project_body %}
     {{ form_start(form) }}
     {{ form_end(form) }}
+{% endblock %}
+
+{% block _project_projectImages_widget %}
+    {{ form_widget(form) }}
+    <div class="form-group">
+        <button type="button" id="add-projectImages" class="btn btn-success">Ajouter une image</button>
+    </div>
+{% endblock %}
+
+{% block _project_projectImages_entry_row %}
+    {{ form_widget(form) }}
+{% endblock %}
+
+{% block _project_projectImages_entry_widget %}
+    <div class="form-group" id="block_{{ id }}">
+        <div class="row">
+            <div class="col-3">
+                {{ form_widget(form.title) }}{{ form_errors(form.title) }}
+            </div>
+            <div class="col-1">
+                <button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        // Ajout des actionnaires
+        $('#add-projectImages').on('click', function() {
+            const index = $('#project_projectImages div.form-group').length;
+            const template = $('#project_projectImages').data('prototype').replace(/__name__/g, index);
+            $('#project_projectImages').append(template);
+            handleDeleteButtons()
+
+            function handleDeleteButtons() {
+                $('button[data-action="delete"]').on('click', function () {
+                    const target = this.dataset.target;
+                    $(target).remove();
+                });
+            }
+
+            handleDeleteButtons();
+
+        })
+
+    </script>
 {% endblock %}
