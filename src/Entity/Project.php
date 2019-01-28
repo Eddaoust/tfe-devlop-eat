@@ -134,9 +134,22 @@ class Project
     private $generalCompany;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\ProjectImages", mappedBy="project")
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File(mimeTypes={ "image/png", "image/jpeg" })
      */
-    private $projectImages;
+    private $img1;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File(mimeTypes={ "image/png", "image/jpeg" })
+     */
+    private $img2;
+
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     * @Assert\File(mimeTypes={ "image/png", "image/jpeg" })
+     */
+    private $img3;
 
     public function __construct()
     {
@@ -310,33 +323,38 @@ class Project
         return $this;
     }
 
-    /**
-     * @return Collection|ProjectImages[]
-     */
-    public function getProjectImages(): Collection
+    public function getImg1()
     {
-        return $this->projectImages;
+        return $this->img1;
     }
 
-    public function addProjectImage(ProjectImages $projectImage): self
+    public function setImg1($img1)
     {
-        if (!$this->projectImages->contains($projectImage)) {
-            $this->projectImages[] = $projectImage;
-            $projectImage->setProject($this);
-        }
+        $this->img1 = $img1;
 
         return $this;
     }
 
-    public function removeProjectImage(ProjectImages $projectImage): self
+    public function getImg2()
     {
-        if ($this->projectImages->contains($projectImage)) {
-            $this->projectImages->removeElement($projectImage);
-            // set the owning side to null (unless already changed)
-            if ($projectImage->getProject() === $this) {
-                $projectImage->setProject(null);
-            }
-        }
+        return $this->img2;
+    }
+
+    public function setImg2($img2)
+    {
+        $this->img2 = $img2;
+
+        return $this;
+    }
+
+    public function getImg3()
+    {
+        return $this->img3;
+    }
+
+    public function setImg3($img3)
+    {
+        $this->img3 = $img3;
 
         return $this;
     }

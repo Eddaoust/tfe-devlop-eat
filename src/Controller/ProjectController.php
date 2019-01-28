@@ -3,12 +3,12 @@
 namespace App\Controller;
 
 use App\Entity\Project;
-use App\Entity\ProjectImages;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -43,18 +43,24 @@ class ProjectController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            foreach ($project->getProjectImages() as $index => $projectImage)
+            $file = $project->getImg1();
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            $file->move(
+                $this->getParameter('project_images_directory'),
+                $fileName
+            );
+            $project->setImg1($fileName);
+            /*
+            for($i = 1; $i <= 3; $i++)
             {
-                $projectImage->setProject($project)
-                            ->setTitle($request->files->get('project')['projectImages'][$index]['title']->getClientOriginalName());
-                $request
-                    ->files
-                    ->get('project')['projectImages'][$index]['title']
-                    ->move('img/project', $request->files->get('project')['projectImages'][$index]['title']
-                        ->getClientOriginalName());
-                $manager->persist($projectImage);
-            }
-
+                $file = $form['img'.$i]->getData();
+                if(!is_null($file))
+                {
+                    $file->move('img/project', $file->getClientOriginalName());
+                    $setImg = 'setImg'.$i;
+                    $project->$setImg($file->getClientOriginalName());
+                }
+            }*/
             $project->setCreated(new \DateTime('now'));
             $manager->persist($project);
             $manager->flush();
@@ -104,6 +110,7 @@ class ProjectController extends Controller
      */
     public function updateProject(Project $project, Request $request, ObjectManager $manager)
     {
+        $project->setImg1(new File($this->getParameter('project_images_directory').'/'.$project->getImg1()));
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 
@@ -118,7 +125,7 @@ class ProjectController extends Controller
         }
 
         return $this->render('project/project_update.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ]);
     }
 

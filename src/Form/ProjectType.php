@@ -9,13 +9,16 @@ use App\Entity\Project;
 use App\Repository\CompanyRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\CallbackTransformer;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ProjectType extends AbstractType
@@ -68,10 +71,17 @@ class ProjectType extends AbstractType
                 'choice_label' => 'name',
                 'placeholder' => 'Choisissez une entreprise générale'
             ])
-            ->add('projectImages', CollectionType::class, [
-                'entry_type' => ProjectImagesType::class,
-                'allow_add' => true,
-                'label' => 'Image du projet'
+            ->add('img1', FileType::class, [
+                'label' => 'Image 1 du projet',
+                'required' => false
+            ])
+            ->add('img2', FileType::class, [
+                'label' => 'Image 2 du projet',
+                'required' => false
+            ])
+            ->add('img3', FileType::class, [
+                'label' => 'Image 3 du projet',
+                'required' => false
             ])
             ->add('Ajouter', SubmitType::class, [
                 'label' => 'Envoyer',
@@ -80,6 +90,18 @@ class ProjectType extends AbstractType
                 ]
             ])
         ;
+
+        $builder->get('img1')
+                ->addModelTransformer(new CallbackTransformer(
+                    function($img1)
+                    {
+                        return null;
+                    },
+                    function($img1)
+                    {
+                        return $img1;
+                    }
+                ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
