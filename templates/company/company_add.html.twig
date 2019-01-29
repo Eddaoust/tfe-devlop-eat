@@ -10,10 +10,6 @@
         <div class="col-3">
             {{ form_row(form.companyCategory) }}
             {{ form_errors(form.companyCategory) }}
-            {#<label for="company_companyCategory">Type de société</label>
-            <select id="company_companyCategory" class="form-control" name="company[companyCategory]">
-                <option selected disabled>Choisissez un type de société...</option>
-            </select>#}
         </div>
     </div>
     {{ form_end(form) }}
@@ -46,90 +42,6 @@
     </div>
 {% endblock %}
 
-
-
-
 {% block js %}
-    <script>
-
-        // Ajout des actionnaires
-    $('#add-shareholder').on('click', function() {
-        const index = $('#company_shareholders div.form-group').length;
-        //if (index === 0) {
-            const template = $('#company_shareholders').data('prototype').replace(/__name__/g, index);
-            $('#company_shareholders').append(template);
-            handleDeleteButtons();
-
-           /* var select = $('#company_shareholders select')
-            select.on('change', function () {
-                var options = $('#company_shareholders select option')
-                for(const option of options) {
-                    if (this.value === option.value)  {
-                        option.disabled = true
-                    } else {
-                        option.disabled = false
-                    }
-                }
-            })
-        } else {
-            const previousIndex = index - 1
-            const template = $('#company_shareholders').data('prototype').replace(/__name__/g, index);
-            const clone = $(`#company_shareholders_${previousIndex}_shareholder`).clone()
-            const newId = clone[0].id.replace(/_\d_/, `_${index}_`)
-            clone[0].id = newId
-            clone[0].name = `company[shareholders][${index}][shareholder]`
-            const regex = /<select(.*?)<\/select>/
-            $('#company_shareholders').append(template.replace(regex, clone[0].outerHTML));
-            console.log(clone[0])
-
-
-            handleDeleteButtons();
-
-            var select = $('#company_shareholders select')
-            select.on('change', function () {
-                var options = $('#company_shareholders select option')
-                for(const option of options) {
-                    if (this.value === option.value)  {
-                        option.disabled = true
-                    }
-                }
-            })
-        }*/
-    });
-
-    function handleDeleteButtons(){
-        $('button[data-action="delete"]').on('click', function () {
-            const target = this.dataset.target;
-            $(target).remove();
-        });
-    }
-    handleDeleteButtons();
-
-    for(const option of $('#company_companyCategory option')){
-        if (option.value.length > 1){
-            option.remove();
-        }
-    }
-
-    // Ajax pour remplir le type de société par rapport au pays
-        $('#company_country').on('change', function () {
-            const url = 'http://127.0.0.1:8000/admin/company/category/ajax/';
-            const countryId = $('#company_country').val();
-            $.ajax({
-                url: url + countryId,
-                type: 'get',
-            })
-                .done(function (datas) {
-                    for(const option of $('#company_companyCategory option')){
-                        if (option.value.length < 8){
-                            option.remove();
-                        }
-                    }
-                    for(const data of datas){
-                        $('#company_companyCategory').append(`<option value="${data.id}">${data.abbreviation} - ${data.name}</option>`);
-                    }
-                })
-        });
-
-    </script>
+    <script type="text/javascript" src="{{ asset('js/company-add.js') }}"></script>
 {% endblock %}

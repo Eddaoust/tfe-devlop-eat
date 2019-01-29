@@ -37,21 +37,5 @@
 
 {% block js %}
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
-    <script>
-        $(function () {
-            $('#table_id').DataTable({
-                'language': {
-                    "lengthMenu": "Afficher _MENU_ éléments par page",
-                    "search": "Recherche: ",
-                    "info": "Affichage de _START_ à _END_ sur un total de _TOTAL_ éléments",
-                    "paginate": {
-                        "first":      "Première",
-                        "last":       "Dernière",
-                        "next":       "Suivant",
-                        "previous":   "Précédent"
-                    }
-                }
-            })
-        })
-    </script>
+    <script type="text/javascript" src="{{ asset('js/dataTable-Init.js') }}"></script>
 {% endblock %}
