@@ -68,7 +68,13 @@
                     </div>
                 </div>
             </div>
-            <div class="col-4"></div>
+            <div class="col-4">
+                <div class="container-fluid">
+                    <div class="row"><img src="{{ asset('img/project/') ~ project.img1 }}"></div>
+                    <div class="row"><img src="{{ asset('img/project/') ~ project.img2 }}"></div>
+                    <div class="row"><img src="{{ asset('img/project/') ~ project.img3 }}"></div>
+                </div>
+            </div>
         </div>
     </div>
 {% endblock %}
