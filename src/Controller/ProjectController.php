@@ -146,7 +146,6 @@ class ProjectController extends Controller
             }
         }
 
-
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 
