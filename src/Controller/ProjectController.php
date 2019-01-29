@@ -6,6 +6,7 @@ use App\Entity\Project;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -99,17 +100,41 @@ class ProjectController extends Controller
 
     /**
      * @param Project $project
+     * @param ObjectManager $manager
+     * @param $img
+     * @param Filesystem $filesystem
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @Route("/admin/project/image/delete/{id}/{img}", name="project_image_delete")
+     * @ParamConverter("project", options={"exclude": {"manager", "filesystem"}})
+     */
+    public function deleteImage(Project $project, ObjectManager $manager, $id, $img, Filesystem $filesystem)
+    {
+        $setImg = 'set'.$img;
+        $getImg = 'get'.$img;
+        $filesystem->remove($this->getParameter('project_images_directory').'/'.$project->$getImg());
+        $project->$setImg(null);
+        $manager->persist($project);
+        $manager->flush();
+
+        return $this->redirectToRoute('project_update', [
+            'id' => $id
+        ]);
+    }
+
+    /**
+     * @param Project $project
      * @param Request $request
      * @param ObjectManager $manager
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/admin/project/update/{id}", name="project_update")
-     * @ParamConverter("project", options={"exclude": {"request","manager"}})
+     * @ParamConverter("project", options={"exclude": {"request","manager", "session"}})
      */
     public function updateProject(Project $project, Request $request, ObjectManager $manager, Session $session)
     {
 
         for($i = 1; $i <= 3; $i++)
         {
+            $session->remove('fileName'.$i);
             $getImg = 'getImg'.$i;
             $setImg = 'setImg'.$i;
             $fileName = $project->$getImg();
@@ -127,22 +152,23 @@ class ProjectController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            for($i = 1; $i <= 3; $i++)
+            for($j = 1; $j <= 3; $j++)
             {
-                $getImg = 'getImg'.$i;
-                $setImg = 'setImg'.$i;
+                $getImg = 'getImg'.$j;
+                $setImg = 'setImg'.$j;
                 $file = $project->$getImg();
                 if(!is_null($file))
                 {
+                    //TODO Supprimer l'ancienne image
                     $fileName = md5(uniqid()).'.'.$file->guessExtension();
                     $file->move(
                         $this->getParameter('project_images_directory'),
                         $fileName);
                     $project->$setImg($fileName);
                 }
-                else
+                else if ($session->get('fileName'.$j))
                 {
-                    $project->$setImg($session->get('fileName'.$i));
+                    $project->$setImg($session->get('fileName'.$j));
                 }
             }
             $manager->persist($project);

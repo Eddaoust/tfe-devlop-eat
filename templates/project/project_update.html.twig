@@ -33,7 +33,7 @@
                     <img src="{{ project.img1 ? asset('img/project/' ~ project.img1.fileName) : asset('img/project/default.png') }}" class="img-fluid">
                 </div>
             </div>
-            <div class="row"><input type="button" class="btn btn-danger" value="Supprimer l'image"></div>
+            <div class="row"><a href="{{ path('project_image_delete', {id: project.id, img: 'img1'}) }}" class="btn btn-danger">Supprimer l'image</a></div>
             <div class="row">{{ form_row(form.img1) }}</div>
         </div>
         <div class="col-4">
@@ -42,7 +42,7 @@
                     <img src="{{ project.img2 ? asset('img/project/' ~ project.img2.fileName) : asset('img/project/default.png') }}" class="img-fluid">
                 </div>
             </div>
-            <div class="row"><input type="button" class="btn btn-danger" value="Supprimer l'image"></div>
+            <div class="row"><a href="{{ path('project_image_delete', {id: project.id, img: 'img2'}) }}" class="btn btn-danger">Supprimer l'image</a></div>
             <div class="row">{{ form_row(form.img2) }}</div>
         </div>
         <div class="col-4">
@@ -51,7 +51,7 @@
                     <img src="{{ project.img3 ? asset('img/project/' ~ project.img3.fileName) : asset('img/project/default.png') }}" class="img-fluid">
                 </div>
             </div>
-            <div class="row"><input type="button" class="btn btn-danger" value="Supprimer l'image"></div>
+            <div class="row"><a href="{{ path('project_image_delete', {id: project.id, img: 'img3'}) }}" class="btn btn-danger">Supprimer l'image</a></div>
             <div class="row">{{ form_row(form.img3) }}</div>
         </div>
     </div>
