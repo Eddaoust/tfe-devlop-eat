@@ -9,6 +9,7 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
@@ -43,24 +44,20 @@ class ProjectController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $file = $project->getImg1();
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
-            $file->move(
-                $this->getParameter('project_images_directory'),
-                $fileName
-            );
-            $project->setImg1($fileName);
-            /*
             for($i = 1; $i <= 3; $i++)
             {
-                $file = $form['img'.$i]->getData();
+                $getImg = 'getImg'.$i;
+                $file = $project->$getImg();
                 if(!is_null($file))
                 {
-                    $file->move('img/project', $file->getClientOriginalName());
+                    $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                    $file->move(
+                        $this->getParameter('project_images_directory'),
+                        $fileName);
                     $setImg = 'setImg'.$i;
-                    $project->$setImg($file->getClientOriginalName());
+                    $project->$setImg($fileName);
                 }
-            }*/
+            }
             $project->setCreated(new \DateTime('now'));
             $manager->persist($project);
             $manager->flush();
@@ -108,14 +105,46 @@ class ProjectController extends Controller
      * @Route("/admin/project/update/{id}", name="project_update")
      * @ParamConverter("project", options={"exclude": {"request","manager"}})
      */
-    public function updateProject(Project $project, Request $request, ObjectManager $manager)
+    public function updateProject(Project $project, Request $request, ObjectManager $manager, Session $session)
     {
-        $project->setImg1(new File($this->getParameter('project_images_directory').'/'.$project->getImg1()));
+
+        for($i = 1; $i <= 3; $i++)
+        {
+            $getImg = 'getImg'.$i;
+            $setImg = 'setImg'.$i;
+            $fileName = $project->$getImg();
+            if (!is_null($fileName))
+            {
+                $file = new File($this->getParameter('project_images_directory').'/'.$project->$getImg());
+                $project->$setImg($file);
+                $session->set('fileName'.$i, $fileName);
+            }
+        }
+
+
         $form = $this->createForm(ProjectType::class, $project);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            for($i = 1; $i <= 3; $i++)
+            {
+                $getImg = 'getImg'.$i;
+                $setImg = 'setImg'.$i;
+                $file = $project->$getImg();
+                if(!is_null($file))
+                {
+                    $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                    $file->move(
+                        $this->getParameter('project_images_directory'),
+                        $fileName);
+                    $project->$setImg($fileName);
+                }
+                else
+                {
+                    $project->$setImg($session->get('fileName'.$i));
+                }
+            }
             $manager->persist($project);
             $manager->flush();
 
@@ -126,6 +155,7 @@ class ProjectController extends Controller
 
         return $this->render('project/project_update.html.twig', [
             'form' => $form->createView(),
+            'project' => $project
         ]);
     }
 

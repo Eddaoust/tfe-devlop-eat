@@ -73,15 +73,15 @@ class ProjectType extends AbstractType
             ])
             ->add('img1', FileType::class, [
                 'label' => 'Image 1 du projet',
-                'required' => false
+                'required' => false,
             ])
             ->add('img2', FileType::class, [
                 'label' => 'Image 2 du projet',
-                'required' => false
+                'required' => false,
             ])
             ->add('img3', FileType::class, [
                 'label' => 'Image 3 du projet',
-                'required' => false
+                'required' => false,
             ])
             ->add('Ajouter', SubmitType::class, [
                 'label' => 'Envoyer',
@@ -90,18 +90,6 @@ class ProjectType extends AbstractType
                 ]
             ])
         ;
-
-        $builder->get('img1')
-                ->addModelTransformer(new CallbackTransformer(
-                    function($img1)
-                    {
-                        return null;
-                    },
-                    function($img1)
-                    {
-                        return $img1;
-                    }
-                ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
