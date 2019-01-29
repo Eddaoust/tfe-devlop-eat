@@ -136,6 +136,14 @@ class Project
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\File(mimeTypes={ "image/png", "image/jpeg" })
+     * @Assert\Image(
+     *     maxSize = "2048k",
+     *     maxSizeMessage = "L'image est trop lourde ({{ size }} {{ suffix }}). Le poid maximum est de {{ limit }} {{ suffix }}.",
+     *     minRatio = 0.5,
+     *     maxRatio = 2,
+     *     minRatioMessage = "Le ratio de l'image est trop petit({{ ratio }}). Le ratio minimum accepté est: {{ min_ratio }}",
+     *     maxRatioMessage = "Le ratio de l'image est trop grand({{ ratio }}). Le ratio maximum accepté est: {{ max_ratio }}"
+     * )
      */
     private $img1;
 
