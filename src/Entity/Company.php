@@ -134,7 +134,6 @@ class Company
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Project", mappedBy="projectOwner")
-     * @Assert\Valid()
      */
     private $projects;
 

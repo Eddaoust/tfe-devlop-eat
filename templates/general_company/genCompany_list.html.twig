@@ -29,8 +29,35 @@
                 <th>{{ genCompany.phone }}</th>
                 <th>{{ genCompany.email }}</th>
                 <th class="text-center"><a href="{{ path('genCompany_update', {id: genCompany.id}) }}"><i class="fas fa-pen"></i></a></th>
-                <th class="text-center"><a href="{{ path('genCompany_delete', {id: genCompany.id}) }}" class="item-delete" id="{{ genCompany.id }}" data-toggle="tooltip"><i class="fas fa-trash-alt"></i></a></th>
+                <th class="text-center">
+                    <span data-toggle="modal" data-target="#genCompany-{{ genCompany.id }}">
+                        <a href="#" class="item-delete" id="{{ genCompany.id }}" data-toggle="tooltip">
+                            <i class="fas fa-trash-alt"></i>
+                        </a>
+                    </span>
+                </th>
             </tr>
+
+            <!-- Modal -->
+            <div class="modal fade" id="genCompany-{{ genCompany.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Suppression de l'entreprise générale {{ genCompany.name }}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            Valider la suppression de l'entreprise générale {{ genCompany.name }}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                            <a class="btn btn-danger" href="{{ path('genCompany_delete', {id: genCompany.id}) }}">Supprimer</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
         </tbody>
     </table>

@@ -11,6 +11,7 @@ $(function() {
             console.log(deleteBtn)
             const inactiveLine = $.grep(datas, function(obj){return obj.id == deleteBtn.id;});
             if(inactiveLine.length > 0){
+                deleteBtn.parentNode.setAttribute('data-toggle', '')
                 deleteBtn.href = 'javascript:void(0)'
                 deleteBtn.classList = 'company-delete text-secondary'
                 deleteBtn.style.cursor = 'not-allowed'

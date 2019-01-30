@@ -7,5 +7,12 @@
                 <h1 class="display-6">Gestion des sociétés</h1>
                 <p class="lead">Vous avez <strong class="text-success">{{ companiesCounter.getCompaniesCount() }}</strong> sociétés enregistrés sur la plateforme.</p>
             </div>
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }}" role="alert">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
             {% block company_body %}{% endblock %}
 {% endblock %}

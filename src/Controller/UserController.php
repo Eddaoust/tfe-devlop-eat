@@ -60,6 +60,7 @@ class UserController extends Controller
             $manager->persist($user);
             $manager->flush();
 
+            $this->addFlash('success', 'Informations de l\'utilisateur mise à jour');
             return $this->redirectToRoute('user_list');
         }
         return $this->render('user/user_update.html.twig', [
@@ -77,6 +78,7 @@ class UserController extends Controller
         $manager->remove($user);
         $manager->flush();
 
+        $this->addFlash('success', 'Utilisateur supprimé');
         return $this->redirectToRoute('user_list');
     }
 
@@ -132,6 +134,7 @@ class UserController extends Controller
                 );
 
             $mailer->send($message);
+            $this->addFlash('success', 'Invitation envoyé à l\'utilisateur');
             return $this->redirectToRoute('user_list');
         }
 
@@ -190,7 +193,7 @@ class UserController extends Controller
                 $manager->remove($user);
                 $manager->remove($invitation);
                 $manager->flush();
-
+                $this->addFlash('danger', 'Votre invitation n\'est plus valide');
                 return $this->redirectToRoute('login');
             }
         }

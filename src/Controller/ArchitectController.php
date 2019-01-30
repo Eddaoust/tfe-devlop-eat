@@ -50,6 +50,7 @@ class ArchitectController extends Controller
             $manager->persist($architect);
             $manager->flush();
 
+            $this->addFlash('success', 'Architecte ajouté avec succès');
             return $this->redirectToRoute('architect_list');
         }
 
@@ -82,6 +83,7 @@ class ArchitectController extends Controller
         $manager->remove($architect);
         $manager->flush();
 
+        $this->addFlash('success', 'Architecte supprimé avec succès');
         return $this->redirectToRoute('architect_list');
     }
 
@@ -103,6 +105,7 @@ class ArchitectController extends Controller
             $manager->persist($architect);
             $manager->flush();
 
+            $this->addFlash('success', 'Architecte modifié avec succès');
             return $this->render('architect/architect_one.html.twig', [
                 'architect' => $architect
             ]);

@@ -56,6 +56,7 @@ class CompanyController extends Controller
                 $manager->persist($shareholder);
             }
 
+            $this->addFlash('success', 'Société ajouté avec succès');
             $manager->persist($company);
             $manager->flush();
 
@@ -95,6 +96,7 @@ class CompanyController extends Controller
         $manager->remove($company);
         $manager->flush();
 
+        $this->addFlash('success', 'Société supprimé avec succès');
         return $this->redirectToRoute('company_list');
     }
 
@@ -129,6 +131,7 @@ class CompanyController extends Controller
             $manager->persist($company);
             $manager->flush();
 
+            $this->addFlash('success', 'Société modifié avec succès');
             return $this->render('company/company_one.html.twig', [
                 'company' => $company
             ]);

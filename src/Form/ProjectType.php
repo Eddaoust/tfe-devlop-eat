@@ -73,15 +73,15 @@ class ProjectType extends AbstractType
             ])
             ->add('img1', FileType::class, [
                 'label' => 'Image 1 du projet',
-                'required' => false,
+                'required' => false
             ])
             ->add('img2', FileType::class, [
                 'label' => 'Image 2 du projet',
-                'required' => false,
+                'required' => false
             ])
             ->add('img3', FileType::class, [
                 'label' => 'Image 3 du projet',
-                'required' => false,
+                'required' => false
             ])
             ->add('Ajouter', SubmitType::class, [
                 'label' => 'Envoyer',

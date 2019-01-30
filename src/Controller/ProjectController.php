@@ -63,6 +63,7 @@ class ProjectController extends Controller
             $manager->persist($project);
             $manager->flush();
 
+            $this->addFlash('success', 'Projet ajouté avec succès');
             return $this->redirectToRoute('project_list');
         }
 
@@ -95,6 +96,7 @@ class ProjectController extends Controller
         $manager->remove($project);
         $manager->flush();
 
+        $this->addFlash('success', 'Projet supprimé avec succès');
         return $this->redirectToRoute('project_list');
     }
 
@@ -116,6 +118,7 @@ class ProjectController extends Controller
         $manager->persist($project);
         $manager->flush();
 
+        $this->addFlash('success', 'Image supprimé avec succès');
         return $this->redirectToRoute('project_update', [
             'id' => $id
         ]);
@@ -173,6 +176,7 @@ class ProjectController extends Controller
             $manager->persist($project);
             $manager->flush();
 
+            $this->addFlash('success', 'Projet modifié avec succès');
             return $this->render('project/project_one.html.twig', [
                 'project' => $project
             ]);

@@ -7,5 +7,12 @@
             <h1 class="display-6">Gestion des entreprises générales</h1>
             <p class="lead">Vous avez <strong class="text-success">{{ genCompaniesCounter.getGenCompaniesCount() }}</strong> entreprises générales enregistrés sur la plateforme.</p>
         </div>
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endfor %}
         {% block genCompany_body %}{% endblock %}
 {% endblock %}

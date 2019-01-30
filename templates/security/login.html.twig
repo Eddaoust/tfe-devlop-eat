@@ -16,6 +16,13 @@
                         Connexion
                     </div>
                     <div class="card-body">
+                        {% for label, messages in app.flashes %}
+                            {% for message in messages %}
+                                <div class="alert alert-{{ label }}" role="alert">
+                                    {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
                         {% if hasError %}
                             <div class="alert alert-danger mt-5">Email ou mot de passe invalide, veuillez recommencer</div>
                         {% endif %}

@@ -50,6 +50,7 @@ class GeneralCompanyController extends Controller
             $manager->persist($genCompany);
             $manager->flush();
 
+            $this->addFlash('success', 'Entreprise générale ajouté avec succès');
             return $this->redirectToRoute('genCompany_list');
         }
 
@@ -82,6 +83,7 @@ class GeneralCompanyController extends Controller
         $manager->remove($genCompany);
         $manager->flush();
 
+        $this->addFlash('success', 'Entreprise générale supprimé avec succès');
         return $this->redirectToRoute('genCompany_list');
     }
 
@@ -103,6 +105,7 @@ class GeneralCompanyController extends Controller
             $manager->persist($genCompany);
             $manager->flush();
 
+            $this->addFlash('success', 'Entreprise générale modifié avec succès');
             return $this->render('general_company/genCompany_one.html.twig', [
                 'genCompany' => $genCompany
             ]);
