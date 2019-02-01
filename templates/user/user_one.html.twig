@@ -18,7 +18,12 @@
                     <p class="text-black-50">Date de naissance</p>
                 {% endif %}
                 <p>{{ user.email }}</p>
-                <br><hr>
+                {% if user.roles[0] == 'ROLE_ADMIN' %}
+                    <p>Administrateur</p>
+                {% elseif user.roles[0] == 'ROLE_USER' %}
+                    <p>Utilisateur</p>
+                {% endif %}
+                <hr>
             </div>
             <div class="col-4"><img src="{{ app.user.img ? asset('img/user-profil/') ~ app.user.img : asset('img/user-profil/default.png') }}" style="height: 150px;width: 150px;border-radius: 90px;background-color: white; border: solid 1px #5E9D4D;"></div>
         </div>

@@ -35,7 +35,7 @@ class CompanyType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', TextType::class, $this->getConfiguration('Nom', true, 'Entrez le nom de la société'))
+            ->add('name', TextType::class, $this->getConfiguration('Nom *', true, 'Entrez le nom de la société'))
             ->add('country', EntityType::class, [
                 'label' => 'Pays',
                 'class' => Country::class,

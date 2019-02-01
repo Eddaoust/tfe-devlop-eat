@@ -1,15 +1,58 @@
 {% extends 'company/company-template.html.twig' %}
 
 {% block company_body %}
-    <h1><span class="text-success">Nom du projet: </span>{{ company.name }} {{ company.companyCategory.abbreviation }}</h1><br>
-    <h3><span class="text-success">Pays: </span>{{ company.country.name }}</h3><br>
-    <p><span class="text-success">Localisation: </span>{{ company.address }}, {{ company.postalCode }} {{ company.city }}</p>
-    <p><span class="text-success">Phone: </span>{{ company.phone }}</p>
-    <p><span class="text-success">TVA: </span>{{ company.tvaNum }}</p>
-    <p><span class="text-success">Banque: </span>{{ company.bank }}</p><br>
-
-    <h3 class="text-success">Actionnaires: </h3>
-    {% for shareholder in company.shareholders %}
-        <p><span class="text-success">{{ shareholder.shareholder.name }}: </span>{{ shareholder.part }}%</p>
-    {% endfor %}
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-6"><h2>{{ company.name }} <strong>{{ company.companyCategory.abbreviation }}</strong></h2></div>
+            <div class="col-6"><h3>{{ company.country.name }}</h3></div>
+        </div>
+        <hr>
+        {% if company.address %}
+            <div class="row mt-5">
+                <div class="col-3"><h6 class="text-success">Siège social: </h6></div>
+                <div class="col-9"><h6>{{ company.address }}, {{ company.postalCode }} {{ company.city }}</h6></div>
+            </div>
+        {% endif %}
+        {% if company.phone %}
+            <div class="row">
+                <div class="col-3"><h6 class="text-success">Téléphone: </h6></div>
+                <div class="col-9"><h6>{{ company.phone }}</h6></div>
+            </div>
+        {% endif %}
+        {% if company.tvaNum %}
+            <div class="row">
+                <div class="col-3"><h6 class="text-success">TVA: </h6></div>
+                <div class="col-9"><h6>{{ company.tvaNum }}</h6></div>
+            </div>
+        {% endif %}
+        {% if company.registrationNum %}
+            <div class="row">
+                <div class="col-3"><h6 class="text-success">Numéro d'enregistrement: </h6></div>
+                <div class="col-9"><h6>{{ company.registrationNum }}</h6></div>
+            </div>
+        {% endif %}
+        <hr class="mt-5 mb-5">
+        {% if company.bank %}
+            <div class="row">
+                <div class="col-3"><h6 class="text-success">Banque: </h6></div>
+                <div class="col-9"><h6>{{ company.bank }}</h6></div>
+            </div>
+        {% endif %}
+        {% if company.bankAccount %}
+            <div class="row">
+                <div class="col-3"><h6 class="text-success">Compte banquaire: </h6></div>
+                <div class="col-9"><h6>{{ company.bankAccount }}</h6></div>
+            </div>
+        {% endif %}
+        <hr class="mt-5 mb-5">
+        {% if company.shareholders %}
+            <h3 class="text-success mb-5">Actionnaires: </h3>
+            {% for shareholder in company.shareholders %}
+                <div class="row">
+                    <div class="col-4"><h6>{{ shareholder.shareholder.name }}: </h6></div>
+                    <div class="col-8"><h6>{{ shareholder.part }}%</h6></div>
+                </div>
+            {% endfor %}
+        {% endif %}
+    </div>
 {% endblock %}

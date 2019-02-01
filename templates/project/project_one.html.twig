@@ -70,9 +70,9 @@
             </div>
             <div class="col-4">
                 <div class="container-fluid">
-                    <div class="row"><img src="{{ asset('img/project/') ~ project.img1 }}"></div>
-                    <div class="row"><img src="{{ asset('img/project/') ~ project.img2 }}"></div>
-                    <div class="row"><img src="{{ asset('img/project/') ~ project.img3 }}"></div>
+                    <div class="row"><img src="{{ project.img1 ? asset('img/project/') ~ project.img1 : asset('img/project/default.png') }}"></div>
+                    <div class="row"><img src="{{ project.img2 ? asset('img/project/') ~ project.img2 : asset('img/project/default.png') }}"></div>
+                    <div class="row"><img src="{{ project.img3 ? asset('img/project/') ~ project.img3 : asset('img/project/default.png') }}"></div>
                 </div>
             </div>
         </div>

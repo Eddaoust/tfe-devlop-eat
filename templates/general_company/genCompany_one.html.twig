@@ -1,6 +1,23 @@
 {% extends 'general_company/genCompany-template.html.twig' %}
 
 {% block genCompany_body %}
-    <h1><span class="text-success">Nom de l'entreprise: </span>{{ genCompany.name }}</h1><br>
-
+    <div class="container">
+        <div class="row mb-5">
+            <div class="col-6"><h2>{{ genCompany.name }}</h2></div>
+            <div class="col-6"><h3>{{ genCompany.email }}</h3></div>
+        </div>
+        <hr class="mb-5">
+        {% if genCompany.address %}
+            <div class="row">
+                <div class="col-3"><h6 class="text-success">Siège social: </h6></div>
+                <div class="col-9"><h6>{{ genCompany.address }}, {{ genCompany.postalCode }} {{ genCompany.city }}</h6></div>
+            </div>
+        {% endif %}
+        {% if genCompany.phone %}
+            <div class="row">
+                <div class="col-3"><h6 class="text-success">Téléphone: </h6></div>
+                <div class="col-9"><h6>{{ genCompany.phone }}</h6></div>
+            </div>
+        {% endif %}
+    </div>
 {% endblock %}
