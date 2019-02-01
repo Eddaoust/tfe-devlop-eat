@@ -1,0 +1,27 @@
+{% extends 'user/user-template.html.twig' %}
+
+{% block title %}Utilisateurs{% endblock %}
+
+{% block user_body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                {% if user.lastName %}
+                    <h2>{{ user.firstName }} <strong>{{ user.lastName }}</strong></h2>
+                {% else %}
+                    <h2><strong class="text-black-50">Nom</strong></h2>
+                {% endif %}
+                <hr>
+                {% if user.birthdate %}
+                    <p>Né le: {{ user.birthdate | date('d/m/Y') }}</p>
+                {% else %}
+                    <p class="text-black-50">Date de naissance</p>
+                {% endif %}
+                <p>{{ user.email }}</p>
+                <br><hr>
+            </div>
+            <div class="col-4"><img src="{{ app.user.img ? asset('img/user-profil/') ~ app.user.img : asset('img/user-profil/default.png') }}" style="height: 150px;width: 150px;border-radius: 90px;background-color: white; border: solid 1px #5E9D4D;"></div>
+        </div>
+        <div class="row"><div class="col-12"><p>Compte créé le: {{ user.created | date('d/m/Y') }}</p></div></div>
+    </div>
+{% endblock %}

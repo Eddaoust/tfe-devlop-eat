@@ -36,6 +36,18 @@ class UserController extends Controller
 
     /**
      * @param User $user
+     * @return Response
+     * @Route("/admin/user/{id}", name="user_one")
+     */
+    public function oneUser(User $user)
+    {
+        return $this->render('user/user_one.html.twig', [
+            'user' => $user
+        ]);
+    }
+
+    /**
+     * @param User $user
      * @param Request $request
      * @param ObjectManager $manager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
@@ -78,7 +90,7 @@ class UserController extends Controller
         $manager->remove($user);
         $manager->flush();
 
-        $this->addFlash('success', 'Utilisateur supprimé');
+        $this->addFlash('success', 'Utilisateur supprimé avec succès');
         return $this->redirectToRoute('user_list');
     }
 
@@ -180,6 +192,7 @@ class UserController extends Controller
                     $manager->persist($user);
                     $manager->flush();
 
+                    $this->addFlash('success', 'Votre password a été modifié avec succès');
                     return $this->redirectToRoute('login');
                 }
 

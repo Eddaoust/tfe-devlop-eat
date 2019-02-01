@@ -17,11 +17,11 @@ class GeneralCompanyType extends AbstractType
      * @param $placeholder
      * @return array
      */
-    private function getConfiguration($label, $placeholder)
+    private function getConfiguration($label, $required, $placeholder)
     {
         return [
             'label' => $label,
-            'required' => true,
+            'required' => $required,
             'attr' => [
                 'placeholder' => $placeholder
             ]

@@ -1,0 +1,94 @@
+<?php
+
+namespace App\Controller;
+
+use App\Form\PasswordResetType;
+use App\Form\UserUpdateType;
+use Doctrine\Common\Persistence\ObjectManager;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+
+/**
+ * Class AccountController
+ * @package App\Controller
+ * @IsGranted("ROLE_USER")
+ */
+class AccountController extends Controller
+{
+    /**
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/log/account", name="account_one")
+     */
+    public function account()
+    {
+        $user = $this->getUser();
+
+        return $this->render('account/account.html.twig', [
+            'user' => $user
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @Route("/log/account/edit", name="account_update")
+     */
+    public function editAccount(Request $request, ObjectManager $manager)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(UserUpdateType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $file = $form['img']->getData();
+            //TODO Problème lors de l'encodage d'ume image trop grosse
+            //TODO remplir le champs file
+            if (!is_null($file)) {
+                $file->move('img/user-profil', $file->getClientOriginalName());
+                $user->setImg($file->getClientOriginalName());
+            }
+
+            $manager->persist($user);
+            $manager->flush();
+
+            $this->addFlash('success', 'Les informations de votre compte ont été modifié avec succès');
+            return $this->redirectToRoute('account_one');
+        }
+
+        return $this->render('user/user_update.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @param UserPasswordEncoderInterface $encoder
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @Route("/log/account/password", name="account_password")
+     */
+    public function editPassword(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(PasswordResetType::class, $user);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+            $manager->persist($user);
+            $manager->flush();
+
+            $this->addFlash('success', 'Votre password a été modifié avec succès');
+            return $this->redirectToRoute('account_one');
+        }
+
+        return $this->render('user/user_password.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+}
