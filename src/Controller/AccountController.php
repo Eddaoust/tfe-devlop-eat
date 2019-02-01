@@ -46,7 +46,6 @@ class AccountController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $file = $form['img']->getData();
             //TODO Problème lors de l'encodage d'ume image trop grosse
-            //TODO remplir le champs file
             if (!is_null($file)) {
                 $file->move('img/user-profil', $file->getClientOriginalName());
                 $user->setImg($file->getClientOriginalName());

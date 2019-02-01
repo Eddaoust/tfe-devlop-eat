@@ -25,7 +25,7 @@
                 {% endif %}
                 <hr>
             </div>
-            <div class="col-4"><img src="{{ app.user.img ? asset('img/user-profil/') ~ app.user.img : asset('img/user-profil/default.png') }}" style="height: 150px;width: 150px;border-radius: 90px;background-color: white; border: solid 1px #5E9D4D;"></div>
+            <div class="col-4"><img src="{{ user.img ? asset('img/user-profil/') ~ user.img : asset('img/user-profil/default.png') }}" style="height: 150px;width: 150px;border-radius: 90px;background-color: white; border: solid 1px #5E9D4D;"></div>
         </div>
         <div class="row"><div class="col-12"><p>Compte créé le: {{ user.created | date('d/m/Y') }}</p></div></div>
     </div>

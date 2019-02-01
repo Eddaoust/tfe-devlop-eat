@@ -11,6 +11,7 @@ use App\Repository\InvitationRepository;
 use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -68,7 +69,6 @@ class UserController extends Controller
                 $file->move('img/user-profil', $file->getClientOriginalName());
                 $user->setImg($file->getClientOriginalName());
             }
-
             $manager->persist($user);
             $manager->flush();
 
@@ -85,8 +85,9 @@ class UserController extends Controller
      * @Route("/admin/user/delete/{id}", name="user_delete")
      * @ParamConverter("user", options={"exclude": {"manager"}})
      */
-    public function deleteUser(User $user, ObjectManager $manager)
+    public function deleteUser(User $user, ObjectManager $manager, Filesystem $filesystem)
     {
+        $filesystem->remove($this->getParameter('user_images_directory').'/'.$user->getImg());
         $manager->remove($user);
         $manager->flush();
 
@@ -114,8 +115,11 @@ class UserController extends Controller
             $file = $form['img']->getData();
             if (!is_null($file))
             {
-                $file->move('img/user-profil', $file->getClientOriginalName());
-                $user->setImg($file->getClientOriginalName());
+                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $file->move(
+                    $this->getParameter('user_images_directory'),
+                    $fileName);
+                $user->setImg($fileName);
             }
 
             $generator = new UriSafeTokenGenerator(256);
@@ -135,7 +139,7 @@ class UserController extends Controller
             $manager->flush();
 
             $message = (new \Swift_Message('Invitation pour Devlop Eat'))
-                ->setFrom('eddst.webdev@gmail.com')// devlopeat@eddaoust.com "Changer lors Push en ligne"
+                ->setFrom('devlopeat@eddaoust.com')// devlopeat@eddaoust.com "Changer lors Push en ligne"
                 ->setTo($user->getEmail())
                 ->setBody(
                     $this->renderView('user/user_add_link.html.twig', [
