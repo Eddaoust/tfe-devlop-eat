@@ -85,17 +85,10 @@ class User implements UserInterface
     private $created;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     * @Assert\Image(
-     *     maxSize = "1024k",
-     *     maxSizeMessage = "L'image est trop lourde ({{ size }} {{ suffix }}). Le poid maximum est de {{ limit }} {{ suffix }}.",
-     *     minRatio = 0.5,
-     *     maxRatio = 1.5,
-     *     minRatioMessage = "Le ratio (largeur/hauteur) est trop petit ({ratio}). Le ratio minimum est de {min_ratio}",
-     *     maxRatioMessage = "Le ratio (largeur/hauteur) est trop grand ({ratio}). Le ratio maximum est de {max_ratio}"
-     * )
+     * @ORM\JoinColumn(name="profil_image_id", nullable=true)
+     * @ORM\OneToOne(targetEntity="App\Entity\ProfilImage", cascade={"persist", "remove"})
      */
-    private $img;
+    private $image;
 
     public function getId(): ?int
     {
@@ -239,15 +232,20 @@ class User implements UserInterface
         return $this;
     }
 
-    public function getImg()
+    /**
+     * @return mixed
+     */
+    public function getImage()
     {
-        return $this->img;
+        return $this->image;
     }
 
-    public function setImg($img)
+    /**
+     * @param mixed $image
+     */
+    public function setImage($image)
     {
-        $this->img = $img;
-
-        return $this;
+        $this->image = $image;
     }
+
 }

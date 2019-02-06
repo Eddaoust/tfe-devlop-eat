@@ -12,7 +12,6 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -22,6 +21,75 @@ use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
 
 class UserController extends Controller
 {
+    /**
+     * @param \Swift_Mailer $mailer
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @param UserPasswordEncoderInterface $encoder
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Exception
+     * @Route("/admin/user/add", name="user_add")
+     */
+    public function addUser(\Swift_Mailer $mailer, Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
+    {
+        $form = $this->createForm(UserAddType::class);
+        $form->handleRequest($request);
+
+        if($form->isSubmitted() && $form->isValid())
+        {
+            // Récupération de l'user dans le form
+            $user = $form->getData();
+            // Récupération de l'image
+            $image = $user->getImage();
+            // Récupération du fichier
+            $file = $image->getFile();
+            // Transformation du nom du fichier
+            $fileName = md5(uniqid()).'.'.$file->guessExtension();
+            // Déplacement vers le répertoire cible
+            $file->move(
+                $this->getParameter('user_images_directory'),
+                $fileName);
+            // Persist du nom
+            $image->setName($fileName);
+            // Création du Token
+            $generator = new UriSafeTokenGenerator(256);
+            $token = $generator->generateToken();
+            // Mise en place d'un faux pw
+            $user->setPassword($encoder->encodePassword($user, $token.'fakePassword'))
+                ->setRoles(['ROLE_USER'])
+                ->setCreated(new \DateTime('now'));
+            // Création d'une invitation
+            $invitation = new Invitation();
+            $invitation->setUser($user);
+            $invitation->setToken($token);
+            $invitation->setSendDate(new \DateTime('now'));
+
+            $manager->persist($user);
+            $manager->persist($invitation);
+            $manager->flush();
+            // Envoi du mail d'invitation
+            $message = (new \Swift_Message('Invitation pour Devlop Eat'))
+                ->setFrom('eddst.webdev@gmail.com')// devlopeat@eddaoust.com "Changer lors Push en ligne"
+                ->setTo($user->getEmail())
+                ->setBody(
+                    $this->renderView('user/user_add_link.html.twig', [
+                        'token' => $token,
+                        'id' => $user->getId()
+                    ]),
+                    'text/html'
+                );
+
+            $mailer->send($message);
+            $this->addFlash('success', 'Invitation envoyé à l\'utilisateur');
+            return $this->redirectToRoute('user_list');
+        }
+
+        return $this->render('user/user_add.html.twig', [
+            'form' => $form->createView()
+        ]);
+
+    }
+
     /**
      * @param UserRepository $repository
      * @return \Symfony\Component\HttpFoundation\Response
@@ -58,25 +126,29 @@ class UserController extends Controller
      */
     public function updateUser(User $user, Request $request, ObjectManager $manager)
     {
-        if (!is_null($user->getImg()))
-        {
-            $file = new File($this->getParameter('user_images_directory').'/'.$user->getImg());
-            $user->setImg($file);
-        }
-
         $form = $this->createForm(UserUpdateType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $file = $user->getImg();
-            if (!is_null($file))
+            $data = $form->getData();
+            $image = $data->getImage();
+            // Test de la présence d'une image envoyé via le form
+            if (!is_null($image) && !is_null($image->getFile()))
             {
+                $file = $image->getFile();
+                // Test si l'utilisateur contient déja une image
+                if (!is_null($user->getImage()->getName()))
+                {
+                    $path = $this->getParameter('user_images_directory').'/'.$user->getImage()->getName();
+                    // Suppression de l'ancienne image
+                    unlink($path);
+                }
                 $fileName = md5(uniqid()).'.'.$file->guessExtension();
                 $file->move(
                     $this->getParameter('user_images_directory'),
                     $fileName);
-                $user->setImg($fileName);
+                $image->setName($fileName);
             }
             $manager->persist($user);
             $manager->flush();
@@ -92,81 +164,21 @@ class UserController extends Controller
     /**
      * @param User $user
      * @Route("/admin/user/delete/{id}", name="user_delete")
-     * @ParamConverter("user", options={"exclude": {"manager"}})
+     * @ParamConverter("user", options={"exclude": {"manager", "filesystem"}})
      */
     public function deleteUser(User $user, ObjectManager $manager, Filesystem $filesystem)
     {
-        $filesystem->remove($this->getParameter('user_images_directory').'/'.$user->getImg());
+        if (!is_null($user->getImage()))
+        {
+            // Si image, on supprime l'ancienne
+            $path = $this->getParameter('user_images_directory').'/'.$user->getImage()->getName();
+            $filesystem->remove($path);
+        }
         $manager->remove($user);
         $manager->flush();
 
         $this->addFlash('success', 'Utilisateur supprimé avec succès');
         return $this->redirectToRoute('user_list');
-    }
-
-    /**
-     * @param \Swift_Mailer $mailer
-     * @param Request $request
-     * @param ObjectManager $manager
-     * @param UserPasswordEncoderInterface $encoder
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @throws \Exception
-     * @Route("/admin/user/add", name="user_add")
-     */
-    public function addUser(\Swift_Mailer $mailer, Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
-    {
-        $user = new User();
-        $form = $this->createForm(UserAddType::class, $user);
-        $form->handleRequest($request);
-
-        if($form->isSubmitted() && $form->isValid())
-        {
-            $file = $form['img']->getData();
-            if (!is_null($file))
-            {
-                $fileName = md5(uniqid()).'.'.$file->guessExtension();
-                $file->move(
-                    $this->getParameter('user_images_directory'),
-                    $fileName);
-                $user->setImg($fileName);
-            }
-
-            $generator = new UriSafeTokenGenerator(256);
-            $token = $generator->generateToken();
-
-            $user->setPassword($encoder->encodePassword($user, $token.'fakePassword'))
-                ->setRoles(['ROLE_USER'])
-                ->setCreated(new \DateTime('now'));
-
-            $invitation = new Invitation();
-            $invitation->setUser($user);
-            $invitation->setToken($token);
-            $invitation->setSendDate(new \DateTime('now'));
-
-            $manager->persist($user);
-            $manager->persist($invitation);
-            $manager->flush();
-
-            $message = (new \Swift_Message('Invitation pour Devlop Eat'))
-                ->setFrom('devlopeat@eddaoust.com')// devlopeat@eddaoust.com "Changer lors Push en ligne"
-                ->setTo($user->getEmail())
-                ->setBody(
-                    $this->renderView('user/user_add_link.html.twig', [
-                        'token' => $token,
-                        'id' => $user->getId()
-                    ]),
-                    'text/html'
-                );
-
-            $mailer->send($message);
-            $this->addFlash('success', 'Invitation envoyé à l\'utilisateur');
-            return $this->redirectToRoute('user_list');
-        }
-
-        return $this->render('user/user_add.html.twig', [
-            'form' => $form->createView()
-        ]);
-
     }
 
     /**
@@ -183,7 +195,9 @@ class UserController extends Controller
      */
     public function resetPassword(UserRepository $userRepo, InvitationRepository $invitRepo, Request $request,ObjectManager $manager, UserPasswordEncoderInterface $encoder ,$id, $token)
     {
+        // Sélection de l'user via l'id du mail
         $user = $userRepo->find($id);
+        // Sélection de l'invitation de l'user
         $invitation = $invitRepo->findOneBy(['user' => $id]);
         // Test de la présence d'un token
         if(!empty($invitation) && $invitation->getToken() === $token)
@@ -195,12 +209,14 @@ class UserController extends Controller
             // Si le token est valide dans le timing
             if(strtotime($dateNow) < strtotime($invitTimeOut))
             {
-                $form = $this->createForm(PasswordResetType::class, $user);
+                $form = $this->createForm(PasswordResetType::class);
                 $form->handleRequest($request);
 
                 if($form->isSubmitted() && $form->isValid())
                 {
+                    // Enregistrement du nouveau pass
                     $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+                    // Suppression de l'invitation
                     $manager->remove($invitation);
                     $manager->persist($user);
                     $manager->flush();

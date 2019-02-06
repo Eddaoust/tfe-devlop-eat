@@ -22,7 +22,7 @@
         <tbody>
         {% for user in users %}
             <tr>
-                <th class="text-center"><img src="{{ user.img ? asset('img/user-profil/') ~ user.img : asset('img/user-profil/default.png') }}" alt="user profil" width="20"></th>
+                <th class="text-center"><img src="{{ user.image ? asset('img/user-profil/') ~ user.image.name : asset('img/user-profil/default.png') }}" alt="user profil" width="20"></th>
                 <th><a href="{{ path('user_one', {id: user.id}) }}">{{ user.email }}</a></th>
                 <th>
                     {% if user.roles[0] == 'ROLE_ADMIN' %}

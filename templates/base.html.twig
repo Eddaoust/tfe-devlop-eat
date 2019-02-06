@@ -23,7 +23,7 @@
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown no-arrow mx-1">
                 <div class="profil-img">
-                    <a href="{{ path('account_one') }}"><img src="{{ app.user.img ? asset('img/user-profil/') ~ app.user.img : asset('img/user-profil/default.png') }}" style="height: 36px;width: 36px;border-radius: 90px;background-color: white; border: solid 1px #5E9D4D;"></a>
+                    <a href="{{ path('account_one') }}"><img src="{{ app.user.image ? asset('img/user-profil/') ~ app.user.image.name : asset('img/user-profil/default.png') }}" style="height: 36px;width: 36px;border-radius: 90px;background-color: white; border: solid 1px #5E9D4D;"></a>
                 </div>
             </li>
         </ul>

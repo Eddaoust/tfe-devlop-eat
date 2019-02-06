@@ -4,9 +4,13 @@ namespace App\Controller;
 
 use App\Form\PasswordResetType;
 use App\Form\UserUpdateType;
+use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -40,17 +44,31 @@ class AccountController extends Controller
     public function editAccount(Request $request, ObjectManager $manager)
     {
         $user = $this->getUser();
+
         $form = $this->createForm(UserUpdateType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $file = $form['img']->getData();
-            //TODO Problème lors de l'encodage d'ume image trop grosse
-            if (!is_null($file)) {
-                $file->move('img/user-profil', $file->getClientOriginalName());
-                $user->setImg($file->getClientOriginalName());
-            }
 
+            $data = $form->getData();
+            $image = $data->getImage();
+            // Test de la présence d'une image envoyé via le form
+            if (!is_null($image) && !is_null($image->getFile()))
+            {
+                $file = $image->getFile();
+                // Test si l'utilisateur contient déja une image
+                if (!is_null($user->getImage()->getName()))
+                {
+                    $path = $this->getParameter('user_images_directory').'/'.$user->getImage()->getName();
+                    // Suppression de l'ancienne image
+                    unlink($path);
+                }
+                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $file->move(
+                    $this->getParameter('user_images_directory'),
+                    $fileName);
+                $image->setName($fileName);
+            }
             $manager->persist($user);
             $manager->flush();
 

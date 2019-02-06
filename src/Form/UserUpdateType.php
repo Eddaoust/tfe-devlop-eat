@@ -34,10 +34,9 @@ class UserUpdateType extends AbstractType
                     'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
                 ]
             ])
-            ->add('img', FileType::class, [
+            ->add('image', ProfilImageType::class, [
                 'label' => 'Image de profil',
-                'required' => false,
-                'data_class' => null
+                'required' => false
             ])
             ->add('submit', SubmitType::class, [
                 'label' => 'Mettre à jour',
