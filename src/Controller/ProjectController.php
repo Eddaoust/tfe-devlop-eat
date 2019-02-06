@@ -132,7 +132,7 @@ class ProjectController extends Controller
      * @Route("/admin/project/update/{id}", name="project_update")
      * @ParamConverter("project", options={"exclude": {"request","manager", "session"}})
      */
-    public function updateProject(Project $project, Request $request, ObjectManager $manager, Session $session)
+    public function updateProject(Project $project, Request $request, ObjectManager $manager, Session $session, Filesystem $filesystem)
     {
 
         for($i = 1; $i <= 3; $i++)
@@ -159,9 +159,10 @@ class ProjectController extends Controller
                 $getImg = 'getImg'.$j;
                 $setImg = 'setImg'.$j;
                 $file = $project->$getImg();
+
                 if(!is_null($file))
                 {
-                    //TODO Supprimer l'ancienne image
+                    $filesystem->remove($this->getParameter('project_images_directory').'/'.$session->get('fileName'.$j));
                     $fileName = md5(uniqid()).'.'.$file->guessExtension();
                     $file->move(
                         $this->getParameter('project_images_directory'),

@@ -12,6 +12,7 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -57,17 +58,25 @@ class UserController extends Controller
      */
     public function updateUser(User $user, Request $request, ObjectManager $manager)
     {
+        if (!is_null($user->getImg()))
+        {
+            $file = new File($this->getParameter('user_images_directory').'/'.$user->getImg());
+            $user->setImg($file);
+        }
+
         $form = $this->createForm(UserUpdateType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            $file = $form['img']->getData();
-            //TODO Problème lors de l'encodage d'ume image trop grosse
+            $file = $user->getImg();
             if (!is_null($file))
             {
-                $file->move('img/user-profil', $file->getClientOriginalName());
-                $user->setImg($file->getClientOriginalName());
+                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $file->move(
+                    $this->getParameter('user_images_directory'),
+                    $fileName);
+                $user->setImg($fileName);
             }
             $manager->persist($user);
             $manager->flush();
