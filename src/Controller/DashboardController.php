@@ -12,6 +12,6 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        return $this->render('dashboard/dashboard.html.twig');
+        return $this->render('dashboard/dash-chart.html.twig');
     }
 }

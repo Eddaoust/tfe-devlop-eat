@@ -84,6 +84,26 @@ class ProjectRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    /**
+     * @return mixed
+     */
+    public function getProjectByYear()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT COUNT(p.id) as projectCount, YEAR(p.created) as year
+            FROM project p
+            GROUP BY YEAR(p.created)
+            ORDER BY YEAR(p.created) ASC
+        ';
+
+        $doctrine = $conn->prepare($sql);
+        $doctrine->execute();
+
+        return $doctrine->fetchAll();
+    }
     // /**
     //  * @return Project[] Returns an array of Project objects
     //  */
