@@ -104,6 +104,27 @@ class ProjectRepository extends ServiceEntityRepository
 
         return $doctrine->fetchAll();
     }
+
+    /**
+     * @return mixed[]
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function getProjectTurnover()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT p.name, p.turnover, p.created
+            FROM project p
+            ORDER BY p.created DESC
+            LIMIT 15
+        ';
+
+        $doctrine = $conn->prepare($sql);
+        $doctrine->execute();
+
+        return $doctrine->fetchAll();
+    }
     // /**
     //  * @return Project[] Returns an array of Project objects
     //  */

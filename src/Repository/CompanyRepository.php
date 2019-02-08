@@ -32,6 +32,27 @@ class CompanyRepository extends ServiceEntityRepository
             ->getSingleScalarResult();
     }
 
+    /**
+     * @return mixed[]
+     * @throws \Doctrine\DBAL\DBALException
+     */
+    public function getCompanyByCountry()
+    {
+        $conn = $this->getEntityManager()->getConnection();
+
+        $sql = '
+            SELECT COUNT(c.id) AS count, country.name, country.code
+            FROM company c 
+            LEFT JOIN country ON c.country_id = country.id
+            GROUP BY country.id
+        ';
+
+        $doctrine = $conn->prepare($sql);
+        $doctrine->execute();
+
+        return $doctrine->fetchAll();
+    }
+
 
     // /**
     //  * @return Company[] Returns an array of Company objects

@@ -177,4 +177,22 @@ class CompanyController extends Controller
 
         return new JsonResponse($data, 200, [], true);
     }
+
+    /**
+     * @param CompanyRepository $repo
+     * @return JsonResponse
+     * @throws \Doctrine\DBAL\DBALException
+     * @Route("/admin/company/dashboard/ajax", name="company_by_country_ajax", methods={"GET"})
+     */
+    public function getCompanyByCountry(CompanyRepository $repo)
+    {
+        $companyCount = $repo->getCompanyByCountry();
+
+        $encoders = [new JsonEncoder()];
+        $normalizers = [(new ObjectNormalizer())];
+        $serializer = new Serializer($normalizers, $encoders);
+        $data = $serializer->serialize($companyCount, 'json');
+
+        return new JsonResponse($data, 200, [], true);
+    }
 }

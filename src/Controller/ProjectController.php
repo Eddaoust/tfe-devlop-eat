@@ -208,4 +208,22 @@ class ProjectController extends Controller
 
         return new JsonResponse($data, 200, [], true);
     }
+
+    /**
+     * @param ProjectRepository $repo
+     * @return JsonResponse
+     * @throws \Doctrine\DBAL\DBALException
+     * @Route("/admin/project/dashboard/turnover", name="project_by_turnover_ajax", methods={"GET"})
+     */
+    public function getProjectTurnover(ProjectRepository $repo)
+    {
+        $turnover = $repo->getProjectTurnover();
+
+        $encoders = [new JsonEncoder()];
+        $normalizers = [(new ObjectNormalizer())];
+        $serializer = new Serializer($normalizers, $encoders);
+        $data = $serializer->serialize($turnover, 'json');
+
+        return new JsonResponse($data, 200, [], true);
+    }
 }
