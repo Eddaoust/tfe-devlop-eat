@@ -3,9 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\Project;
-use App\Entity\State;
+use App\Form\ProjectStateType;
 use App\Form\ProjectType;
-use App\Form\StateType;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Filesystem\Filesystem;
@@ -227,5 +226,36 @@ class ProjectController extends Controller
         $data = $serializer->serialize($turnover, 'json');
 
         return new JsonResponse($data, 200, [], true);
+    }
+
+    /**
+     * @param Project $project
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/admin/project/add/state/{id}", name="project_add_state")
+     */
+    public function addProjectState(Project $project, Request $request, ObjectManager $manager)
+    {
+        $form = $this->createForm(ProjectStateType::class, $project);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            foreach ($project->getState() as $state)
+            {
+                $state->setProject($project);
+            }
+            $manager->persist($project);
+            $manager->flush();
+
+            return $this->render('project/project_one.html.twig', [
+                'project' => $project
+            ]);
+        }
+
+        return $this->render('project/project_state.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 }

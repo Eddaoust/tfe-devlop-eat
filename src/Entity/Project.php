@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -179,9 +180,15 @@ class Project
      */
     private $steps;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\State", mappedBy="project", cascade={"persist", "remove"})
+     */
+    private $state;
+
     public function __construct()
     {
         $this->projectImages = new ArrayCollection();
+        $this->state = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -395,6 +402,37 @@ class Project
     public function setSteps(?Step $steps): self
     {
         $this->steps = $steps;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|State[]
+     */
+    public function getState(): Collection
+    {
+        return $this->state;
+    }
+
+    public function addState(State $state): self
+    {
+        if (!$this->state->contains($state)) {
+            $this->state[] = $state;
+            $state->setProject($this);
+        }
+
+        return $this;
+    }
+
+    public function removeState(State $state): self
+    {
+        if ($this->state->contains($state)) {
+            $this->state->removeElement($state);
+            // set the owning side to null (unless already changed)
+            if ($state->getProject() === $this) {
+                $state->setProject(null);
+            }
+        }
 
         return $this;
     }

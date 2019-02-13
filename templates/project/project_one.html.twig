@@ -81,5 +81,6 @@
         {% else %}
             <a href="{{ path('project_update_step', {id: project.id}) }}" class="btn btn-outline-success">Editer des données de la ligne du temps</a>
         {% endif %}
+        <a href="{{ path('project_add_state', {id: project.id}) }}" class="btn btn-outline-danger">Ajouter des données à l'état du projet</a>
     </div>
 {% endblock %}
