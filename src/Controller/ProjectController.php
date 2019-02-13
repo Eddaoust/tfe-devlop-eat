@@ -249,13 +249,49 @@ class ProjectController extends Controller
             $manager->persist($project);
             $manager->flush();
 
-            return $this->render('project/project_one.html.twig', [
+            return $this->render('project/project_step_show.html.twig', [
                 'project' => $project
             ]);
         }
 
         return $this->render('project/project_state.html.twig', [
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'project' => $project
+        ]);
+    }
+
+    /**
+     * @Route("/admin/project/update/state/{id}", name="project_update_state")
+     */
+    public function updateProjectState(Project $project, Request $request, ObjectManager $manager)
+    {
+        $form = $this->createForm(ProjectStateType::class, $project);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            foreach ($project->getState() as $state)
+            {
+                if (!is_null($state->getQuantity()))
+                {
+                    $state->setProject($project);
+                }
+                else
+                {
+                    $manager->remove($state);
+                }
+                $manager->persist($project);
+                $manager->flush();
+
+                return $this->render('project/project_step_show.html.twig', [
+                    'project' => $project
+                ]);
+            }
+        }
+
+        return $this->render('project/project_state.html.twig', [
+            'form' => $form->createView(),
+            'project' => $project
         ]);
     }
 }

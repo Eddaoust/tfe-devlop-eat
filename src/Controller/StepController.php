@@ -40,6 +40,7 @@ class StepController extends Controller
 
         return $this->render('project/project_step.html.twig', [
             'form' => $form->createView(),
+            'project' => $project
         ]);
     }
 
@@ -70,6 +71,7 @@ class StepController extends Controller
 
         return $this->render('project/project_step.html.twig', [
             'form' => $form->createView(),
+            'project' => $project
         ]);
     }
 

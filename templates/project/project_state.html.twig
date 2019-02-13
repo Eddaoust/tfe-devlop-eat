@@ -3,8 +3,12 @@
 {% form_theme form _self %}
 
 {% block project_body %}
-    {{ form_start(form) }}
-    {{ form_end(form) }}
+    <div class="container">
+        <h3 class="text-black-50 text-center">Ajout / Modification de l'état du projet</h3><hr>
+        <h6 class="text-center"><span class="text-success">Projet: </span>{{ project.name }}</h6>
+        {{ form_start(form) }}
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
 
 {% block _project_state_state_widget %}
