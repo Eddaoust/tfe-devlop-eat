@@ -174,6 +174,11 @@ class Project
      */
     private $img3;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\Step", cascade={"persist", "remove"})
+     */
+    private $steps;
+
     public function __construct()
     {
         $this->projectImages = new ArrayCollection();
@@ -378,6 +383,18 @@ class Project
     public function setImg3($img3)
     {
         $this->img3 = $img3;
+
+        return $this;
+    }
+
+    public function getSteps(): ?Step
+    {
+        return $this->steps;
+    }
+
+    public function setSteps(?Step $steps): self
+    {
+        $this->steps = $steps;
 
         return $this;
     }

@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Project;
+use App\Entity\State;
 use App\Form\ProjectType;
+use App\Form\StateType;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Filesystem\Filesystem;
