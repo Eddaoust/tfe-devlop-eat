@@ -32,7 +32,7 @@ class StepController extends Controller
             $manager->persist($project);
             $manager->flush();
 
-            return $this->render('project/project_one.html.twig', [
+            return $this->render('project/project_step_show.html.twig', [
                 'project' => $project
                 //Todo: Ajouter le nom du projet
             ]);
@@ -63,13 +63,23 @@ class StepController extends Controller
             $manager->persist($project);
             $manager->flush();
 
-            return $this->render('project/project_one.html.twig', [
+            return $this->render('project/project_step_show.html.twig', [
                 'project' => $project
             ]);
         }
 
         return $this->render('project/project_step.html.twig', [
             'form' => $form->createView(),
+        ]);
+    }
+
+    /**
+     * @Route("/admin/project/show/step/{id}", name="project_step_show")
+     */
+    public function showStep(Project $project)
+    {
+        return $this->render('project/project_step_show.html.twig', [
+            'project' => $project
         ]);
     }
 }

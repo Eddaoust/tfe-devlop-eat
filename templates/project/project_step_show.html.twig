@@ -1,0 +1,99 @@
+{% extends 'project/project-template.html.twig' %}
+
+{% block project_body %}
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-6">
+                            <h1 class="text-success">{{ project.name }}</h1>
+                        </div>
+                        <div class="col-6">
+                            <h3 class="pt-2">{{ project.projectOwner.name }} {{ project.projectOwner.companyCategory.abbreviation }} - {{ project.projectOwner.country.code }}</h3>
+                        </div>
+                    </div>
+
+                    <div class="description mt-2 ml-3">
+                        {% if project.description %}
+                            {% set descriptions = project.description | split('\n') %}
+                            {% for description in descriptions %}
+                                <p>{{ description }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <h1 class="text-success">Localisation</h1>
+                    {% if project.address %}
+                        <div class="localisation mt-2 ml-3">
+                            <p>{{ project.address }}</p>
+                            <p>{{ project.postalCode }} {{ project.city }}</p>
+                        </div>
+                    {% endif %}
+
+                    <h1 class="text-success">Points d'intérêts</h1>
+                    {% if project.pointOfInterest %}
+                        <div class="point-interest mt-2 ml-3">
+                            {% set pointsInterest = project.pointOfInterest | split('\n') %}
+                            {% for point in pointsInterest %}
+                                <p>{{ point }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <h1 class="text-success">Chiffres: </h1>
+                    {% if project.fieldSize %}
+                        <div class="numbers mt-2 ml-3">
+                            <p><i class="mr-2">Terrain</i>{{ project.fieldSize }} ares</p>
+                            <p><i class="mr-2">Chiffre d'affaire</i>{{ project.turnover }} &euro;</p>
+                            <p><i class="mr-2">Lots</i>{{ project.lots }}</p><br>
+                        </div>
+                    {% endif %}
+                    <h1 class="text-success">Partenaires: </h1>
+                    <div class="shareholders mt-2 ml-3">
+                        <p><i class="mr-2">Actionnaires</i></p>
+                        {% if project.projectOwner.shareholders %}
+                            {% for shareholder in project.projectOwner.shareholders %}
+                                <p class="ml-5">{{ shareholder.shareholder.name }} - {{ shareholder.part }}%</p>
+                            {% endfor %}
+                        {% endif %}
+                        <p><i class="mr-2">Architecte</i></p>
+                        {% if project.architect %}
+                            <p class="ml-5">{{ project.architect.name }}</p>
+                        {% endif %}
+                        <p><i class="mr-2">Entreprise Gén.</i></p>
+                        {% if project.generalCompany %}
+                            <p class="ml-5">{{ project.generalCompany.name }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-4" style="border-left: 1px dashed grey;">
+                <div class="container-fluid">
+                    <h6 class="text-black-50">Données du projet</h6><hr>
+                    <p class="text-black-50">Ligne du temps:</p>
+                    {% if project.steps.id is defined %}
+                        <p><span class="text-black-50">Etude: </span>{{ project.steps.study ? project.steps.study | date('d/m/Y'): 'Pas de donnée' }}</p>
+                        <p><span class="text-black-50">Maîtrise: </span>{{ project.steps.mastery ? project.steps.mastery | date('d/m/Y'): 'Pas de donnée' }}</p>
+                        <p>
+                            <span class="text-black-50">Permis: </span>
+                            {{ project.steps.permitStart ? project.steps.permitStart | date('d/m/Y'): 'Pas de donnée' }}
+                            - {{ project.steps.permitEnd ? project.steps.permitEnd | date('d/m/Y'): 'Pas de donnée' }}
+                        </p>
+                        <p>
+                            <span class="text-black-50">Travaux: </span>
+                            {{ project.steps.worksStart ? project.steps.worksStart | date('d/m/Y'): 'Pas de donnée' }}
+                            - {{ project.steps.worksEnd ? project.steps.worksEnd | date('d/m/Y'): 'Pas de donnée' }}
+                        </p>
+                        <p><span class="text-black-50">Livraison: </span>{{ project.steps.delivery ? project.steps.delivery | date('d/m/Y'): 'Pas de donnée' }}</p><br>
+                        <a href="{{ path('project_update_step', {id: project.id}) }}" class="btn btn-outline-success">Editer les données de la ligne du temps</a>
+                    {% else %}
+                        <a href="{{ path('project_add_step', {id: project.id}) }}" class="btn btn-outline-success">Ajouter des données à la ligne du temps</a>
+                    {% endif %}
+                    <a href="{{ path('project_add_state', {id: project.id}) }}" class="btn btn-outline-danger">Ajouter des données à l'état du projet</a>
+                    {{ dump(project) }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
