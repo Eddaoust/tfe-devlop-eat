@@ -3,21 +3,16 @@
 namespace App\Controller;
 
 use App\Entity\Project;
-use App\Form\ProjectStateType;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
 
 class ProjectController extends Controller
 {
@@ -192,39 +187,5 @@ class ProjectController extends Controller
             'form' => $form->createView(),
             'project' => $project
         ]);
-    }
-
-    /**
-     * @param ProjectRepository $repo
-     * @Route("/admin/project/dashboard/year", name="project_by_year_ajax", methods={"GET"})
-     */
-    public function getProjectByYear(ProjectRepository $repo)
-    {
-        $count = $repo->getProjectByYear();
-
-        $encoders = [new JsonEncoder()];
-        $normalizers = [(new ObjectNormalizer())];
-        $serializer = new Serializer($normalizers, $encoders);
-        $data = $serializer->serialize($count, 'json');
-
-        return new JsonResponse($data, 200, [], true);
-    }
-
-    /**
-     * @param ProjectRepository $repo
-     * @return JsonResponse
-     * @throws \Doctrine\DBAL\DBALException
-     * @Route("/admin/project/dashboard/turnover", name="project_by_turnover_ajax", methods={"GET"})
-     */
-    public function getProjectTurnover(ProjectRepository $repo)
-    {
-        $turnover = $repo->getProjectTurnover();
-
-        $encoders = [new JsonEncoder()];
-        $normalizers = [(new ObjectNormalizer())];
-        $serializer = new Serializer($normalizers, $encoders);
-        $data = $serializer->serialize($turnover, 'json');
-
-        return new JsonResponse($data, 200, [], true);
     }
 }

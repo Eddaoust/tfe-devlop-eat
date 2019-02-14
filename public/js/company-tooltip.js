@@ -5,7 +5,7 @@ $(function() {
 
     $.ajax({
         type: 'get',
-        url: 'http://127.0.0.1:8000/admin/company/get-projects/ajax'
+        url: 'http://127.0.0.1:8000/admin/api/company/get-projects'
     }).done(function(datas) {
         for(const deleteBtn of deleteBtnList){
             console.log(deleteBtn)

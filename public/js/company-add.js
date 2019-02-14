@@ -21,7 +21,7 @@ for(const option of $('#company_companyCategory option')){
 }
 // Ajax pour remplir le type de société par rapport au pays
 $('#company_country').on('change', function () {
-    const url = 'http://127.0.0.1:8000/admin/company/category/ajax/';
+    const url = 'http://127.0.0.1:8000/admin/api/company/category/';
     const countryId = $('#company_country').val();
     $.ajax({
         url: url + countryId,

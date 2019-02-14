@@ -2,7 +2,7 @@ $(function () {
 
     $.ajax({
         type: 'GET',
-        url: 'http://127.0.0.1:8000/admin/project/dashboard/year'
+        url: 'http://127.0.0.1:8000/admin/api/project/year'
     }).done(function (datas) {
         const date = []
         const count = []
@@ -84,7 +84,7 @@ $(function () {
 
     $.ajax({
         type: 'GET',
-        url: 'http://127.0.0.1:8000/admin/company/dashboard/ajax'
+        url: 'http://127.0.0.1:8000/admin/api/company/country'
     }).done(function (datas) {
         const country = []
         const count = []
@@ -123,7 +123,7 @@ $(function () {
 
     $.ajax({
         type: 'GET',
-        url: 'http://127.0.0.1:8000/admin/project/dashboard/turnover'
+        url: 'http://127.0.0.1:8000/admin/api/project/turnover'
     }).done(function (datas) {
         const company = []
         const turnover = []

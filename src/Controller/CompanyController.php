@@ -6,18 +6,11 @@ use App\Entity\Company;
 use App\Form\CompanyType;
 use App\Repository\CompanyCategoryRepository;
 use App\Repository\CompanyRepository;
-use App\Repository\ProjectRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\HttpFoundation\JsonResponse;
-
-
 
 class CompanyController extends Controller
 {
@@ -125,58 +118,5 @@ class CompanyController extends Controller
             'form' => $form->createView(),
             'company' => $company
         ]);
-    }
-
-    /**
-     * @param $countryId
-     * @param CompanyCategoryRepository $repo
-     * @return JsonResponse
-     * @Route("/admin/company/category/ajax/{countryId}", name="company_category_ajax", methods={"GET"})
-     */
-    public function getCompanyCategory($countryId, CompanyCategoryRepository $repo)
-    {
-        $compCat = $repo->getCompanyCat($countryId);
-
-        $encoders = [new JsonEncoder()];
-        $normalizers = [(new ObjectNormalizer())];
-        $serializer = new Serializer($normalizers, $encoders);
-        $data = $serializer->serialize($compCat, 'json');
-
-        return new JsonResponse($data, 200, [], true);
-    }
-
-    /**
-     * @param CompanyRepository $repo
-     * @return JsonResponse
-     * @Route("/admin/company/get-projects/ajax", name="company_project_name_ajax", methods={"GET"})
-     */
-    public function getCompanyProjectName(ProjectRepository $repo)
-    {
-        $companyProjects = $repo->getCompanyProjectName();
-
-        $encoders = [new JsonEncoder()];
-        $normalizers = [(new ObjectNormalizer())];
-        $serializer = new Serializer($normalizers, $encoders);
-        $data = $serializer->serialize($companyProjects, 'json');
-
-        return new JsonResponse($data, 200, [], true);
-    }
-
-    /**
-     * @param CompanyRepository $repo
-     * @return JsonResponse
-     * @throws \Doctrine\DBAL\DBALException
-     * @Route("/admin/company/dashboard/ajax", name="company_by_country_ajax", methods={"GET"})
-     */
-    public function getCompanyByCountry(CompanyRepository $repo)
-    {
-        $companyCount = $repo->getCompanyByCountry();
-
-        $encoders = [new JsonEncoder()];
-        $normalizers = [(new ObjectNormalizer())];
-        $serializer = new Serializer($normalizers, $encoders);
-        $data = $serializer->serialize($companyCount, 'json');
-
-        return new JsonResponse($data, 200, [], true);
     }
 }
