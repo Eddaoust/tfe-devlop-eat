@@ -49,20 +49,14 @@ class CompanyController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            //TODO Pas d'enregistrement, probleme de nom d'input en JS
-            foreach ($company->getShareholders() as $shareholder)
-            {
-                $shareholder->setCompany($company);
-                $manager->persist($shareholder);
-            }
-
             $this->addFlash('success', 'Société ajouté avec succès');
             $manager->persist($company);
             $manager->flush();
 
-            return $this->redirectToRoute('company_list');
+            return $this->redirectToRoute('company_one', [
+                'id' => $company->getId()
+            ]);
         }
-
         return $this->render('company/company_add.html.twig', [
             'form' => $form->createView()
         ]);
@@ -89,10 +83,6 @@ class CompanyController extends Controller
      */
     public function deleteCompany(Company $company, ObjectManager $manager)
     {
-        foreach ($company->getShareholders() as $shareholder)
-        {
-            $manager->remove($shareholder);
-        }
         $manager->remove($company);
         $manager->flush();
 
@@ -117,26 +107,20 @@ class CompanyController extends Controller
         {
             foreach ($company->getShareholders() as $shareholder)
             {
-                if (!$shareholder->getPart())
+                if (is_null($shareholder->getPart()))
                 {
+                    $company->removeShareholder($shareholder);
                     $manager->remove($shareholder);
                 }
-                else
-                {
-                    $shareholder->setCompany($company);
-                    $manager->persist($shareholder);
-                }
             }
-
             $manager->persist($company);
             $manager->flush();
 
             $this->addFlash('success', 'Société modifié avec succès');
-            return $this->render('company/company_one.html.twig', [
-                'company' => $company
+            return $this->redirectToRoute('company_one', [
+                'id' => $company->getId()
             ]);
         }
-
         return $this->render('company/company_update.html.twig', [
             'form' => $form->createView(),
             'company' => $company

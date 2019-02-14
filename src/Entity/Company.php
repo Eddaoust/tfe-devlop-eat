@@ -127,7 +127,7 @@ class Company
     private $companyCategory;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Shareholder", mappedBy="company")
+     * @ORM\OneToMany(targetEntity="App\Entity\Shareholder", mappedBy="company", cascade={"persist", "remove"})
      * @Assert\Valid()
      */
     private $shareholders;

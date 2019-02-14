@@ -58,7 +58,8 @@ class CompanyType extends AbstractType
             ->add('shareholders', CollectionType::class, [
                 'label' => 'Actionnaire(s)',
                 'entry_type' => ShareholderType::class,
-                'allow_add' => true
+                'allow_add' => true,
+                'by_reference' => false
             ])
             ->add('Ajouter', SubmitType::class, [
                 'label' => 'Envoyer',
