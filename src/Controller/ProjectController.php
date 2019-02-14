@@ -242,10 +242,6 @@ class ProjectController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
-            foreach ($project->getState() as $state)
-            {
-                $state->setProject($project);
-            }
             $manager->persist($project);
             $manager->flush();
 
@@ -272,21 +268,18 @@ class ProjectController extends Controller
         {
             foreach ($project->getState() as $state)
             {
-                if (!is_null($state->getQuantity()))
+                if (is_null($state->getQuantity()))
                 {
-                    $state->setProject($project);
-                }
-                else
-                {
+                    $project->removeState($state);
                     $manager->remove($state);
                 }
-                $manager->persist($project);
-                $manager->flush();
-
-                return $this->render('project/project_step_show.html.twig', [
-                    'project' => $project
-                ]);
             }
+            $manager->persist($project);
+            $manager->flush();
+
+            return $this->render('project/project_step_show.html.twig', [
+                'project' => $project
+            ]);
         }
 
         return $this->render('project/project_state.html.twig', [
