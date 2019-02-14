@@ -4,25 +4,25 @@
 
 {% block project_body %}
     <div class="container">
-        <h3 class="text-black-50 text-center">Ajout / Modification de l'état du projet</h3><hr>
-        <h6 class="text-center"><span class="text-success">Projet: </span>{{ project.name }}</h6>
+        <h3 class="text-black-50 text-center">Ajout / Modification des statistiques  du projet</h3><hr>
+        <h4 class="text-center"><span class="text-success">Projet: </span>{{ project.name }}</h4>
         {{ form_start(form) }}
         {{ form_end(form) }}
     </div>
 {% endblock %}
 
-{% block _project_state_state_widget %}
+{% block _project_stat_state_widget %}
     {{ form_widget(form) }}
     <div class="form-group">
         <button type="button" id="add-state" class="btn btn-success">Ajouter un état</button>
     </div>
 {% endblock %}
 
-{% block _project_state_state_entry_row %}
+{% block _project_stat_state_entry_row %}
     {{ form_widget(form) }}
 {% endblock %}
 
-{% block _project_state_state_entry_widget %}
+{% block _project_stat_state_entry_widget %}
     <div class="form-group" id="block_{{ id }}">
         <div class="row">
             <div class="col-10">

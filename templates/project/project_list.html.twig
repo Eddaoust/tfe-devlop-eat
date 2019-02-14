@@ -26,7 +26,7 @@
                 <th>{{ project.projectOwner.name }}</th>
                 <th>{{ project.city }}</th>
                 <th>{{ project.created | date('d/m/Y') }}</th>
-                <th class="text-center"><a href="{{ path('project_step_show', {id: project.id}) }}"><i class="fas fa-database"></i></a></th>
+                <th class="text-center"><a href="{{ path('projectStat_show', {id: project.id}) }}"><i class="fas fa-database"></i></a></th>
                 <th class="text-center"><a href="{{ path('project_update', {id: project.id}) }}"><i class="fas fa-pen"></i></a></th>
                 <th class="text-center">
                     <span data-toggle="modal" data-target="#project-{{ project.id }}">

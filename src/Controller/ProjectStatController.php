@@ -1,0 +1,89 @@
+<?php
+
+namespace App\Controller;
+
+use App\Form\ProjectStatType;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use Doctrine\Common\Persistence\ObjectManager;
+use App\Entity\Project;
+
+class ProjectStatController extends Controller
+{
+    /**
+     * @param Project $project
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/admin/projectStat/show/{id}", name="projectStat_show")
+     */
+    public function showProjectStat(Project $project)
+    {
+        return $this->render('project_stat/projectStat_show.html.twig', [
+            'project' => $project
+        ]);
+    }
+    /**
+     * @param Project $project
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/admin/projectStat/add/{id}", name="projectStat_add")
+     */
+    public function addProjectStat(Project $project, Request $request, ObjectManager $manager)
+    {
+        $form = $this->createForm(ProjectStatType::class, $project);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+            $manager->persist($project);
+            $manager->flush();
+
+            return $this->redirectToRoute('projectStat_show', [
+                'id' => $project->getId()
+            ]);
+        }
+        //TODO Revoir l'affichage du formulaire
+        return $this->render('project_stat/projectStat_add.html.twig', [
+            'form' => $form->createView(),
+            'project' => $project
+        ]);
+    }
+
+    /**
+     * @param Project $project
+     * @param Request $request
+     * @param ObjectManager $manager
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/admin/projectStat/edit/{id}", name="projectStat_edit")
+     */
+    public function editProjectStat(Project $project, Request $request, ObjectManager $manager)
+    {
+        $form = $this->createForm(ProjectStatType::class, $project);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid())
+        {
+
+            foreach ($project->getState() as $state)
+            {
+                if (is_null($state->getQuantity()))
+                {
+                    $project->removeState($state);
+                    $manager->remove($state);
+                }
+            }
+            $manager->persist($project);
+            $manager->flush();
+
+            return $this->redirectToRoute('projectStat_show', [
+                'id' => $project->getId()
+            ]);
+        }
+
+        return $this->render('project_stat/projectStat_add.html.twig', [
+            'form' => $form->createView(),
+            'project' => $project
+        ]);
+    }
+}

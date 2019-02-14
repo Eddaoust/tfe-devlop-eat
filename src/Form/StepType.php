@@ -70,12 +70,6 @@ class StepType extends AbstractType
                     'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
                 ]
             ])
-            ->add('submit', SubmitType::class, [
-                'label' => 'Valider',
-                'attr' => [
-                    'class' => 'btn btn-success'
-                ]
-            ])
         ;
     }
 
