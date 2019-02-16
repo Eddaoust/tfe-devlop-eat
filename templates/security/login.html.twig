@@ -5,40 +5,42 @@
 {% block body %}
     <div class="container">
         <div class="row justify-content-md-center">
-            {% if app.user %}
-                <div class="alert alert-success mt-5">
-                    <p><strong>{{ app.user.firstName }}</strong> vous êtes déja connecté.</p>
-                    <a class="btn-success" href="{{ path('dashboard') }}">Aller à votre dashboard</a>
-                </div>
-            {% else %}
-                <div class="card text-center mt-5">
-                    <div class="card-header">
-                        Connexion
+            <div class="col-12 col-md-6 col-lg-4">
+                {% if app.user %}
+                    <div class="alert alert-success mt-5">
+                        <p><strong>{{ app.user.firstName }}</strong> vous êtes déja connecté.</p>
+                        <a class="btn-success" href="{{ path('dashboard') }}">Aller à votre dashboard</a>
                     </div>
-                    <div class="card-body">
-                        {% for label, messages in app.flashes %}
-                            {% for message in messages %}
-                                <div class="alert alert-{{ label }}" role="alert">
-                                    {{ message }}
-                                </div>
+                {% else %}
+                    <div class="card text-center mt-5">
+                        <div class="card-header">
+                            Connexion
+                        </div>
+                        <div class="card-body">
+                            {% for label, messages in app.flashes %}
+                                {% for message in messages %}
+                                    <div class="alert alert-{{ label }}" role="alert">
+                                        {{ message }}
+                                    </div>
+                                {% endfor %}
                             {% endfor %}
-                        {% endfor %}
-                        {% if hasError %}
-                            <div class="alert alert-danger mt-5">Email ou mot de passe invalide, veuillez recommencer</div>
-                        {% endif %}
-                        <img src="{{ asset('img/logo/devlop-logo.svg') }}" class="card-title" width="80" alt="Devlop logo">
-                        <form method="post" action="{{ path('login') }}">
-                            <div class="form-group">
-                                <input type="email" class="form-control" name="_username" id="mail" placeholder="Entrez votre email" value="{{ email }}">
-                            </div>
-                            <div class="form-group">
-                                <input type="password" class="form-control" id="password" name="_password" placeholder="Entrez votre mot de passe">
-                            </div>
-                            <button type="submit" class="btn btn-success">Connexion</button>
-                        </form>
+                            {% if hasError %}
+                                <div class="alert alert-danger mt-5">Email ou mot de passe invalide, veuillez recommencer</div>
+                            {% endif %}
+                            <img src="{{ asset('img/logo/devlop-logo.svg') }}" class="card-title" width="80" alt="Devlop logo">
+                            <form method="post" action="{{ path('login') }}">
+                                <div class="form-group">
+                                    <input type="email" class="form-control" name="_username" id="mail" placeholder="Entrez votre email" value="{{ email }}">
+                                </div>
+                                <div class="form-group">
+                                    <input type="password" class="form-control" id="password" name="_password" placeholder="Entrez votre mot de passe">
+                                </div>
+                                <button type="submit" class="btn btn-success">Connexion</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-            {% endif %}
+                {% endif %}
+            </div>
         </div>
     </div>
 {% endblock %}

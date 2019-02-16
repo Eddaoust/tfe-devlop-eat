@@ -1,4 +1,5 @@
 $('#table_id').DataTable({
+    responsive: true,
     'language': {
         "lengthMenu": "Afficher _MENU_ éléments par page",
         "search": "Recherche: ",
