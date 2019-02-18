@@ -93,6 +93,14 @@ class ProjectController extends Controller
      */
     public function deletePoject(Project $project, ObjectManager $manager)
     {
+        for ($i = 1; $i <= 3; $i++)
+        {
+            $getImg = 'getImg'.$i;
+            if (!is_null($project->$getImg()))
+            {
+                unlink($this->getParameter('project_images_directory').'/'.$project->$getImg());
+            }
+        }
         $manager->remove($project);
         $manager->flush();
 
@@ -132,7 +140,7 @@ class ProjectController extends Controller
      * @Route("/admin/project/update/{id}", name="project_update")
      * @ParamConverter("project", options={"exclude": {"request","manager", "session"}})
      */
-    public function updateProject(Project $project, Request $request, ObjectManager $manager, Session $session, Filesystem $filesystem)
+    public function updateProject(Project $project, Request $request, ObjectManager $manager, Session $session)
     {
 
         for($i = 1; $i <= 3; $i++)
@@ -162,18 +170,25 @@ class ProjectController extends Controller
 
                 if(!is_null($file))
                 {
-                    $filesystem->remove($this->getParameter('project_images_directory').'/'.$session->get('fileName'.$j));
+                    if ($session->get('fileName'.$j))
+                    {
+                        $path = $this->getParameter('project_images_directory').'/'.$session->get('fileName'.$j);
+                        unlink($path);
+                    }
                     $fileName = md5(uniqid()).'.'.$file->guessExtension();
                     $file->move(
                         $this->getParameter('project_images_directory'),
                         $fileName);
                     $project->$setImg($fileName);
                 }
-                else if ($session->get('fileName'.$j))
+                else if ($session->get('fileName'.$j) && is_null($file))
                 {
                     $project->$setImg($session->get('fileName'.$j));
+
+
                 }
             }
+
             $manager->persist($project);
             $manager->flush();
 
