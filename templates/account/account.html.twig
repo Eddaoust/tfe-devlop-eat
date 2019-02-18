@@ -2,6 +2,10 @@
 
 {% block title %}Utilisateurs{% endblock %}
 
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}"/>
+{% endblock %}
+
 {% block user_body %}
     <div class="container">
         <div class="row">
@@ -25,7 +29,7 @@
                 {% endif %}
                 <hr>
             </div>
-            <div class="col-4"><img src="{{ app.user.image ? asset('img/user-profil/') ~ app.user.image.name : asset('img/user-profil/default.png') }}" style="height: 150px;width: 150px;border-radius: 90px;background-color: white; border: solid 1px #5E9D4D;"></div>
+            <div class="col-4"><img class="account_img account_img_medium" src="{{ app.user.image ? asset('img/user-profil/') ~ app.user.image.name : asset('img/user-profil/default.png') }}"></div>
         </div>
         <div class="row"><div class="col-12"><p>Compte créé le: {{ user.created | date('d/m/Y') }}</p></div></div>
         <div class="row">
