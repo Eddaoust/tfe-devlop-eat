@@ -4,9 +4,28 @@
 
 {% block project_body %}
     <div class="container">
-        <h3 class="text-black-50 text-center">Ajout / Modification des statistiques  du projet</h3><hr>
-        <h4 class="text-center"><span class="text-success">Projet: </span>{{ project.name }}</h4>
+        <div class="row">
+            <div class="col-12">
+                <h3 class="text-black-50 text-center">Ajout / Modification des statistiques  du projet</h3><hr>
+                <h4 class="text-center"><span class="text-success">Projet: </span>{{ project.name }}</h4>
+            </div>
+        </div>
         {{ form_start(form) }}
+        <div class="row">
+            <div class="col-lg-6">{{ form_row(form.steps.study) }}</div>
+            <div class="col-lg-6">{{ form_row(form.steps.mastery) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">{{ form_row(form.steps.permitStart) }}</div>
+            <div class="col-lg-6">{{ form_row(form.steps.permitEnd) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-lg-6">{{ form_row(form.steps.worksStart) }}</div>
+            <div class="col-lg-6">{{ form_row(form.steps.worksEnd) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-12">{{ form_row(form.steps.delivery) }}</div>
+        </div>
         {{ form_end(form) }}
     </div>
 {% endblock %}
@@ -27,9 +46,9 @@
         <div class="row">
             <div class="col-10">
                 <div class="row">
-                    <div class="col">{{ form_widget(form.quantity) }}</div>
-                    <div class="col">{{ form_widget(form.date) }}</div>
-                    <div class="col">{{ form_widget(form.type) }}</div>
+                    <div class="col-2">{{ form_widget(form.quantity) }}</div>
+                    <div class="col-5">{{ form_widget(form.date) }}</div>
+                    <div class="col-5">{{ form_widget(form.type) }}</div>
                 </div>
             </div>
             <div class="col-2">

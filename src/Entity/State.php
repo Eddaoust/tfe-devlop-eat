@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StateRepository")
@@ -18,11 +19,16 @@ class State
 
     /**
      * @ORM\Column(type="integer", nullable=true)
+     * @Assert\Type(
+     *     type="integer",
+     *     message="Vous devez entrer un nombre entier."
+     * )
      */
     private $quantity;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Date
      */
     private $date;
 

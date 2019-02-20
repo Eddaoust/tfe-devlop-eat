@@ -17,7 +17,13 @@ class StateType extends AbstractType
     {
         $builder
             ->add('quantity', IntegerType::class)
-            ->add('date', DateType::class)
+            ->add('date', DateType::class, [
+                'required' => false,
+                'format' => 'dd-MM-yyyy',
+                'placeholder' => [
+                    'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
+                ]
+            ])
             ->add('type', EntityType::class, [
                 'placeholder' => 'Choisissez un type',
                 'class' => ProjectState::class,

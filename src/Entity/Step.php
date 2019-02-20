@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\StepRepository")
@@ -18,36 +19,43 @@ class Step
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Date
      */
     private $study;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Date
      */
     private $mastery;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Date
      */
     private $permitStart;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Date
      */
     private $permitEnd;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Date
      */
     private $worksStart;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Date
      */
     private $worksEnd;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
+     * @Assert\Date
      */
     private $delivery;
 
