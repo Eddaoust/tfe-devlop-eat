@@ -39,18 +39,21 @@ class UserController extends Controller
         {
             // Récupération de l'user dans le form
             $user = $form->getData();
-            // Récupération de l'image
-            $image = $user->getImage();
-            // Récupération du fichier
-            $file = $image->getFile();
-            // Transformation du nom du fichier
-            $fileName = md5(uniqid()).'.'.$file->guessExtension();
-            // Déplacement vers le répertoire cible
-            $file->move(
-                $this->getParameter('user_images_directory'),
-                $fileName);
-            // Persist du nom
-            $image->setName($fileName);
+            if (!is_null($user->getImage()))
+            {
+                // Récupération de l'image
+                $image = $user->getImage();
+                // Récupération du fichier
+                $file = $image->getFile();
+                // Transformation du nom du fichier
+                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                // Déplacement vers le répertoire cible
+                $file->move(
+                    $this->getParameter('user_images_directory'),
+                    $fileName);
+                // Persist du nom
+                $image->setName($fileName);
+            }
             // Création du Token
             $generator = new UriSafeTokenGenerator(256);
             $token = $generator->generateToken();
@@ -203,7 +206,7 @@ class UserController extends Controller
         if(!empty($invitation) && $invitation->getToken() === $token)
         {
             // Définition du temps de validité du token
-            $invitTimeOut = date('Y-m-d H:i:s', strtotime("+10 minute", strtotime($invitation->getSendDate()->format('Y-m-d H:i:s'))));
+            $invitTimeOut = date('Y-m-d H:i:s', strtotime("+60 minute", strtotime($invitation->getSendDate()->format('Y-m-d H:i:s'))));
             $dateNow = date('Y-m-d H:i:s');
 
             // Si le token est valide dans le timing

@@ -21,6 +21,9 @@
                     <h6 class="dropdown-header">Utilisateurs :</h6>
                     <a class="dropdown-item" href="{{ path('user_list') }}">Liste</a>
                     <a class="dropdown-item" href="{{ path('user_add') }}">Inviter</a>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <a class="dropdown-item" href="{{ path('invitation_list') }}">Invitation</a>
+                    {% endif %}
                 </div>
             </li>
             <li class="nav-item active dropdown">
