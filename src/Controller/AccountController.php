@@ -2,27 +2,17 @@
 
 namespace App\Controller;
 
-use App\Form\PasswordResetType;
 use App\Form\UserUpdateType;
-use App\Repository\UserRepository;
-use Doctrine\Common\Persistence\ObjectManager;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Filesystem\Filesystem;
-use Symfony\Component\HttpFoundation\File\File;
+use App\Form\PasswordResetType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\Session;
+use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-/**
- * Class AccountController
- * @package App\Controller
- * @IsGranted("ROLE_USER")
- */
 class AccountController extends Controller
 {
-    /**
+    /**   
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/log/account", name="account_one")
      */

@@ -7,7 +7,13 @@ use App\Repository\InvitationRepository;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * Class InvitationController
+ * @package App\Controller
+ * @IsGranted("ROLE_ADMIN")
+ */
 class InvitationController extends Controller
 {
     /**

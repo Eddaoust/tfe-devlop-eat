@@ -177,13 +177,11 @@ class Project
 
     /**
      * @ORM\OneToOne(targetEntity="App\Entity\Step", cascade={"persist", "remove"})
-     * @Assert\Valid()
      */
     private $steps;
 
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\State", mappedBy="project", cascade={"persist", "remove"})
-     * @Assert\Valid()
      */
     private $state;
 
