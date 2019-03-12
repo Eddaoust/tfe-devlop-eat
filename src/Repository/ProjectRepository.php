@@ -125,6 +125,50 @@ class ProjectRepository extends ServiceEntityRepository
 
         return $doctrine->fetchAll();
     }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getProjectStep($id)
+    {
+        return $this->createQueryBuilder('project')
+                    ->select(
+                        'project.lots',
+                        'step.study',
+                        'step.mastery',
+                        'step.permitStart',
+                        'step.permitEnd',
+                        'step.worksStart',
+                        'step.worksEnd',
+                        'step.delivery'
+                        )
+                    ->leftJoin('project.steps', 'step')
+                    ->andWhere('project.id = :projectId')
+                    ->setParameter('projectId', $id)
+                    ->getQuery()
+                    ->getResult();
+    }
+
+    /**
+     * @param $id
+     * @return mixed
+     */
+    public function getProjectState($id)
+    {
+        return $this->createQueryBuilder('project')
+                    ->select(
+                        'projectState.name',
+                        'state.date',
+                        'state.quantity'
+                    )
+                    ->leftJoin('project.state', 'state')
+                    ->leftJoin('state.type', 'projectState')
+                    ->andWhere('project.id = :projectId')
+                    ->setParameter('projectId', $id)
+                    ->getQuery()
+                    ->getResult();
+    }
     // /**
     //  * @return Project[] Returns an array of Project objects
     //  */

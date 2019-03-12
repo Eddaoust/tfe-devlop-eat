@@ -15,6 +15,28 @@ use App\Repository\CompanyRepository;
 class ApiController extends Controller
 {
     /**
+     * @Route("/admin/api/project/stat/{id}", name="api_project_stat", methods={"GET"})
+     */
+    public function getProjectStat($id, ProjectRepository $repo)
+    {
+        $state = $repo->getProjectState($id);
+        $step = $repo->getProjectStep($id);
+
+        $project = [
+            'lots' => array_shift($step[0]),
+            'state' => $state,
+            'step' => $step[0]
+        ];
+
+        $encoders = [new JsonEncoder()];
+        $normalizers = [(new ObjectNormalizer())];
+        $serializer = new Serializer($normalizers, $encoders);
+        $data = $serializer->serialize($project, 'json');
+
+        return new JsonResponse($data, 200, [], true);
+    }
+
+    /**
      * @param $countryId
      * @param CompanyCategoryRepository $repo
      * @return JsonResponse
