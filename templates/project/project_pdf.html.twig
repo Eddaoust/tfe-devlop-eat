@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang=fr>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>PDF</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-8">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-6">
+                            <h1 class="text-success">{{ project.name }}</h1>
+                            <input type="hidden" id="projectId" value="{{ project.id }}">
+                        </div>
+                        <div class="col-6">
+                            <h3 class="pt-2">{{ project.projectOwner.name }} {{ project.projectOwner.companyCategory.abbreviation }} - {{ project.projectOwner.country.code }}</h3>
+                        </div>
+                    </div>
+
+                    <div class="description mt-2 ml-3">
+                        {% if project.description %}
+                            {% set descriptions = project.description | split('\n') %}
+                            {% for description in descriptions %}
+                                <p>{{ description }}</p>
+                            {% endfor %}
+                        {% endif %}
+                    </div>
+
+                    <h1 class="text-success">Localisation</h1>
+                    {% if project.address %}
+                        <div class="localisation mt-2 ml-3">
+                            <p>{{ project.address }}</p>
+                            <p>{{ project.postalCode }} {{ project.city }}</p>
+                        </div>
+                    {% endif %}
+
+                    <h1 class="text-success">Points d'intérêts</h1>
+                    {% if project.pointOfInterest %}
+                        <div class="point-interest mt-2 ml-3">
+                            {% set pointsInterest = project.pointOfInterest | split('\n') %}
+                            {% for point in pointsInterest %}
+                                <p>{{ point }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <h1 class="text-success">Chiffres: </h1>
+                    {% if project.fieldSize %}
+                        <div class="numbers mt-2 ml-3">
+                            <p><i class="mr-2">Terrain</i>{{ project.fieldSize }} ares</p>
+                            <p><i class="mr-2">Chiffre d'affaire</i>{{ project.turnover }} &euro;</p>
+                            <p><i class="mr-2">Lots</i>{{ project.lots }}</p><br>
+                        </div>
+                    {% endif %}
+                    <h1 class="text-success">Partenaires: </h1>
+                    <div class="shareholders mt-2 ml-3">
+                        <p><i class="mr-2">Actionnaires</i></p>
+                        {% if project.projectOwner.shareholders %}
+                            {% for shareholder in project.projectOwner.shareholders %}
+                                <p class="ml-5">{{ shareholder.shareholder.name }} - {{ shareholder.part }}%</p>
+                            {% endfor %}
+                        {% endif %}
+                        <p><i class="mr-2">Architecte</i></p>
+                        {% if project.architect %}
+                            <p class="ml-5">{{ project.architect.name }}</p>
+                        {% endif %}
+                        <p><i class="mr-2">Entreprise Gén.</i></p>
+                        {% if project.generalCompany %}
+                            <p class="ml-5">{{ project.generalCompany.name }}</p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-4">
+                <div class="container-fluid">
+                    <div class="row"><img src="{{ project.img1 ? asset('img/project/') ~ project.img1 : asset('img/project/default.png') }}"></div>
+                    <div class="row"><img src="{{ project.img2 ? asset('img/project/') ~ project.img2 : asset('img/project/default.png') }}"></div>
+                    <div class="row"><img src="{{ project.img3 ? asset('img/project/') ~ project.img3 : asset('img/project/default.png') }}"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="timeline" style="width: 100%; height: 100px;">
+                    <canvas id="timeline"></canvas>
+                </div>
+                <div class="chart" style="width: 100%; height: 200px;">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="{{ absolute_url(asset('https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.3.1.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js')) }}" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="{{ absolute_url(asset('https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.bundle.min.js')) }}"></script>
+    <script src="{{ absolute_url(asset('js/project_one.js')) }}"></script>
+</body>
+</html>
+
+

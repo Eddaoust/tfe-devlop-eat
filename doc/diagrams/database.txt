@@ -1,0 +1,135 @@
+@startuml
+
+class User {
+    id: (int)
+    email: (string)
+    roles: (json)
+    password: (string)
+    firstName: (string)
+    lastName: (string)
+    birthdate: (string)
+    created: (\Datetime)
+}
+
+class Step {
+    id: (int)
+    study: (\Datetime)
+    mastery: (\Datetime)
+    permitStart: (\Datetime)
+    permitEnd: (\Datetime)
+    worksStart: (\Datetime)
+    worksEnd: (\Datetime)
+    delivery: (\Datetime)
+}
+
+class State {
+    id: (int)
+    quantity: (int)
+    date: (\Datetime)
+    type: (ProjectState)
+    project: (Project)
+}
+
+class Shareholder {
+    id: (int)
+    company: (Company)
+    part: (int)
+    shareholder: (Company)
+}
+
+class ProjectState {
+    id: (int)
+    name: (string)
+    code: (string)
+}
+
+class Project {
+    id: (int)
+    name: (string)
+    address: (string)
+    postalCode: (string)
+    city: (string)
+    description: (text)
+    pointOfInterest: (text)
+    fieldSize: (int)
+    turnover: (int)
+    lots: (int)
+    created: (\Datetime)
+    projectOwner: (Company)
+    architect: (Architect)
+    generalCompany: (GeneralCompany)
+    img1: (string)
+    img2: (string)
+    img3: (string)
+    steps: (Step)
+    state: (State)
+}
+
+class ProfilImage {
+    id: (int)
+    name: (string)
+}
+
+class Invitation {
+    id: (int)
+    user: (User)
+    token: (string)
+    sendDate: (\Datetime)
+}
+
+class GeneralCompany {
+    id: (int)
+    name: (string)
+    address: (string)
+    postalCode: (string)
+    city: (string)
+    phone: (string)
+    email: (string)
+    projects: (Project)
+}
+
+class Country {
+    id: (int)
+    code: (string)
+    name: (string)
+    companyCategories: (CompanyCategory)
+    companies: (Company)
+}
+
+class CompanyCategory {
+    id: (int)
+    country: (Country)
+    abbreviation: (string)
+    name: (string)
+    companies: (Company)
+}
+
+class Company {
+    id: (int)
+    name: (string)
+    address: (string)
+    postalCode: (string)
+    city: (string)
+    phone: (string)
+    tvaNum: (string)
+    registrationNum: (string)
+    bank: (string)
+    bankAccount: (string)
+    country: (Country)
+    companyCategory: (CompanyCategory)
+    shareholders: (Shareholder)
+    projects: (Project)
+}
+
+class Architect {
+    id: (int)
+    name: (string)
+    address: (string)
+    postalCode: (string)
+    city: (string)
+    phone: (string)
+    email: (string)
+    projects: (Project)
+}
+
+@enduml

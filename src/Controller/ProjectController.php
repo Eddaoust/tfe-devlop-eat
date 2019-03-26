@@ -6,6 +6,7 @@ use App\Entity\Project;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Persistence\ObjectManager;
+use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
@@ -82,6 +83,20 @@ class ProjectController extends Controller
         return $this->render('project/project_one.html.twig', [
             'project' => $project
         ]);
+    }
+
+    /**
+     * @Route("/log/project/knp/{id}", name="project_pdf")
+     */
+    public function toPdf(Project $project)
+    {
+        $html = $this->render('project/project_pdf.html.twig', [
+            'project' => $project
+        ]);
+
+        return new PdfResponse(
+            $this->get('knp_snappy.pdf')->getOutput($html), 'test.pdf'
+        );
     }
 
     /**
