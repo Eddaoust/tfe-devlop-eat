@@ -10,7 +10,6 @@
 /.idea/
 /.vscode/
 /vendor/
-/src/DataFixtures/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
