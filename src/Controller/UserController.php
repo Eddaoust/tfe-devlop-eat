@@ -72,6 +72,7 @@ class UserController extends Controller
             $manager->flush();
             // Envoi du mail d'invitation
             $message = (new \Swift_Message('Invitation pour Devlop Eat'))
+				//TODO Changer l'utilisateur pour no reply
                 ->setFrom('eddst.webdev@gmail.com')// devlopeat@eddaoust.com "Changer lors Push en ligne"
                 ->setTo($user->getEmail())
                 ->setBody(

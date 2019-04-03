@@ -9,6 +9,16 @@
     <link rel="stylesheet" href="{{ asset('css/sb-admin.css') }}">
     {% block stylesheets %}{% endblock %}
     <title>Devlop Eat - {% block title %}{% endblock %}</title>
+	<style>
+		@media print {
+			/*
+			Formater l'affichage en print et wktopdf
+			*/
+			.navbar {
+				display: none !important;
+			}
+		}
+	</style>
 </head>
 <body>
 

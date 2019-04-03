@@ -39,7 +39,7 @@ class AccountController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-
+			//TODO Impossible de modifier l'image quand on est l'utilisateur connecté
             $data = $form->getData();
             $image = $data->getImage();
             // Test de la présence d'une image envoyé via le form
