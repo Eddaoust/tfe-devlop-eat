@@ -81,15 +81,24 @@ class ProjectController extends Controller
 	public function toPdf (Project $project)
 	{
 		$knp = $this->container->get('knp_snappy.pdf');
-		$knp->generateFromHtml(
-			$this->renderView('project/project_pdf.html.twig', [
-				'project' => $project
-			]),
-			'pdf/' . $project->getName() . '.pdf'
-		);
+        $html = $this->renderView('project/project_pdf.html.twig', [
+            'project' => $project
+        ]);
+        /*$knp->generateFromHtml(
+            $this->renderView('project/project_pdf.html.twig', [
+                'project' => $project
+            ]),
+            'pdf/' . $project->getName() . '.pdf'
+        );*/
 
-		//TODO ecrire le css pour l'export pdf
-		return new Response('ok');
+        return new PdfResponse(
+            $knp->getOutputFromHtml($html),
+            'file.pdf'
+        );
+
+        /*return $this->render('project/project_pdf.html.twig', [
+            'project' => $project
+        ]);*/
 	}
 
 	/**

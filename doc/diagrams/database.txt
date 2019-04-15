@@ -132,4 +132,17 @@ class Architect {
     projects: (Project)
 }
 
+User -- ProfilImage
+User -- Invitation
+Project -- Step
+Project -- GeneralCompany
+Project -- Architect
+Project -- Company
+Company -- CompanyCategory
+Company -- Country
+CompanyCategory -- Country
+Project -- State
+State -- ProjectState
+Company -- Shareholder
+
 @enduml

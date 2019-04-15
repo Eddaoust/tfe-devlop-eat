@@ -8,10 +8,48 @@
 			font-family: Avenir;
 		}
 
+        body {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .container {
+            width: 70%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+        }
+
+        .content {
+            width: 70%;
+        }
+
+        .image_container {
+            width: 30%;
+        }
+
 		h1 {
 			color: #5E9D4D;
 			font-weight: bold;
 		}
+
+        p {
+            margin-left: 20px;
+        }
+
+        .title {
+            font-size: 25px;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            margin-right: 60px;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
 	</style>
 </head>
 <body>
@@ -45,29 +83,37 @@
 
 		<h1>Chiffres: </h1>
 		{% if project.fieldSize %}
-			<p><i>Terrain</i>{{ project.fieldSize }} ares</p>
-			<p><i>Chiffre d'affaire</i>{{ project.turnover }} &euro;</p>
-			<p><i>Lots</i>{{ project.lots }}</p><br>
+            <p><i>Terrain</i> {{ project.fieldSize }} ares</p>
+            <p><i>Chiffre d'affaire</i> {{ project.turnover }} &euro;</p>
+            <p><i>Lots</i> {{ project.lots }}</p><br>
 		{% endif %}
 
 		<h1>Partenaires: </h1>
 		<p><i>Actionnaires</i></p>
 		{% if project.projectOwner.shareholders %}
 			{% for shareholder in project.projectOwner.shareholders %}
-				<p>{{ shareholder.shareholder.name }} - {{ shareholder.part }}%</p>
+                <p style="margin-left: 40px;">{{ shareholder.shareholder.name }} - {{ shareholder.part }}%</p>
 			{% endfor %}
 		{% endif %}
 		<p><i>Architecte</i></p>
 		{% if project.architect %}
-			<p>{{ project.architect.name }}</p>
+            <p style="margin-left: 40px;">{{ project.architect.name }}</p>
 		{% endif %}
 		<p><i>Entreprise Gén.</i></p>
 		{% if project.generalCompany %}
-			<p>{{ project.generalCompany.name }}</p>
+            <p style="margin-left: 40px;">{{ project.generalCompany.name }}</p>
 		{% endif %}
 	</div>
 	<div class="image_container">
-
+        <div style="margin-top: 30px;" class="row"><img
+                    src="{{ project.img1 ? asset('img/project/') ~ project.img1 : absolute_url(asset('img/project/default.png')) }}">
+        </div>
+        <div class="row"><img
+                    src="{{ project.img2 ? absolute_url(asset('img/project/') ~ project.img2) : asset('img/project/default.png') }}">
+        </div>
+        <div class="row"><img
+                    src="{{ project.img3 ? asset('img/project/') ~ project.img3 : absolute_url(asset('img/project/default.png')) }}">
+        </div>
 	</div>
 </div>
 </body>
