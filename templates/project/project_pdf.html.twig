@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="fr">
 <head>
-	<meta charset="UTF-8">
-	<title>Project to pdf</title>
-	<style>
-		* {
-			font-family: Avenir;
-		}
+    <meta charset="UTF-8">
+    <title>Project to pdf</title>
+    <style>
+        * {
+            font-family: Avenir;
+        }
 
         body {
             display: flex;
@@ -17,8 +17,7 @@
         .container {
             width: 70%;
             display: flex;
-            flex-direction: row;
-            justify-content: center;
+            flex-direction: column;
         }
 
         .content {
@@ -29,10 +28,10 @@
             width: 30%;
         }
 
-		h1 {
-			color: #5E9D4D;
-			font-weight: bold;
-		}
+        h1 {
+            color: #5E9D4D;
+            font-weight: bold;
+        }
 
         p {
             margin-left: 20px;
@@ -50,71 +49,71 @@
             width: 100%;
             height: auto;
         }
-	</style>
+    </style>
 </head>
 <body>
 <div class="container">
-	<div class="content">
-		<div class="title">
-			<h1>{{ project.name }}</h1>
-			<h3>{{ project.projectOwner.name }} {{ project.projectOwner.companyCategory.abbreviation }}
-				- {{ project.projectOwner.country.code }}</h3>
-		</div>
-		{% if project.description %}
-			{% set descriptions = project.description | split('\n') %}
-			{% for description in descriptions %}
-				<p>{{ description }}</p>
-			{% endfor %}
-		{% endif %}
+    <div class="content">
+        <div class="title">
+            <h1>{{ project.name }}</h1>
+            <h3>{{ project.projectOwner.name }} {{ project.projectOwner.companyCategory.abbreviation }}
+                - {{ project.projectOwner.country.code }}</h3>
+        </div>
+        {% if project.description %}
+            {% set descriptions = project.description | split('\n') %}
+            {% for description in descriptions %}
+                <p>{{ description }}</p>
+            {% endfor %}
+        {% endif %}
 
-		<h1>Localisation</h1>
-		{% if project.address %}
-			<p>{{ project.address }}</p>
-			<p>{{ project.postalCode }} {{ project.city }}</p>
-		{% endif %}
+        <h1>Localisation</h1>
+        {% if project.address %}
+            <p>{{ project.address }}</p>
+            <p>{{ project.postalCode }} {{ project.city }}</p>
+        {% endif %}
 
-		<h1>Points d'intérêts</h1>
-		{% if project.pointOfInterest %}
-			{% set pointsInterest = project.pointOfInterest | split('\n') %}
-			{% for point in pointsInterest %}
-				<p>{{ point }}</p>
-			{% endfor %}
-		{% endif %}
+        <h1>Points d'intérêts</h1>
+        {% if project.pointOfInterest %}
+            {% set pointsInterest = project.pointOfInterest | split('\n') %}
+            {% for point in pointsInterest %}
+                <p>{{ point }}</p>
+            {% endfor %}
+        {% endif %}
 
-		<h1>Chiffres: </h1>
-		{% if project.fieldSize %}
+        <h1>Chiffres: </h1>
+        {% if project.fieldSize %}
             <p><i>Terrain</i> {{ project.fieldSize }} ares</p>
             <p><i>Chiffre d'affaire</i> {{ project.turnover }} &euro;</p>
             <p><i>Lots</i> {{ project.lots }}</p><br>
-		{% endif %}
+        {% endif %}
 
-		<h1>Partenaires: </h1>
-		<p><i>Actionnaires</i></p>
-		{% if project.projectOwner.shareholders %}
-			{% for shareholder in project.projectOwner.shareholders %}
+        <h1>Partenaires: </h1>
+        <p><i>Actionnaires</i></p>
+        {% if project.projectOwner.shareholders %}
+            {% for shareholder in project.projectOwner.shareholders %}
                 <p style="margin-left: 40px;">{{ shareholder.shareholder.name }} - {{ shareholder.part }}%</p>
-			{% endfor %}
-		{% endif %}
-		<p><i>Architecte</i></p>
-		{% if project.architect %}
+            {% endfor %}
+        {% endif %}
+        <p><i>Architecte</i></p>
+        {% if project.architect %}
             <p style="margin-left: 40px;">{{ project.architect.name }}</p>
-		{% endif %}
-		<p><i>Entreprise Gén.</i></p>
-		{% if project.generalCompany %}
+        {% endif %}
+        <p><i>Entreprise Gén.</i></p>
+        {% if project.generalCompany %}
             <p style="margin-left: 40px;">{{ project.generalCompany.name }}</p>
-		{% endif %}
-	</div>
-	<div class="image_container">
-        <div style="margin-top: 30px;" class="row"><img
-                    src="{{ project.img1 ? asset('img/project/') ~ project.img1 : absolute_url(asset('img/project/default.png')) }}">
+        {% endif %}
+    </div>
+    <div class="image_container">
+        <div style="margin-top: 30px;" class="row">
+            <img src="{{ project.img1 ? rootDir ~ '/public/' ~ asset('img/project/') ~ project.img1 : rootDir ~ '/public/' ~ asset('img/project/default.png') }}">
         </div>
-        <div class="row"><img
-                    src="{{ project.img2 ? absolute_url(asset('img/project/') ~ project.img2) : asset('img/project/default.png') }}">
+        <div class="row">
+            <img src="{{ project.img2 ? rootDir ~ '/public/' ~ asset('img/project/') ~ project.img2 : rootDir ~ '/public/' ~ asset('img/project/default.png') }}">
         </div>
-        <div class="row"><img
-                    src="{{ project.img3 ? asset('img/project/') ~ project.img3 : absolute_url(asset('img/project/default.png')) }}">
+        <div class="row">
+            <img src="{{ project.img3 ? rootDir ~ '/public/' ~ asset('img/project/') ~ project.img3 : rootDir ~ '/public/' ~ asset('img/project/default.png') }}">
         </div>
-	</div>
+    </div>
 </div>
 </body>
 </html>

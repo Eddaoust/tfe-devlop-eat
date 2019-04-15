@@ -82,7 +82,8 @@ class ProjectController extends Controller
 	{
 		$knp = $this->container->get('knp_snappy.pdf');
         $html = $this->renderView('project/project_pdf.html.twig', [
-            'project' => $project
+            'project' => $project,
+            'rootDir' => $this->get('kernel')->getProjectDir()
         ]);
         /*$knp->generateFromHtml(
             $this->renderView('project/project_pdf.html.twig', [
