@@ -9,6 +9,7 @@
 /.idea/
 /.vscode/
 /vendor/
+/tfe/
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###

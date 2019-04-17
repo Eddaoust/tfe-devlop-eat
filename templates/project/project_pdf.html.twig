@@ -4,20 +4,15 @@
     <meta charset="UTF-8">
     <title>Project to pdf</title>
     <style>
+
         * {
             font-family: Avenir;
         }
 
-        body {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-        }
-
         .container {
-            width: 70%;
-            display: flex;
-            flex-direction: column;
+            display: -webkit-box;
+            flex-direction: row;
+            justify-content: space-between;
         }
 
         .content {
@@ -26,6 +21,8 @@
 
         .image_container {
             width: 30%;
+            border-left: 1px solid black;
+            padding-left: 30px;
         }
 
         h1 {
@@ -39,7 +36,7 @@
 
         .title {
             font-size: 25px;
-            display: flex;
+            display: -webkit-box;
             flex-direction: row;
             justify-content: space-between;
             margin-right: 60px;
@@ -49,6 +46,7 @@
             width: 100%;
             height: auto;
         }
+
     </style>
 </head>
 <body>
@@ -104,6 +102,9 @@
         {% endif %}
     </div>
     <div class="image_container">
+        {#<div class="row"><img src="{{ project.img1 ? asset('img/project/') ~ project.img1 : asset('img/project/default.png') }}"></div>
+        <div class="row"><img src="{{ project.img2 ? asset('img/project/') ~ project.img2 : asset('img/project/default.png') }}"></div>
+        <div class="row"><img src="{{ project.img3 ? asset('img/project/') ~ project.img3 : asset('img/project/default.png') }}"></div>#}
         <div style="margin-top: 30px;" class="row">
             <img src="{{ project.img1 ? rootDir ~ '/public/' ~ asset('img/project/') ~ project.img1 : rootDir ~ '/public/' ~ asset('img/project/default.png') }}">
         </div>
