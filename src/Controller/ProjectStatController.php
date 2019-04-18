@@ -10,13 +10,15 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class ProjectStatController extends Controller
 {
     /**
      * @param Project $project
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/admin/projectStat/show/{id}", name="projectStat_show")
+     * @IsGranted("ROLE_USER")
+     * @Route("/log/projectStat/show/{id}", name="projectStat_show")
      */
     public function showProjectStat(Project $project)
     {
@@ -29,6 +31,7 @@ class ProjectStatController extends Controller
      * @param Request $request
      * @param ObjectManager $manager
      * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/projectStat/add/{id}", name="projectStat_add")
      */
     public function addProjectStat(Project $project, Request $request, ObjectManager $manager, Session $session)
@@ -80,6 +83,7 @@ class ProjectStatController extends Controller
      * @param Request $request
      * @param ObjectManager $manager
      * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/projectStat/edit/{id}", name="projectStat_edit")
      */
     public function editProjectStat(Project $project, Request $request, ObjectManager $manager, Session $session)

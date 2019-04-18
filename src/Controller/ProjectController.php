@@ -17,12 +17,14 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class ProjectController extends Controller
 {
 	/**
 	 * @param ProjectRepository $repo
 	 * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_USER")
 	 * @Route("/log/project", name="project_list")
 	 */
 	public function listProjects (ProjectRepository $repo)
@@ -38,6 +40,7 @@ class ProjectController extends Controller
 	 * @param Request       $request
 	 * @param ObjectManager $manager
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_ADMIN")
 	 * @Route("/admin/project/add", name="project_add")
 	 */
 	public function addProject (Request $request, ObjectManager $manager)
@@ -76,6 +79,7 @@ class ProjectController extends Controller
 	/**
 	 * @param Project $project
 	 * @return Response
+     * @IsGranted("ROLE_USER")
 	 * @Route("/log/project/to-pdf/{id}", name="project_pdf")
 	 */
 	public function toPdf (Project $project)
@@ -105,6 +109,7 @@ class ProjectController extends Controller
 	/**
 	 * @param Project $project
 	 * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_USER")
 	 * @Route("/log/project/{id}", name="project_one")
 	 */
 	public function oneProject (Project $project)
@@ -118,6 +123,7 @@ class ProjectController extends Controller
 	 * @param Project       $project
 	 * @param ObjectManager $manager
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @IsGranted("ROLE_ADMIN")
 	 * @Route("/admin/project/delete/{id}", name="project_delete")
 	 * @ParamConverter("project", options={"exclude": {"manager"}})
 	 */
@@ -142,6 +148,7 @@ class ProjectController extends Controller
 	 * @param               $img
 	 * @param Filesystem    $filesystem
 	 * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @IsGranted("ROLE_ADMIN")
 	 * @Route("/admin/project/image/delete/{id}/{img}", name="project_image_delete")
 	 * @ParamConverter("project", options={"exclude": {"manager", "filesystem"}})
 	 */
@@ -165,6 +172,7 @@ class ProjectController extends Controller
 	 * @param Request       $request
 	 * @param ObjectManager $manager
 	 * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_ADMIN")
 	 * @Route("/admin/project/update/{id}", name="project_update")
 	 * @ParamConverter("project", options={"exclude": {"request","manager", "session"}})
 	 */

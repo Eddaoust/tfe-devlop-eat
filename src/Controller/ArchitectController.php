@@ -10,12 +10,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class ArchitectController extends Controller
 {
     /**
      * @param ArchitectRepository $repo
      * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_USER")
      * @Route("/log/architect", name="architect_list")
      */
     public function listProjects(ArchitectRepository $repo)
@@ -31,6 +33,7 @@ class ArchitectController extends Controller
      * @param Request $request
      * @param ObjectManager $manager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/architect/add", name="architect_add")
      */
     public function addArchitect(Request $request, ObjectManager $manager)
@@ -57,9 +60,10 @@ class ArchitectController extends Controller
     /**
      * @param Architect $architect
      * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_USER")
      * @Route("/log/architect/{id}", name="architect_one")
      */
-    public function oneProject(Architect $architect)
+    public function oneArchitect(Architect $architect)
     {
         return $this->render('architect/architect_one.html.twig', [
             'architect' => $architect
@@ -70,10 +74,11 @@ class ArchitectController extends Controller
      * @param Architect $architect
      * @param ObjectManager $manager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/architect/delete/{id}", name="architect_delete")
      * @ParamConverter("architect", options={"exclude": {"manager"}})
      */
-    public function deletePoject(Architect $architect, ObjectManager $manager)
+    public function deleteArchitect(Architect $architect, ObjectManager $manager)
     {
         $manager->remove($architect);
         $manager->flush();
@@ -87,6 +92,7 @@ class ArchitectController extends Controller
      * @param Request $request
      * @param ObjectManager $manager
      * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/architect/update/{id}", name="architect_update")
      * @ParamConverter("architect", options={"exclude": {"request","manager"}})
      */

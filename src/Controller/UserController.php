@@ -18,7 +18,13 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * Class UserController
+ * @package App\Controller
+ * @IsGranted("ROLE_ADMIN")
+ */
 class UserController extends Controller
 {
     /**
@@ -97,7 +103,7 @@ class UserController extends Controller
     /**
      * @param UserRepository $repository
      * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/log/user", name="user_list")
+     * @Route("/admin/user", name="user_list")
      */
     public function listUsers(UserRepository $repo)
     {

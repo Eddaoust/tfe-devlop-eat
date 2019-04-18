@@ -9,7 +9,13 @@ use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * Class AccountController
+ * @package App\Controller
+ * @IsGranted("ROLE_USER")
+ */
 class AccountController extends Controller
 {
     /**   

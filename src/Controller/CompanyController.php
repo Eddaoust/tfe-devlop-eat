@@ -11,12 +11,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class CompanyController extends Controller
 {
     /**
      * @param CompanyRepository $repo
      * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_USER")
      * @Route("/log/company", name="company_list")
      */
     public function listCompany(CompanyRepository $repo)
@@ -32,6 +34,7 @@ class CompanyController extends Controller
      * @param Request $request
      * @param ObjectManager $manager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/company/add", name="company_add")
      */
     public function addCompany(Request $request, ObjectManager $manager, CompanyCategoryRepository $repo)
@@ -58,6 +61,7 @@ class CompanyController extends Controller
     /**
      * @param Company $company
      * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_USER")
      * @Route("/log/company/{id}", name="company_one")
      */
     public function oneCompany(Company $company)
@@ -71,6 +75,7 @@ class CompanyController extends Controller
      * @param Company $company
      * @param ObjectManager $manager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/company/delete/{id}", name="company_delete")
      * @ParamConverter("company", options={"exclude": {"manager"}})
      */
@@ -88,6 +93,7 @@ class CompanyController extends Controller
      * @param Request $request
      * @param ObjectManager $manager
      * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/company/update/{id}", name="company_update")
      * @ParamConverter("company", options={"exclude": {"request","manager"}})
      */

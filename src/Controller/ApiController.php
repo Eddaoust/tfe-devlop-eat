@@ -11,7 +11,13 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Repository\ProjectRepository;
 use App\Repository\CompanyCategoryRepository;
 use App\Repository\CompanyRepository;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * Class ApiController
+ * @package App\Controller
+ * @IsGranted("ROLE_ADMIN")
+ */
 class ApiController extends Controller
 {
 	/**

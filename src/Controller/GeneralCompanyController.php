@@ -10,12 +10,14 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class GeneralCompanyController extends Controller
 {
     /**
      * @param GeneralCompanyRepository $repo
      * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_USER")
      * @Route("/log/genCompany", name="genCompany_list")
      */
     public function listGenCompanies(GeneralCompanyRepository $repo)
@@ -31,6 +33,7 @@ class GeneralCompanyController extends Controller
      * @param Request $request
      * @param ObjectManager $manager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/genCompany/add", name="genCompany_add")
      */
     public function addArGenCompany(Request $request, ObjectManager $manager)
@@ -57,6 +60,7 @@ class GeneralCompanyController extends Controller
     /**
      * @param GeneralCompany $genCompany
      * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_USER")
      * @Route("/log/genCompany/{id}", name="genCompany_one")
      */
     public function oneGenCompany(GeneralCompany $genCompany)
@@ -70,6 +74,7 @@ class GeneralCompanyController extends Controller
      * @param GeneralCompany $genCompany
      * @param ObjectManager $manager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/genCompany/delete/{id}", name="genCompany_delete")
      * @ParamConverter("genCompany", options={"exclude": {"manager"}})
      */
@@ -87,6 +92,7 @@ class GeneralCompanyController extends Controller
      * @param Request $request
      * @param ObjectManager $manager
      * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/genCompany/update/{id}", name="genCompany_update")
      * @ParamConverter("genCompany", options={"exclude": {"request","manager"}})
      */
