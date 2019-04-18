@@ -17,8 +17,10 @@
                     <th class="desktop">Ville</th>
                     <th class="desktop">Création</th>
                     <th class="desktop">Données</th>
-                    <th class="desktop">Modifier</th>
-                    <th class="desktop">Supprimer</th>
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <th class="desktop">Modifier</th>
+                        <th class="desktop">Supprimer</th>
+                    {% endif %}
                 </tr>
                 </thead>
                 <tbody>
@@ -30,6 +32,7 @@
                         <th>{{ project.city }}</th>
                         <th>{{ project.created | date('d/m/Y') }}</th>
                         <th class="text-center"><a href="{{ path('projectStat_show', {id: project.id}) }}"><i class="fas fa-database"></i></a></th>
+                    {% if is_granted('ROLE_ADMIN') %}
                         <th class="text-center"><a href="{{ path('project_update', {id: project.id}) }}"><i class="fas fa-pen"></i></a></th>
                         <th class="text-center">
                             <span data-toggle="modal" data-target="#project-{{ project.id }}">
@@ -38,28 +41,29 @@
                                 </a>
                             </span>
                         </th>
-                    </tr>
+                        </tr>
 
-                    <!-- Modal -->
-                    <div class="modal fade" id="project-{{ project.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <h5 class="modal-title" id="exampleModalLabel">Suppression du projet: {{ project.name }}</h5>
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                        <span aria-hidden="true">&times;</span>
-                                    </button>
-                                </div>
-                                <div class="modal-body">
-                                    Valider la suppression du projet: {{ project.name }}
-                                </div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                    <a class="btn btn-danger" href="{{ path('project_delete', {id: project.id}) }}">Supprimer</a>
+                        <!-- Modal -->
+                        <div class="modal fade" id="project-{{ project.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLabel">Suppression du projet: {{ project.name }}</h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Valider la suppression du projet: {{ project.name }}
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                        <a class="btn btn-danger" href="{{ path('project_delete', {id: project.id}) }}">Supprimer</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    {% endif %}
                 {% endfor %}
                 </tbody>
             </table>

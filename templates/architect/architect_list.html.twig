@@ -16,8 +16,10 @@
             <th class="desktop">Ville</th>
             <th class="desktop">Phone</th>
             <th class="desktop">Email</th>
-            <th class="desktop">Modifier</th>
-            <th class="desktop">Supprimer</th>
+            {% if is_granted('ROLE_ADMIN') %}
+                <th class="desktop">Modifier</th>
+                <th class="desktop">Supprimer</th>
+            {% endif %}
         </thead>
         <tbody>
         {% for architect in architects %}
@@ -29,6 +31,7 @@
                 <th>{{ architect.city }}</th>
                 <th>{{ architect.phone }}</th>
                 <th>{{ architect.email }}</th>
+            {% if is_granted('ROLE_ADMIN') %}
                 <th class="text-center"><a href="{{ path('architect_update', {id: architect.id}) }}"><i class="fas fa-pen"></i></a></th>
                 <th class="text-center">
                     <span data-toggle="modal" data-target="#architect-{{ architect.id }}">
@@ -37,28 +40,29 @@
                         </a>
                     </span>
                 </th>
-            </tr>
+                </tr>
 
-            <!-- Modal -->
-            <div class="modal fade" id="architect-{{ architect.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Suppression de l'architecte {{ architect.name }}</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            Valider la suppression de l'architecte {{ architect.name }}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                            <a class="btn btn-danger" href="{{ path('architect_delete', {id: architect.id}) }}">Supprimer</a>
+                <!-- Modal -->
+                <div class="modal fade" id="architect-{{ architect.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Suppression de l'architecte {{ architect.name }}</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                Valider la suppression de l'architecte {{ architect.name }}
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                <a class="btn btn-danger" href="{{ path('architect_delete', {id: architect.id}) }}">Supprimer</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            {% endif %}
         {% endfor %}
         </tbody>
     </table>
