@@ -7,7 +7,7 @@ Get the name and the id of each projects
 
 **Authentification** True
 
-**Permission** ROLE_ADMIN
+**Permission** ROLE_USER
 
 ## Response
 

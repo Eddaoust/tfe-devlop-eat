@@ -7,7 +7,7 @@ Get company category for a given country
 
 **Authentification** True
 
-**Permission** ROLE_ADMIN
+**Permission** ROLE_USER
 
 ## Request Data
 

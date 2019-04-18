@@ -7,7 +7,7 @@ Get the turnover for recent projects
 
 **Authentification** True
 
-**Permission** ROLE_ADMIN
+**Permission** ROLE_USER
 
 ## Response
 

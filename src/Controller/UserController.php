@@ -23,7 +23,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * Class UserController
  * @package App\Controller
- * @IsGranted("ROLE_ADMIN")
  */
 class UserController extends Controller
 {
@@ -34,6 +33,7 @@ class UserController extends Controller
      * @param UserPasswordEncoderInterface $encoder
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @throws \Exception
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/user/add", name="user_add")
      */
     public function addUser(\Swift_Mailer $mailer, Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
@@ -103,6 +103,7 @@ class UserController extends Controller
     /**
      * @param UserRepository $repository
      * @return \Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/user", name="user_list")
      */
     public function listUsers(UserRepository $repo)
@@ -117,6 +118,7 @@ class UserController extends Controller
     /**
      * @param User $user
      * @return Response
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/user/{id}", name="user_one")
      */
     public function oneUser(User $user)
@@ -131,6 +133,7 @@ class UserController extends Controller
      * @param Request $request
      * @param ObjectManager $manager
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/user/update/{id}", name="user_update")
      * @ParamConverter("user", options={"exclude": {"request", "manager"}})
      */
@@ -173,6 +176,7 @@ class UserController extends Controller
 
     /**
      * @param User $user
+     * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/user/delete/{id}", name="user_delete")
      * @ParamConverter("user", options={"exclude": {"manager", "filesystem"}})
      */
@@ -224,6 +228,7 @@ class UserController extends Controller
 
                 if($form->isSubmitted() && $form->isValid())
                 {
+                    // TODO Issue with password
                     // Enregistrement du nouveau pass
                     $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
                     // Suppression de l'invitation

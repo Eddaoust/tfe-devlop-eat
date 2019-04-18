@@ -7,7 +7,7 @@ Get the count of company by country
 
 **Authentification** True
 
-**Permission** ROLE_ADMIN
+**Permission** ROLE_USER
 
 ## Response
 

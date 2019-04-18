@@ -7,7 +7,7 @@ Get the count of projects by year
 
 **Authentification** True
 
-**Permission** ROLE_ADMIN
+**Permission** ROLE_USER
 
 ## Response
 

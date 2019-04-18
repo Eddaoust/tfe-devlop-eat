@@ -7,7 +7,7 @@ Get statistics for one project.
 
 **Authentification** True
 
-**Permission** ROLE_ADMIN
+**Permission** ROLE_USER
 
 ## Request Data
 
