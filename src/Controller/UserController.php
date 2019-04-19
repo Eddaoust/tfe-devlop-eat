@@ -144,6 +144,10 @@ class UserController extends Controller
 
         if ($form->isSubmitted() && $form->isValid())
         {
+            if (!array_key_exists('roles', $request->request->get('user_update'))) {
+                $user->setRoles(['ROLE_USER']);
+            }
+
             $data = $form->getData();
             $image = $data->getImage();
             // Test de la présence d'une image envoyé via le form

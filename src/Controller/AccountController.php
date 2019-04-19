@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Form\UserUpdateType;
+use App\Form\AccountUpdateType;
 use App\Form\PasswordResetType;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -41,7 +41,7 @@ class AccountController extends Controller
     {
         $user = $this->getUser();
 
-        $form = $this->createForm(UserUpdateType::class, $user);
+        $form = $this->createForm(AccountUpdateType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
