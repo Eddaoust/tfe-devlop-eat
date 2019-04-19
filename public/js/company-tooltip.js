@@ -17,7 +17,7 @@ $(function() {
                 deleteBtn.style.cursor = 'not-allowed'
                 let tooltipStr = 'Suppression impossible car la société est utilisé dans les projest suivants:\n '
                 for(const company of inactiveLine){
-                    tooltipStr += company.name + ',\n '
+                    tooltipStr += '- ' + company.name + '\n '
                 }
                 deleteBtn.title = tooltipStr
             }
