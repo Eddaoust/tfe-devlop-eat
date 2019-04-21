@@ -57,7 +57,7 @@ class ProjectController extends Controller
 				if (!is_null($file)) {
 					$fileName = md5(uniqid()) . '.' . $file->guessExtension();
 					$file->move(
-						$this->getParameter('project_images_directory'),
+                        $this->getParameter('project_images_directory') . '/' . $project->getName(),
 						$fileName);
 					$setImg = 'setImg' . $i;
 					$project->$setImg($fileName);
@@ -127,14 +127,18 @@ class ProjectController extends Controller
 	 * @Route("/admin/project/delete/{id}", name="project_delete")
 	 * @ParamConverter("project", options={"exclude": {"manager"}})
 	 */
-	public function deletePoject (Project $project, ObjectManager $manager)
+    public function deletePoject(Project $project, ObjectManager $manager, Filesystem $filesystem)
 	{
 		for ($i = 1; $i <= 3; $i++) {
 			$getImg = 'getImg' . $i;
 			if (!is_null($project->$getImg())) {
-				unlink($this->getParameter('project_images_directory') . '/' . $project->$getImg());
+                unlink($this->getParameter('project_images_directory') . '/' . $project->getName() . '/' . $project->$getImg());
 			}
 		}
+
+        if ($this->dir_is_empty($this->getParameter('project_images_directory') . '/' . $project->getName())) {
+            $filesystem->remove($this->getParameter('project_images_directory') . '/' . $project->getName());
+        }
 		$manager->remove($project);
 		$manager->flush();
 
@@ -156,10 +160,14 @@ class ProjectController extends Controller
 	{
 		$setImg = 'set' . $img;
 		$getImg = 'get' . $img;
-		$filesystem->remove($this->getParameter('project_images_directory') . '/' . $project->$getImg());
+        $filesystem->remove($this->getParameter('project_images_directory') . '/' . $project->getName() . '/' . $project->$getImg());
 		$project->$setImg(null);
 		$manager->persist($project);
 		$manager->flush();
+
+        if ($this->dir_is_empty($this->getParameter('project_images_directory') . '/' . $project->getName())) {
+            $filesystem->remove($this->getParameter('project_images_directory') . '/' . $project->getName());
+        }
 
 		$this->addFlash('success', 'Image supprimé avec succès');
 		return $this->redirectToRoute('project_update', [
@@ -185,7 +193,7 @@ class ProjectController extends Controller
 			$setImg = 'setImg' . $i;
 			$fileName = $project->$getImg();
 			if (!is_null($fileName)) {
-				$file = new File($this->getParameter('project_images_directory') . '/' . $project->$getImg());
+                $file = new File($this->getParameter('project_images_directory') . '/' . $project->getName() . '/' . $project->$getImg());
 				$project->$setImg($file);
 				$session->set('fileName' . $i, $fileName);
 			}
@@ -202,12 +210,12 @@ class ProjectController extends Controller
 
 				if (!is_null($file)) {
 					if ($session->get('fileName' . $j)) {
-						$path = $this->getParameter('project_images_directory') . '/' . $session->get('fileName' . $j);
+                        $path = $this->getParameter('project_images_directory') . '/' . $project->getName() . '/' . $session->get('fileName' . $j);
 						unlink($path);
 					}
 					$fileName = md5(uniqid()) . '.' . $file->guessExtension();
 					$file->move(
-						$this->getParameter('project_images_directory'),
+                        $this->getParameter('project_images_directory') . '/' . $project->getName(),
 						$fileName);
 					$project->$setImg($fileName);
 				} else if ($session->get('fileName' . $j) && is_null($file)) {
@@ -231,4 +239,13 @@ class ProjectController extends Controller
 			'project' => $project
 		]);
 	}
+
+    private function dir_is_empty($dirname)
+    {
+        if (!is_dir($dirname)) return false;
+        foreach (scandir($dirname) as $file) {
+            if (!in_array($file, array('.', '..', '.svn', '.git'))) return false;
+        }
+        return true;
+    }
 }
