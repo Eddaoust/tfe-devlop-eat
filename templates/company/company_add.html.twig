@@ -32,7 +32,7 @@
             <div class="col-10">
                 <div class="row">
                     <div class="col">{{ form_widget(form.shareholder) }}{{ form_errors(form.shareholder) }}</div>
-                    <div class="col">{{ form_widget(form.part) }}{{ form_errors(form.part) }}</div>
+                    <div class="col">{{ form_widget(form.part, {'attr': {'class': 'company-part'}}) }}{{ form_errors(form.part) }}</div>
                 </div>
             </div>
             <div class="col-2">

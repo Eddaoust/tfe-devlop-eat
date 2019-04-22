@@ -1,4 +1,31 @@
 $(function() {
+    // Validation pour ne pas dépasser 100% sur le shareholder part
+    const parts = document.getElementsByClassName('company-part');
+    const submit = document.getElementById('company_Ajouter');
+    for (const item of parts) {
+        item.addEventListener('blur', function () {
+            let maxValue = 100;
+            let inputTotal = 0;
+            for (const part of parts) {
+                inputTotal += parseInt(part.value);
+            }
+            if (inputTotal > maxValue) {
+                this.classList.add('is-invalid');
+                const div = document.createElement('div');
+                div.classList.add('invalid-feedback');
+                div.innerText = 'Le total des champs ne peux dépasser 100%';
+                this.parentNode.appendChild(div);
+                submit.disabled = true;
+            } else {
+                this.classList.remove('is-invalid');
+                while (this.parentNode.lastChild !== this) {
+                    this.parentNode.removeChild(this.parentNode.lastChild);
+                }
+                submit.disabled = false;
+            }
+        });
+    }
+
     // Ajout des actionnaires
     $('#add-shareholder').on('click', function() {
         const index = $('#company_shareholders div.form-group').length;
@@ -36,7 +63,7 @@ $(function() {
     });
 
     // Event au chargement de la page pour sélectionner la bonne catégorie de société
-    const url = 'http://127.0.0.1:8000/admin/log/company/category/';
+    const url = 'http://127.0.0.1:8000/log/api/company/category/';
     const countryId = $('#company_country').val();
     $.ajax({
         url: url + countryId,
