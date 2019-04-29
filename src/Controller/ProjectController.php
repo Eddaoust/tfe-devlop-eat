@@ -89,21 +89,11 @@ class ProjectController extends Controller
             'project' => $project,
             'rootDir' => $this->get('kernel')->getProjectDir()
         ]);
-        /*$knp->generateFromHtml(
-            $this->renderView('project/project_pdf.html.twig', [
-                'project' => $project
-            ]),
-            'pdf/' . $project->getName() . '.pdf'
-        );*/
 
         return new PdfResponse(
             $knp->getOutputFromHtml($html),
             'file.pdf'
         );
-
-        /*return $this->render('project/project_pdf.html.twig', [
-            'project' => $project
-        ]);*/
 	}
 
 	/**

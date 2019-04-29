@@ -71,7 +71,6 @@ class ProjectStatController extends Controller
                 'id' => $project->getId()
             ]);
         }
-        //TODO Revoir l'affichage du formulaire
         return $this->render('project_stat/projectStat_add.html.twig', [
             'form' => $form->createView(),
             'project' => $project

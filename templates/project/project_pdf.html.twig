@@ -102,9 +102,6 @@
         {% endif %}
     </div>
     <div class="image_container">
-        {#<div class="row"><img src="{{ project.img1 ? asset('img/project/') ~ project.img1 : asset('img/project/default.png') }}"></div>
-        <div class="row"><img src="{{ project.img2 ? asset('img/project/') ~ project.img2 : asset('img/project/default.png') }}"></div>
-        <div class="row"><img src="{{ project.img3 ? asset('img/project/') ~ project.img3 : asset('img/project/default.png') }}"></div>#}
         <div style="margin-top: 30px;" class="row">
             <img src="{{ project.img1 ? rootDir ~ '/public/' ~ asset('img/project/') ~ project.name ~ '/' ~ project.img1 : rootDir ~ '/public/' ~ asset('img/project/default.png') }}">
         </div>
