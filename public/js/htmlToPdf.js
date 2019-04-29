@@ -6,7 +6,7 @@ const cookie = {
     path: '/',
     httpOnly: true,
     secure: false
-}
+};
 
 const puppeteer = require('puppeteer');
 
@@ -21,6 +21,7 @@ const puppeteer = require('puppeteer');
     });
 
     console.log(cookie);
+    console.log();
 
     await browser.close();
 
