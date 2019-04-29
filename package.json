@@ -1,0 +1,26 @@
+{
+  "name": "devlop-eat",
+  "version": "1.0.0",
+  "description": "**This app helps the company to know the progress of several construction projects**",
+  "main": "index.js",
+  "directories": {
+    "doc": "doc",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Eddaoust/tfe-devlop-eat.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Eddaoust/tfe-devlop-eat/issues"
+  },
+  "homepage": "https://github.com/Eddaoust/tfe-devlop-eat#readme",
+  "dependencies": {
+    "puppeteer": "^1.15.0"
+  }
+}

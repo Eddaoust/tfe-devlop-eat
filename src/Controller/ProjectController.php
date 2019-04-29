@@ -96,6 +96,15 @@ class ProjectController extends Controller
         );
 	}
 
+    /**
+     * @Route("/log/pupet/{id}", name="project_pupet")
+     */
+    public function pupetPdf(Project $project, Request $request)
+    {
+        $name = $request->cookies->keys()[0];
+        $value = $request->cookies->get($name);
+    }
+
 	/**
 	 * @param Project $project
 	 * @return \Symfony\Component\HttpFoundation\Response
