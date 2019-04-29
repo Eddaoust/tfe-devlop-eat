@@ -1,6 +1,21 @@
 {% extends 'project/project-template.html.twig' %}
 
 {% block project_body %}
+    <style>
+        @media print {
+            .jumbotron {
+                display: none;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .navbar {
+                display: none;
+            }
+        }
+    </style>
     <div class="container">
         <div class="row">
             <div class="col-8">

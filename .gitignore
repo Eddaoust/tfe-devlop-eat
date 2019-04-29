@@ -5,6 +5,7 @@
 /.env.local
 /.env.*.local
 /public/bundles/
+/public/img/
 /var/
 /.idea/
 /.vscode/

@@ -18,6 +18,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class AccountController extends Controller
 {
+    //TODO Permettre la suppression de compte
+    //TODO Afficher la présence d'une photo dans l'edit du profil
     /**   
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/log/account", name="account_one")

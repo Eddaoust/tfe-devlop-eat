@@ -16,6 +16,8 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class InvitationController extends Controller
 {
+    //TODO Modifier le système d'invitation en faisant apparaitre le status et ne pas supprimer l'user confirmé
+    //TODO Envoyer un mail lors de la suppression de compte
     /**
      * @Route("/admin/invitation/list", name="invitation_list")
      */
