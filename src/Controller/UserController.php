@@ -2,9 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Invitation;
 use App\Entity\User;
-use App\Form\PasswordResetType;
 use App\Form\UserAddType;
 use App\Form\UserUpdateType;
 use App\Repository\InvitationRepository;
@@ -17,7 +15,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Security\Csrf\TokenGenerator\UriSafeTokenGenerator;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
@@ -27,77 +24,94 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class UserController extends Controller
 {
     /**
-     * @param \Swift_Mailer $mailer
+     * Create a new user secure by token
+     *
      * @param Request $request
      * @param ObjectManager $manager
      * @param UserPasswordEncoderInterface $encoder
+     * @param InvitationRepository $invitationRepository
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      * @throws \Exception
-     * @IsGranted("ROLE_ADMIN")
-     * @Route("/admin/user/add", name="user_add")
+     * @Route("user/create", name="user_create")
      */
-    public function addUser(\Swift_Mailer $mailer, Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
+    public function createUser(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder, InvitationRepository $invitationRepository)
     {
-        $form = $this->createForm(UserAddType::class);
-        $form->handleRequest($request);
+        // Check if token in request url
+        if ($request->query->get('token')) {
 
-        if($form->isSubmitted() && $form->isValid())
-        {
-            // Récupération de l'user dans le form
-            $user = $form->getData();
-            if (!is_null($user->getImage()))
-            {
-                // Récupération de l'image
-                $image = $user->getImage();
-                // Récupération du fichier
-                $file = $image->getFile();
-                // Transformation du nom du fichier
-                $fileName = md5(uniqid()).'.'.$file->guessExtension();
-                // Déplacement vers le répertoire cible
-                $file->move(
-                    $this->getParameter('user_images_directory'),
-                    $fileName);
-                // Persist du nom
-                $image->setName($fileName);
+            // Check if invitation relative to token send
+            $invitation = $invitationRepository->findOneBy(['token' => $request->query->get('token')]);
+
+            if (!empty($invitation)) {
+
+                // Set the invitation timeout
+                $now = new \DateTime();
+                $sendDate = clone($invitation->getSendDate());
+                $timeOut = new \DateInterval('PT24H');
+
+                // Check if timeout
+                if ($now->sub($timeOut) < $sendDate) {
+                    $user = new User();
+
+                    $form = $this->createForm(UserAddType::class, $user);
+                    $form->handleRequest($request);
+
+                    if ($form->isSubmitted() && $form->isValid()) {
+
+                        // File management
+                        $user = $form->getData();
+                        if (!is_null($user->getImage())) {
+                            // Récupération de l'image
+                            $image = $user->getImage();
+                            // Récupération du fichier
+                            $file = $image->getFile();
+                            // Transformation du nom du fichier
+                            $fileName = md5(uniqid()) . '.' . $file->guessExtension();
+                            // Déplacement vers le répertoire cible
+                            $file->move(
+                                $this->getParameter('user_images_directory'),
+                                $fileName);
+                            // Persist du nom
+                            $image->setName($fileName);
+                        }
+                        // Set user
+                        $user->setPassword($encoder->encodePassword($user, $user->getPassword()))
+                            ->setRoles(['ROLE_USER'])
+                            ->setCreated(new \DateTime('now'));
+
+                        // Change the invitation data
+                        $invitation->setStatus($invitation::CONFIRMED)
+                            ->setToken('')
+                            ->setEmail($user->getEmail())
+                            ->setUser($user)
+                            ->setConfirmedAt(new \DateTime());
+
+                        $manager->persist($user);
+                        $manager->persist($invitation);
+                        $manager->flush();
+
+                        $this->addFlash('success', 'Compte créé avec succès');
+                        return $this->redirectToRoute('login');
+                    }
+
+                    return $this->render('user/user_add.html.twig', [
+                        'form' => $form->createView()
+                    ]);
+                } else {
+                    $invitation->setStatus($invitation::TIMEOUT);
+                    $invitation->setToken('');
+                    $manager->persist($invitation);
+                    $manager->flush();
+
+                    $this->addFlash('danger', 'Votre invitation n\'est plus valide');
+                    return $this->redirectToRoute('login');
+                }
+            } else {
+                throw new \Exception('Accès refusé');
             }
-            // Création du Token
-            $generator = new UriSafeTokenGenerator(256);
-            $token = $generator->generateToken();
-            // Mise en place d'un faux pw
-            $user->setPassword($encoder->encodePassword($user, $token.'fakePassword'))
-                ->setRoles(['ROLE_USER'])
-                ->setCreated(new \DateTime('now'));
-            // Création d'une invitation
-            $invitation = new Invitation();
-            $invitation->setUser($user);
-            $invitation->setToken($token);
-            $invitation->setSendDate(new \DateTime('now'));
-
-            $manager->persist($user);
-            $manager->persist($invitation);
-            $manager->flush();
-            // Envoi du mail d'invitation
-            $message = (new \Swift_Message('Invitation pour Devlop Eat'))
-				//TODO Changer l'utilisateur pour no reply
-                ->setFrom('eddst.webdev@gmail.com')// devlopeat@eddaoust.com "Changer lors Push en ligne"
-                ->setTo($user->getEmail())
-                ->setBody(
-                    $this->renderView('user/user_add_link.html.twig', [
-                        'token' => $token,
-                        'id' => $user->getId()
-                    ]),
-                    'text/html'
-                );
-
-            $mailer->send($message);
-            $this->addFlash('success', 'Invitation envoyé à l\'utilisateur');
-            return $this->redirectToRoute('user_list');
+        } else {
+            throw new \Exception('Accès refusé');
         }
-
-        return $this->render('user/user_add.html.twig', [
-            'form' => $form->createView()
-        ]);
-
     }
 
     /**
@@ -197,70 +211,5 @@ class UserController extends Controller
 
         $this->addFlash('success', 'Utilisateur supprimé avec succès');
         return $this->redirectToRoute('user_list');
-    }
-
-    /**
-     * @param UserRepository $userRepo
-     * @param InvitationRepository $invitRepo
-     * @param Request $request
-     * @param ObjectManager $manager
-     * @param UserPasswordEncoderInterface $encoder
-     * @param $id
-     * @param $token
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
-     * @throws \Exception
-     * @Route("/reset-password/{id}/{token}", name="user_reset_password")
-     */
-    public function resetPassword(UserRepository $userRepo, InvitationRepository $invitRepo, Request $request,ObjectManager $manager, UserPasswordEncoderInterface $encoder ,$id, $token)
-    {
-        // Sélection de l'user via l'id du mail
-        $user = $userRepo->find($id);
-        // Sélection de l'invitation de l'user
-        $invitation = $invitRepo->findOneBy(['user' => $id]);
-        // Test de la présence d'un token
-        if(!empty($invitation) && $invitation->getToken() === $token)
-        {
-            // Définition du temps de validité du token
-            $invitTimeOut = date('Y-m-d H:i:s', strtotime("+60 minute", strtotime($invitation->getSendDate()->format('Y-m-d H:i:s'))));
-            $dateNow = date('Y-m-d H:i:s');
-
-            // Si le token est valide dans le timing
-            if(strtotime($dateNow) < strtotime($invitTimeOut))
-            {
-                $form = $this->createForm(PasswordResetType::class);
-                $form->handleRequest($request);
-
-                if($form->isSubmitted() && $form->isValid())
-                {
-                    // TODO Issue with password
-                    // Enregistrement du nouveau pass
-                    $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
-                    // Suppression de l'invitation
-                    $manager->remove($invitation);
-                    $manager->persist($user);
-                    $manager->flush();
-
-                    $this->addFlash('success', 'Votre password a été modifié avec succès');
-                    return $this->redirectToRoute('login');
-                }
-
-                return $this->render('user/user_password.html.twig', [
-                    'form' => $form->createView()
-                ]);
-            }
-            else
-            {
-                // Si le token n'est plus valide on efface l'user et l'invitation
-                $manager->remove($user);
-                $manager->remove($invitation);
-                $manager->flush();
-                $this->addFlash('danger', 'Votre invitation n\'est plus valide');
-                return $this->redirectToRoute('login');
-            }
-        }
-        else
-        {
-            return $this->redirectToRoute('login');
-        }
     }
 }

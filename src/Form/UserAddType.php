@@ -6,6 +6,7 @@ use App\Entity\User;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
+use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +22,20 @@ class UserAddType extends AbstractType
                 'required' => true,
                 'attr' => [
                     'placeholder' => 'Entrez une adresse email'
+                ]
+            ])
+            ->add('password', PasswordType::class, [
+                'label' => 'Mot de passe',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Entrez votre mot de passe'
+                ]
+            ])
+            ->add('confirmPassword', PasswordType::class, [
+                'label' => 'Confirmation mot de passe',
+                'required' => true,
+                'attr' => [
+                    'placeholder' => 'Confirmez votre mot de passe'
                 ]
             ])
             ->add('firstName', TextType::class, [

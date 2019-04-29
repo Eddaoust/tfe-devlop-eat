@@ -22,11 +22,15 @@
                 <tbody>
                 {% for invitation in invitations %}
                     <tr>
-                        <th>{{ invitation.user.email }}</th>
-                        {% if invitation.sendDate | date_modify("+60 minutes") | date() < 'now' | date() %}
-                            <th class="text-danger">Invitation dépassée</th>
-                        {% else %}
-                            <th class="text-success">Invitation en attente</th>
+                        <th>{{ invitation.email }}</th>
+                        {% if invitation.status == 1 %}
+                            <th class="text-success">Confirmé</th>
+                        {% elseif invitation.status == 2 %}
+                            <th class="text-info">Refusé</th>
+                        {% elseif invitation.status == 3 %}
+                            <th class="text-warning">En attente</th>
+                        {% elseif invitation.status == 4 %}
+                            <th class="text-danger">Délai dépassé</th>
                         {% endif %}
                         <th>{{ invitation.sendDate | date('d/m/Y') }}</th>
                         <th class="text-center"><a href="{{ path('invitation_delete', {id: invitation.id}) }}">
