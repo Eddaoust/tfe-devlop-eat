@@ -23,5 +23,5 @@ const puppeteer = require('puppeteer');
     console.log(cookie);
 
     await browser.close();
-    g
+
 })();
