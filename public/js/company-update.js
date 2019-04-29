@@ -51,13 +51,13 @@ $(function() {
             type: 'get',
         })
             .done(function (datas) {
-                for(const option of $('#companyCategory option')){
+                for (const option of $('#company_companyCategory option')) {
                     if (option.value.length < 8){
                         option.remove();
                     }
                 }
                 for(const data of datas){
-                    $('#companyCategory').append(`<option value="${data.abbreviation}">${data.abbreviation} - ${data.name}</option>`);
+                    $('#company_companyCategory').append(`<option value="${data.id}">${data.abbreviation} - ${data.name}</option>`);
                 }
             })
     });
@@ -70,7 +70,7 @@ $(function() {
         type: 'get',
     })
         .done(function (datas) {
-            for(const option of $('#companyCategory option')){
+            for (const option of $('#company_companyCategory option')) {
                 if (option.value.length < 8){
                     option.remove();
                 }
@@ -78,9 +78,9 @@ $(function() {
             for(const data of datas){
                 if(data.id == $('#companyCategoryToCheck').val()){
                     // Sélection du champs présent en db
-                    $('#companyCategory').append(`<option selected value="${data.abbreviation}">${data.abbreviation} - ${data.name}</option>`)
+                    $('#company_companyCategory').append(`<option selected value="${data.id}">${data.abbreviation} - ${data.name}</option>`)
                 } else {
-                    $('#companyCategory').append(`<option value="${data.abbreviation}">${data.abbreviation} - ${data.name}</option>`);
+                    $('#company_companyCategory').append(`<option value="${data.id}">${data.abbreviation} - ${data.name}</option>`);
                 }
             }
         })

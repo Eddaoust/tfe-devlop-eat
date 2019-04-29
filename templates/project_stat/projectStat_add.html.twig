@@ -4,12 +4,8 @@
 
 {% block project_body %}
     <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <h3 class="text-black-50 text-center">Ajout / Modification des statistiques  du projet</h3><hr>
-                <h4 class="text-center"><span class="text-success">Projet: </span>{{ project.name }}</h4>
-            </div>
-        </div>
+        <h3>Ajout des données du projet</h3>
+        <hr class="mb-5">
         {{ form_start(form) }}
         <div class="row">
             <div class="col-lg-6">{{ form_row(form.steps.study) }}</div>

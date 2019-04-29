@@ -36,7 +36,7 @@ class GeneralCompanyController extends Controller
      * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/genCompany/add", name="genCompany_add")
      */
-    public function addArGenCompany(Request $request, ObjectManager $manager)
+    public function addGenCompany(Request $request, ObjectManager $manager)
     {
         $genCompany = new GeneralCompany();
 

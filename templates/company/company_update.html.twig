@@ -3,19 +3,22 @@
 {% form_theme form _self %} {# Dans ce fichier, pour la variable form on utilise le theme personnalisé plus bas #}
 
 {% block company_body %}
-    {{ form_start(form) }}
-    <input type="hidden" value="{{ company.companyCategory.id }}" id="companyCategoryToCheck">
-    <div class="row">
-        <div class="col-6">{{ form_row(form.name) }}</div>
-        <div class="col-3">{{ form_row(form.country) }}</div>
-        <div class="col-3">
-            <label for="companyCategory">Type de société</label>
-            <select id="companyCategory" class="form-control" name="company[companyCategory]">
-                <option selected disabled>Choisissez un type de société...</option>
-            </select>
+    <div class="container">
+        <h3>Ajouter une société</h3>
+        <hr class="mb-5">
+        `
+        {{ form_start(form) }}
+        <input type="hidden" value="{{ company.companyCategory.id }}" id="companyCategoryToCheck">
+        <div class="row">
+            <div class="col-6">{{ form_row(form.name) }}</div>
+            <div class="col-3">{{ form_row(form.country) }}</div>
+            <div class="col-3">
+                {{ form_row(form.companyCategory) }}
+                {{ form_errors(form.companyCategory) }}
+            </div>
         </div>
+        {{ form_end(form) }}
     </div>
-    {{ form_end(form) }}
 {% endblock %}
 
 {% block _company_shareholders_widget %} {# Theme personnalisé pour la balise avec l'id company_shareholders #}
@@ -32,13 +35,13 @@
 {% block _company_shareholders_entry_widget %}
     <div class="form-group" id="block_{{ id }}">
         <div class="row">
-            <div class="col-10">
+            <div class="col-11">
                 <div class="row">
                     <div class="col">{{ form_widget(form.shareholder) }}</div>
                     <div class="col">{{ form_widget(form.part, {'attr': {'class': 'company-part'}}) }}{{ form_errors(form.part) }}</div>
                 </div>
             </div>
-            <div class="col-2">
+            <div class="col-1">
                 <button type="button" data-action="delete" data-target="#block_{{ id }}" class="btn btn-danger">X</button>
             </div>
         </div>

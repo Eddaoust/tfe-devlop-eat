@@ -43,6 +43,7 @@ class CompanyType extends AbstractType
                 'placeholder' => 'Choisissez un pays'
             ])
             ->add('companyCategory', EntityType::class, [
+                'label' => 'Forme juridique',
                 'class' => CompanyCategory::class,
                 'choice_label' => 'name',
                 'placeholder' => 'Choisissez un type de société'

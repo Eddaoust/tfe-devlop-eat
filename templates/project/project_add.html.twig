@@ -1,35 +1,48 @@
 {% extends 'project/project-template.html.twig' %}
 
 {% block project_body %}
-    {{ form_start(form) }}
-    <div class="row">
-        <div class="col-6">{{ form_row(form.name) }}</div>
-        <div class="col-6">{{ form_row(form.projectOwner) }}</div>
+    <div class="container">
+        <h3>Ajouter un projet</h3>
+        <hr class="mb-5">
+        {{ form_start(form) }}
+        <div class="row">
+            <div class="col-6">{{ form_row(form.name) }}</div>
+            <div class="col-6">{{ form_row(form.projectOwner) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-6">{{ form_row(form.architect) }}</div>
+            <div class="col-6">{{ form_row(form.generalCompany) }}</div>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div class="row">
+            <div class="col-4">{{ form_row(form.address) }}</div>
+            <div class="col-4">{{ form_row(form.postalCode) }}</div>
+            <div class="col-4">{{ form_row(form.city) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-4">{{ form_row(form.fieldSize) }}</div>
+            <div class="col-4">{{ form_row(form.turnover) }}</div>
+            <div class="col-4">{{ form_row(form.lots) }}</div>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div class="row">
+            <div class="col-12">{{ form_row(form.description) }}</div>
+        </div>
+        <div class="row">
+            <div class="col-12">{{ form_row(form.pointOfInterest) }}</div>
+        </div>
+        <br>
+        <hr>
+        <br>
+        <div class="row">
+            <div class="col-4">{{ form_row(form.img1) }}</div>
+            <div class="col-4">{{ form_row(form.img2) }}</div>
+            <div class="col-4">{{ form_row(form.img3) }}</div>
+        </div>
+        {{ form_end(form) }}
     </div>
-    <div class="row">
-        <div class="col-12">{{ form_row(form.description) }}</div>
-    </div>
-    <div class="row">
-        <div class="col-4">{{ form_row(form.address) }}</div>
-        <div class="col-4">{{ form_row(form.postalCode) }}</div>
-        <div class="col-4">{{ form_row(form.city) }}</div>
-    </div>
-    <div class="row">
-        <div class="col-12">{{ form_row(form.pointOfInterest) }}</div>
-    </div>
-    <div class="row">
-        <div class="col-4">{{ form_row(form.fieldSize) }}</div>
-        <div class="col-4">{{ form_row(form.turnover) }}</div>
-        <div class="col-4">{{ form_row(form.lots) }}</div>
-    </div>
-    <div class="row">
-        <div class="col-6">{{ form_row(form.architect) }}</div>
-        <div class="col-6">{{ form_row(form.generalCompany) }}</div>
-    </div>
-    <div class="row">
-        <div class="col-4">{{ form_row(form.img1) }}</div>
-        <div class="col-4">{{ form_row(form.img2) }}</div>
-        <div class="col-4">{{ form_row(form.img3) }}</div>
-    </div>
-    {{ form_end(form) }}
 {% endblock %}

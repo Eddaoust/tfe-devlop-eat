@@ -1,6 +1,10 @@
 {% extends 'general_company/genCompany-template.html.twig' %}
 
 {% block genCompany_body %}
-    {{ form_start(form) }}
-    {{ form_end(form) }}
+    <div class="container">
+        <h3>Ajouter une entreprise générale</h3>
+        <hr class="mb-5">
+        {{ form_start(form) }}
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
