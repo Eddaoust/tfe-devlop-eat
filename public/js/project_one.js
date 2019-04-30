@@ -1,6 +1,6 @@
 $(function () {
 
-    const url = 'http://127.0.0.1:8000/log/api/project/stat/'
+    const url = '/log/api/project/stat/'
     const id = $('#projectId').val()
 
     $.ajax({

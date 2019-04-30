@@ -5,7 +5,7 @@ $(function() {
 
     $.ajax({
         type: 'get',
-        url: 'http://127.0.0.1:8000/log/api/archi-projects'
+        url: '/log/api/archi-projects'
     }).done(function(datas) {
         for(const deleteBtn of deleteBtnList){
             const inactiveLine = $.grep(datas, function(obj){return obj.id == deleteBtn.id;});

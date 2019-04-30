@@ -101,8 +101,15 @@ class ProjectController extends Controller
      */
     public function pupetPdf(Project $project, Request $request)
     {
-        $name = $request->cookies->keys()[0];
+        $name = session_name();
         $value = $request->cookies->get($name);
+
+        exec('/usr/local/bin/node ' . __DIR__ . '/../../public/js/htmlToPdf.js ' . $name . ' ' . $value, $output, $return_var);
+        dump($name);
+        dump($value);
+        dump($output);
+        dump($return_var);
+        die();
     }
 
 	/**

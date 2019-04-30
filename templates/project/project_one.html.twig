@@ -86,13 +86,16 @@
             </div>
             <div class="col-4">
                 <div class="container-fluid">
-                    <div class="row"><img
+                    <div class="row" style="align-items: flex-start">
+                        <img class="img-fluid"
                                 src="{{ project.img1 ? asset('img/project/') ~ project.name ~ '/' ~ project.img1 : asset('img/project/default.png') }}">
                     </div>
-                    <div class="row"><img
+                    <div class="row" style="align-items: flex-start">
+                        <img class="img-fluid"
                                 src="{{ project.img2 ? asset('img/project/') ~ project.name ~ '/' ~ project.img2 : asset('img/project/default.png') }}">
                     </div>
-                    <div class="row"><img
+                    <div class="row" style="align-items: flex-start">
+                        <img class="img-fluid"
                                 src="{{ project.img3 ? asset('img/project/') ~ project.name ~ '/' ~ project.img3 : asset('img/project/default.png') }}">
                     </div>
                 </div>
