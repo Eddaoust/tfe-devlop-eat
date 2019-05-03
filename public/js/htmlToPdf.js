@@ -1,8 +1,9 @@
+
 const cookie = {
     name: process.argv[2],
     value: process.argv[3],
-    domain: 'localhost',
-    url: 'http://localhost:8888/',
+    domain: '192.168.33.230',
+    url: 'http://192.168.33.230/',
     path: '/',
     expires: -1,
     httpOnly: true,
@@ -13,12 +14,21 @@ const cookie = {
 const puppeteer = require('puppeteer');
 
 (async () => {
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        headless: true,
+        executablePath:'/var/www/html/tfe-devlop-eat/node_modules/puppeteer/.local-chromium/linux-650583/chrome-linux/chrome',
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+    });
     const page = await browser.newPage();
     await page.setCookie(cookie);
-    await page.goto('http://localhost:8888/log/project/929', {waitUntil: 'networkidle2'});
+    await page.setRequestInterception(true);
+    page.on("request", request => {
+        console.log(request.url());
+        request.continue();
+    });
+    await page.goto('http://192.168.33.230/log/project/1', {waitUntil: 'domcontentloaded'});
     await page.pdf({
-        path: '/Users/edmonddaoust/Documents/CODING/Learning/PERSONAL_PROJECT/Devlop-Eat/public/pdf/test.pdf',
+        path: '/var/www/html/tfe-devlop-eat/public/pdf/test.pdf',
         format: 'A4'
     });
 

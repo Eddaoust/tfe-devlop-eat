@@ -18,6 +18,8 @@ use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 
 class ProjectController extends Controller
 {
@@ -97,19 +99,22 @@ class ProjectController extends Controller
 	}
 
     /**
-     * @Route("/log/pupet/{id}", name="project_pupet")
+     * @Route("/log/pupet", name="project_pupet")
      */
-    public function pupetPdf(Project $project, Request $request)
+    public function pupetPdf(Request $request)
     {
         $name = session_name();
         $value = $request->cookies->get($name);
 
-        exec('/usr/local/bin/node ' . __DIR__ . '/../../public/js/htmlToPdf.js ' . $name . ' ' . $value, $output, $return_var);
-        dump($name);
-        dump($value);
-        dump($output);
-        dump($return_var);
-        die();
+        $process = new Process(['/usr/bin/node',  __DIR__ . '/../../public/js/htmlToPdf.js', $name, $value]);
+        $process->run(function ($type, $buffer){
+            echo $buffer;
+        });
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        echo $process->getOutput();
     }
 
 	/**
