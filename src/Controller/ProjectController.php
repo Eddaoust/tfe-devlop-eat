@@ -6,17 +6,15 @@ use App\Entity\Project;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
 use Doctrine\Common\Persistence\ObjectManager;
-use Knp\Bundle\SnappyBundle\KnpSnappyBundle;
-use Knp\Bundle\SnappyBundle\Snappy\Response\PdfResponse;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Process\Exception\ProcessFailedException;
+use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
-use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 class ProjectController extends Controller
@@ -76,40 +74,25 @@ class ProjectController extends Controller
 		]);
 	}
 
-	/**
-	 * @param Project $project
-	 * @return Response
-     * @IsGranted("ROLE_USER")
-	 * @Route("/log/project/to-pdf/{id}", name="project_pdf")
-	 */
-	public function toPdf (Project $project)
-	{
-		$knp = $this->container->get('knp_snappy.pdf');
-        $html = $this->renderView('project/project_pdf.html.twig', [
-            'project' => $project,
-            'rootDir' => $this->get('kernel')->getProjectDir()
-        ]);
-
-        return new PdfResponse(
-            $knp->getOutputFromHtml($html),
-            'file.pdf'
-        );
-	}
-
     /**
-     * @Route("/log/pupet/{id}", name="project_pupet")
+     * @Route("/log/pupet", name="project_pupet")
      */
-    public function pupetPdf(Project $project, Request $request)
+    public function pupetPdf(Request $request)
     {
         $name = session_name();
         $value = $request->cookies->get($name);
 
-        exec('/usr/local/bin/node ' . __DIR__ . '/../../public/js/htmlToPdf.js ' . $name . ' ' . $value, $output, $return_var);
-        dump($name);
-        dump($value);
-        dump($output);
-        dump($return_var);
-        die();
+        session_write_close();
+
+        $process = new Process(['/usr/local/bin/node',  __DIR__ . '/../../public/js/htmlToPdf.js', $name, $value]);
+        $process->run(function ($type, $buffer){
+            echo $buffer;
+        });
+        if (!$process->isSuccessful()) {
+            throw new ProcessFailedException($process);
+        }
+
+        echo $process->getOutput();
     }
 
 	/**
