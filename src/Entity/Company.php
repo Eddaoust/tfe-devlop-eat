@@ -57,9 +57,9 @@ class Company
      * @ORM\Column(type="string", length=255, nullable=true)
      * @Assert\Length(
      *     min = 2,
-     *     max = 20,
+     *     max = 40,
      *     minMessage = "La ville doit faire au moins 2 caractères",
-     *     maxMessage = "La ville doit faire moins de 20 caractères"
+     *     maxMessage = "La ville doit faire moins de 40 caractères"
      * )
      */
     private $city;
