@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Entity\Project;
 use App\Form\ProjectType;
 use App\Repository\ProjectRepository;
+use App\Service\PendingPdfManager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\File\File;
@@ -41,7 +42,7 @@ class ProjectController extends Controller
      * @IsGranted("ROLE_ADMIN")
 	 * @Route("/admin/project/add", name="project_add")
 	 */
-	public function addProject (Request $request, ObjectManager $manager)
+	public function addProject (Request $request, ObjectManager $manager, PendingPdfManager $pendingPdfManager)
 	{
 		$project = new Project();
 
@@ -62,6 +63,7 @@ class ProjectController extends Controller
 				}
 			}
 			$project->setCreated(new \DateTime('now'));
+			$pendingPdfManager->addPendingPdf($project);
 			$manager->persist($project);
 			$manager->flush();
 
@@ -173,7 +175,7 @@ class ProjectController extends Controller
 	 * @Route("/admin/project/update/{id}", name="project_update")
 	 * @ParamConverter("project", options={"exclude": {"request","manager", "session"}})
 	 */
-	public function updateProject (Project $project, Request $request, ObjectManager $manager, Session $session)
+	public function updateProject (Project $project, Request $request, ObjectManager $manager, Session $session, PendingPdfManager $pendingPdfManager)
 	{
 
 		for ($i = 1; $i <= 3; $i++) {
@@ -213,7 +215,7 @@ class ProjectController extends Controller
 
 				}
 			}
-
+            $pendingPdfManager->addPendingPdf($project);
 			$manager->persist($project);
 			$manager->flush();
 

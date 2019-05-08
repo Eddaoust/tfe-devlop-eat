@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Project;
 use App\Form\ProjectStatType;
+use App\Service\PendingPdfManager;
 use Symfony\Component\HttpFoundation\Request;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\HttpFoundation\File\File;
@@ -34,7 +35,7 @@ class ProjectStatController extends Controller
      * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/projectStat/add/{id}", name="projectStat_add")
      */
-    public function addProjectStat(Project $project, Request $request, ObjectManager $manager, Session $session)
+    public function addProjectStat(Project $project, Request $request, ObjectManager $manager, Session $session, PendingPdfManager $pendingPdfManager)
     {
         // Gestion des input file du projet (image)
         for($i = 1; $i <= 3; $i++)
@@ -64,6 +65,7 @@ class ProjectStatController extends Controller
                     $project->$setImg($session->get('fileName'.$j));
                 }
             }
+            $pendingPdfManager->addPendingPdf($project);
             $manager->persist($project);
             $manager->flush();
 
@@ -85,7 +87,7 @@ class ProjectStatController extends Controller
      * @IsGranted("ROLE_ADMIN")
      * @Route("/admin/projectStat/edit/{id}", name="projectStat_edit")
      */
-    public function editProjectStat(Project $project, Request $request, ObjectManager $manager, Session $session)
+    public function editProjectStat(Project $project, Request $request, ObjectManager $manager, Session $session, PendingPdfManager $pendingPdfManager)
     {
         // Gestion des input file du projet (image)
         for($i = 1; $i <= 3; $i++)
@@ -124,6 +126,7 @@ class ProjectStatController extends Controller
                     $manager->remove($state);
                 }
             }
+            $pendingPdfManager->addPendingPdf($project);
             $manager->persist($project);
             $manager->flush();
 
