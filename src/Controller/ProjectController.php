@@ -12,8 +12,6 @@ use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\Session;
-use Symfony\Component\Process\Exception\ProcessFailedException;
-use Symfony\Component\Process\Process;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -62,6 +60,7 @@ class ProjectController extends Controller
 					$project->$setImg($fileName);
 				}
 			}
+			$project->setDirectoryName($project->getName());
 			$project->setCreated(new \DateTime('now'));
 			$pendingPdfManager->addPendingPdf($project);
 			$manager->persist($project);
@@ -104,12 +103,12 @@ class ProjectController extends Controller
 		for ($i = 1; $i <= 3; $i++) {
 			$getImg = 'getImg' . $i;
 			if (!is_null($project->$getImg())) {
-                unlink($this->getParameter('project_images_directory') . '/' . $project->getName() . '/' . $project->$getImg());
+                unlink($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName() . '/' . $project->$getImg());
 			}
 		}
 
-        if ($this->dir_is_empty($this->getParameter('project_images_directory') . '/' . $project->getName())) {
-            $filesystem->remove($this->getParameter('project_images_directory') . '/' . $project->getName());
+        if ($this->dir_is_empty($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName())) {
+            $filesystem->remove($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName());
         }
 		$manager->remove($project);
 		$manager->flush();
@@ -132,13 +131,13 @@ class ProjectController extends Controller
 	{
 		$setImg = 'set' . $img;
 		$getImg = 'get' . $img;
-        $filesystem->remove($this->getParameter('project_images_directory') . '/' . $project->getName() . '/' . $project->$getImg());
+        $filesystem->remove($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName() . '/' . $project->$getImg());
 		$project->$setImg(null);
 		$manager->persist($project);
 		$manager->flush();
 
-        if ($this->dir_is_empty($this->getParameter('project_images_directory') . '/' . $project->getName())) {
-            $filesystem->remove($this->getParameter('project_images_directory') . '/' . $project->getName());
+        if ($this->dir_is_empty($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName())) {
+            $filesystem->remove($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName());
         }
 
 		$this->addFlash('success', 'Image supprimé avec succès');
@@ -158,14 +157,13 @@ class ProjectController extends Controller
 	 */
 	public function updateProject (Project $project, Request $request, ObjectManager $manager, Session $session, PendingPdfManager $pendingPdfManager)
 	{
-        //FIXME if change project name also change repo name
 		for ($i = 1; $i <= 3; $i++) {
 			$session->remove('fileName' . $i);
 			$getImg = 'getImg' . $i;
 			$setImg = 'setImg' . $i;
 			$fileName = $project->$getImg();
 			if (!is_null($fileName)) {
-                $file = new File($this->getParameter('project_images_directory') . '/' . $project->getName() . '/' . $project->$getImg());
+                $file = new File($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName() . '/' . $project->$getImg());
 				$project->$setImg($file);
 				$session->set('fileName' . $i, $fileName);
 			}
@@ -182,12 +180,12 @@ class ProjectController extends Controller
 
 				if (!is_null($file)) {
 					if ($session->get('fileName' . $j)) {
-                        $path = $this->getParameter('project_images_directory') . '/' . $project->getName() . '/' . $session->get('fileName' . $j);
+                        $path = $this->getParameter('project_images_directory') . '/' . $project->getDirectoryName() . '/' . $session->get('fileName' . $j);
 						unlink($path);
 					}
 					$fileName = md5(uniqid()) . '.' . $file->guessExtension();
 					$file->move(
-                        $this->getParameter('project_images_directory') . '/' . $project->getName(),
+                        $this->getParameter('project_images_directory') . '/' . $project->getDirectoryName(),
 						$fileName);
 					$project->$setImg($fileName);
 				} else if ($session->get('fileName' . $j) && is_null($file)) {

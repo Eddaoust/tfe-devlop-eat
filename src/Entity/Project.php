@@ -187,6 +187,11 @@ class Project
      */
     private $state;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $directoryName;
+
     public function __construct()
     {
         $this->projectImages = new ArrayCollection();
@@ -435,6 +440,18 @@ class Project
                 $state->setProject(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDirectoryName(): ?string
+    {
+        return $this->directoryName;
+    }
+
+    public function setDirectoryName(?string $directoryName): self
+    {
+        $this->directoryName = $directoryName;
 
         return $this;
     }

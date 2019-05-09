@@ -88,6 +88,7 @@ class AppFixtures extends Fixture
                             ->setTurnover($faker->numberBetween(200000, 10000000))
                             ->setLots($faker->numberBetween(5, 50))
                             ->setCreated($faker->dateTimeThisDecade)
+                            ->setDirectoryName($project->getName())
                             ->setArchitect($architect)
                             ->setGeneralCompany($generalCompany);
                         $manager->persist($project);

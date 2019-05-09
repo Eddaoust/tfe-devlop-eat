@@ -26,12 +26,21 @@ class UserFixtures extends Fixture
                 ->setPassword($this->encoder->encodePassword($user, 'testtest'))
                 ->setFirstName($faker->firstName)
                 ->setLastName($faker->lastName)
-                ->setRoles(['ROLE_ADMIN'])
+                ->setRoles(['ROLE_USER'])
                 ->setBirthdate($faker->dateTimeThisDecade)
                 ->setCreated($faker->dateTimeThisMonth);
 
             $manager->persist($user);
-            $manager->flush();
         }
+        $admin = new User();
+        $admin->setEmail('ed@test.be')
+            ->setPassword($this->encoder->encodePassword($user, 'testtest'))
+            ->setFirstName($faker->firstName)
+            ->setLastName($faker->lastName)
+            ->setRoles(['ROLE_ADMIN'])
+            ->setBirthdate($faker->dateTimeThisDecade)
+            ->setCreated($faker->dateTimeThisMonth);
+        $manager->persist($admin);
+        $manager->flush();
     }
 }
