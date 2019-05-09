@@ -5,9 +5,11 @@
 ## Requirements
 
 * Symfony 3.4 (LTS)
-* PHP 5.5.9 Or higher
-* MySQL 
-* [Wkhtmltopdf](https://wkhtmltopdf.org/ "Link to WkHtmlToPdf website")
+* PHP 7.0.8 Or higher
+* MySQL 5.7
+* NodeJS 6.4 Or higher
+* NPM 1.15 Or higher
+* [Puppeteer](https://github.com/GoogleChrome/puppeteer "Link to Puppeteer github repository")
 
 ## Installation
 
@@ -39,13 +41,23 @@ $ php bin/console doctrine:migrations:migrate
 ```
 $ php bin/console doctrine:fixtures:load --no-interaction
 ```
+* Install node modules
+```
+$ npm install
+```
 * Launch the app
 ```
 $ php bin/console server:run
 ```
 
+## Notes
+
 * Update Diagrams with PlantUML: 
 ```
 $ cd /doc/diagrams
 $ java -jar plantuml.jar database.txt
+```
+* Add crontab to generate pdf 
+```
+$ * * * * * php PATH_TO_BIN/CONSOLE app:generate-pdf
 ```
