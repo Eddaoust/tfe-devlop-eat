@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Project;
 use App\Form\ProjectType;
+use App\Repository\PendingPdfRepository;
 use App\Repository\ProjectRepository;
 use App\Service\PendingPdfManager;
 use Doctrine\Common\Persistence\ObjectManager;
@@ -98,7 +99,7 @@ class ProjectController extends Controller
 	 * @Route("/admin/project/delete/{id}", name="project_delete")
 	 * @ParamConverter("project", options={"exclude": {"manager"}})
 	 */
-    public function deletePoject(Project $project, ObjectManager $manager, Filesystem $filesystem)
+    public function deletePoject(Project $project, ObjectManager $manager, Filesystem $filesystem, PendingPdfRepository $pendingPdfRepository)
 	{
 		for ($i = 1; $i <= 3; $i++) {
 			$getImg = 'getImg' . $i;
@@ -106,10 +107,13 @@ class ProjectController extends Controller
                 unlink($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName() . '/' . $project->$getImg());
 			}
 		}
+        $pdf = $pendingPdfRepository->findOneBy(['project' => $project]);
+
 
         if ($this->dir_is_empty($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName())) {
             $filesystem->remove($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName());
         }
+        $manager->remove($pdf);
 		$manager->remove($project);
 		$manager->flush();
 

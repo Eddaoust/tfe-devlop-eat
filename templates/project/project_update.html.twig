@@ -42,7 +42,7 @@
             <div class="col-4">
                 <div class="row">
                     <div class="img-wrapper" style="height: 250px; overflow: hidden;">
-                        <img src="{{ project.img1 ? asset('img/project/' ~ project.name ~ '/' ~ project.img1.fileName) : asset('img/project/default.png') }}"
+                        <img src="{{ project.img1 ? asset('img/project/' ~ project.directoryName ~ '/' ~ project.img1.fileName) : asset('img/project/default.png') }}"
                              class="img-fluid">
                     </div>
                 </div>
@@ -55,7 +55,7 @@
             <div class="col-4">
                 <div class="row">
                     <div class="img-wrapper" style="height: 250px; overflow: hidden;">
-                        <img src="{{ project.img2 ? asset('img/project/' ~ project.name ~ '/' ~ project.img2.fileName) : asset('img/project/default.png') }}"
+                        <img src="{{ project.img2 ? asset('img/project/' ~ project.directoryName ~ '/' ~ project.img2.fileName) : asset('img/project/default.png') }}"
                              class="img-fluid">
                     </div>
                 </div>
@@ -68,7 +68,7 @@
             <div class="col-4">
                 <div class="row">
                     <div class="img-wrapper" style="height: 250px; overflow: hidden;">
-                        <img src="{{ project.img3 ? asset('img/project/' ~ project.name ~ '/' ~ project.img3.fileName) : asset('img/project/default.png') }}"
+                        <img src="{{ project.img3 ? asset('img/project/' ~ project.directoryName ~ '/' ~ project.img3.fileName) : asset('img/project/default.png') }}"
                              class="img-fluid">
                     </div>
                 </div>
