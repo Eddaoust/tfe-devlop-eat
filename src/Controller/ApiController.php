@@ -16,12 +16,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 /**
  * Class ApiController
  * @package App\Controller
- * @IsGranted("ROLE_USER")
  */
 class ApiController extends Controller
 {
 	/**
-     * @Route("/log/api/project/stat/{id}", name="api_project_stat", methods={"GET"})
+     * @Route("/internal/api/project/stat/{id}", name="internal_api_project_stat", methods={"GET"})
 	 */
 	public function getProjectStat ($id, ProjectRepository $repo)
 	{
@@ -46,6 +45,7 @@ class ApiController extends Controller
 	 * @param                           $countryId
 	 * @param CompanyCategoryRepository $repo
 	 * @return JsonResponse
+     * @IsGranted("ROLE_USER")
      * @Route("/log/api/company/category/{countryId}", name="api_company_category", methods={"GET"})
 	 */
 	public function getCompanyCategory ($countryId, CompanyCategoryRepository $repo)
@@ -63,6 +63,7 @@ class ApiController extends Controller
 	/**
 	 * @param CompanyRepository $repo
 	 * @return JsonResponse
+     * @IsGranted("ROLE_USER")
      * @Route("/log/api/company/get-projects", name="api_company_project_name_ajax", methods={"GET"})
 	 */
 	public function getCompanyProjectName (ProjectRepository $repo)
@@ -80,6 +81,7 @@ class ApiController extends Controller
 
 	/**
 	 * @return JsonResponse
+     * @IsGranted("ROLE_USER")
      * @Route("/log/api/archi-projects", name="api_archi_projects", methods={"GET"})
 	 */
 	public function getArchitectProjectName (ProjectRepository $repo)
@@ -97,6 +99,7 @@ class ApiController extends Controller
 
 	/**
 	 * @return JsonResponse
+     * @IsGranted("ROLE_USER")
      * @Route("/log/api/genComp-projects", name="api_genComp_projects", methods={"GET"})
 	 */
 	public function getCompaniesGenCompanyName (ProjectRepository $repo)
@@ -117,6 +120,7 @@ class ApiController extends Controller
 	 * @param CompanyRepository $repo
 	 * @return JsonResponse
 	 * @throws \Doctrine\DBAL\DBALException
+     * @IsGranted("ROLE_USER")
      * @Route("/log/api/company/country", name="api_company_by_country", methods={"GET"})
 	 */
 	public function getCompanyByCountry (CompanyRepository $repo)
@@ -133,6 +137,7 @@ class ApiController extends Controller
 
 	/**
 	 * @param ProjectRepository $repo
+     * @IsGranted("ROLE_USER")
      * @Route("/log/api/project/year", name="api_project_by_year", methods={"GET"})
 	 */
 	public function getProjectByYear (ProjectRepository $repo)
@@ -151,6 +156,7 @@ class ApiController extends Controller
 	 * @param ProjectRepository $repo
 	 * @return JsonResponse
 	 * @throws \Doctrine\DBAL\DBALException
+     * @IsGranted("ROLE_USER")
      * @Route("/log/api/project/turnover", name="api_project_by_turnover", methods={"GET"})
 	 */
 	public function getProjectTurnover (ProjectRepository $repo)

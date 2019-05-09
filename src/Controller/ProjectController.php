@@ -76,32 +76,13 @@ class ProjectController extends Controller
 		]);
 	}
 
-    /**
-     * @Route("/log/pupet", name="project_pupet")
-     */
-    public function pupetPdf(Request $request)
-    {
-        $name = session_name();
-        $value = $request->cookies->get($name);
-
-        session_write_close();
-
-        $process = new Process(['/usr/local/bin/node',  __DIR__ . '/../../public/js/htmlToPdf.js', $name, $value]);
-        $process->run(function ($type, $buffer){
-            echo $buffer;
-        });
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-
-        echo $process->getOutput();
-    }
-
 	/**
+     * First route only accessible by localhost
+     *
 	 * @param Project $project
 	 * @return \Symfony\Component\HttpFoundation\Response
-     * @IsGranted("ROLE_USER")
-	 * @Route("/log/project/{id}", name="project_one")
+	 * @Route("/internal/project/{id}", name="project_internal")
+     * @Route("/log/project/{id}", name="project_one")
 	 */
 	public function oneProject (Project $project)
 	{
@@ -177,7 +158,7 @@ class ProjectController extends Controller
 	 */
 	public function updateProject (Project $project, Request $request, ObjectManager $manager, Session $session, PendingPdfManager $pendingPdfManager)
 	{
-
+        //FIXME if change project name also change repo name
 		for ($i = 1; $i <= 3; $i++) {
 			$session->remove('fileName' . $i);
 			$getImg = 'getImg' . $i;

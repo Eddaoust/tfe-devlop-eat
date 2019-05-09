@@ -17,7 +17,7 @@ class PendingPdf
     private $id;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Project", cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity="App\Entity\Project")
      * @ORM\JoinColumn(nullable=false)
      */
     private $project;

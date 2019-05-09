@@ -2,6 +2,7 @@
 
 namespace App\Command;
 
+use App\Service\PendingPdfManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -11,10 +12,14 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class GeneratePdfCommand extends Command
 {
+    // Command callable
     protected static $defaultName = 'app:generate-pdf';
+    private $pendingPdfManager;
 
-    public function __construct($name = null)
+    // Get the pending manager at instanciation
+    public function __construct(PendingPdfManager $pendingPdfManager, $name = null)
     {
+        $this->pendingPdfManager = $pendingPdfManager;
         parent::__construct($name);
     }
 
@@ -27,12 +32,7 @@ class GeneratePdfCommand extends Command
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        // Configure action
-        /*
-         * 1. Get the pending project on the db
-         * 2. Foreach create pdf
-         * 3. Check for timeout
-         */
-        $output->writeln('ça marche');
+        $this->pendingPdfManager->generatePdf();
+        $output->writeln('PDF generated!');
     }
 }

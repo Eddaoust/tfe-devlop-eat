@@ -1,6 +1,6 @@
 $(function () {
 
-    const url = '/log/api/project/stat/'
+    const url = '/internal/api/project/stat/'
     const id = $('#projectId').val()
 
     $.ajax({
