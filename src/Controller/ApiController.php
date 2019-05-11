@@ -20,7 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class ApiController extends Controller
 {
 	/**
-     * @Route("/internal/api/project/stat/{id}", name="internal_api_project_stat", methods={"GET"})
+     * @Route("/api/project/stat/{id}", name="internal_api_project_stat", methods={"GET"})
 	 */
 	public function getProjectStat ($id, ProjectRepository $repo)
 	{

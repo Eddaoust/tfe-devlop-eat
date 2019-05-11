@@ -1,105 +1,131 @@
 $(function () {
 
-    const url = '/internal/api/project/stat/'
-    const id = $('#projectId').val()
+    const url = '/api/project/stat/';
+    const id = $('#projectId').val();
+
+    // Fonction pour récupérer les années manquantes (https://stackoverflow.com/questions/37277897/javascript-find-missing-number-in-array)
+    let missingNumbers = (a, l=true) => Array.from(Array(Math.max(...a)).keys()).map((n, i) => a.indexOf(i) < 0  && (!l || i > Math.min(...a)) ? i : null).filter(f=>f);
+
 
     $.ajax({
         type: 'GET',
-        url: url + id
-    }).done(function(datas) {
+        url: url + id,
+    }).done(function (data) {
 
-        const stateData = {
+        const state = {
             Vente: [],
             Prevente: [],
             Option: [],
             Location: [],
             Projection: [],
-            stateTime: [],
-            stepName: ['Etude', 'Maîtrise', 'Permis', 'Travaux', 'Livraison'],
-            stepDate: []
-        }
-        const years = []
+            date: []
+        };
 
-        for (const key in datas.step){
-            if(datas.step.hasOwnProperty(key) && datas.step[key] != null){
-                const datetime = new Date(datas.step[key].timestamp*1000)
+        const step = {
+            name: ['Etude', 'Maîtrise', 'Permis', 'Travaux', 'Livraison'],
+            date: []
+        };
+
+        const years = [];
+        const chartLabel = []
+
+        ////////////// SET THE STEP DATA ////////////////
+
+        for (const key in data.step){
+            if(data.step.hasOwnProperty(key) && data.step[key] != null){
+                // Set step date
+                const datetime = new Date(data.step[key].timestamp*1000);
                 // Récupération de toutes les années des steps
-                years.push(new Date(datas.step[key].timestamp*1000).getFullYear())
+                years.push(new Date(data.step[key].timestamp*1000).getFullYear());
+                // Si ajout d'une date de fin + 3 mois
                 if (key === 'study' || key === 'mastery' || key === 'delivery'){
-                    stateData.stepDate.push({
-                        x: new Date(datas.step[key].timestamp*1000),
+                    step.date.push({
+                        x: new Date(data.step[key].timestamp*1000),
                         y: 1
                     }, {
                         x: datetime.setMonth(datetime.getMonth() + 3),
                         y: 1
                     })
                 } else {
-                    stateData.stepDate.push({
-                        x: new Date(datas.step[key].timestamp*1000),
+                    step.date.push({
+                        x: new Date(data.step[key].timestamp*1000),
                         y: 1
                     })
                 }
 
             }
         }
+
+        ////////////// Création du label des graphiques AXE X ////////////////
+
         // Suppression des doublons dans les années
-        const yearsLabels = Array.from(new Set(years))
-        // Ajout des années manquantes pour avoir toujours un tableau de 6 éléments
-        while (yearsLabels.length < 6){
-            const temp = yearsLabels[0] - 1
-            yearsLabels.splice(0, 0, temp)
-        }
-        for (const item in yearsLabels){
-            yearsLabels[item] = new Date(yearsLabels[item], 1)
-        }
+        let yearsLabel = Array.from(new Set(years));
+        // Ajout d'une année à la fin du tableau
+        let lastYear = new Date(yearsLabel[yearsLabel.length-1].toString());
+        let lastLabel = new Date(lastYear.setFullYear(lastYear.getFullYear()+1));
+        // Ajout d'une année au début du tableau
+        let firstYear = new Date(yearsLabel[0].toString());
+        let firstLabel = new Date(firstYear.setFullYear(firstYear.getFullYear()-1));
+        yearsLabel.push(lastLabel.getFullYear());
+        yearsLabel.unshift(firstLabel.getFullYear());
+        // Remplissage d'un tableau de date pour le label des deux graphs
 
-        // Définition de la date de fin de l'axe X
-        const dateNowMoreOneYear = new Date(new Date().setFullYear(new Date().getFullYear()+1))
-        const futurDate = new Date(new Date().setFullYear(yearsLabels[yearsLabels.length -1].getFullYear() + 1))
-        yearsLabels[yearsLabels.length - 1].getFullYear() > dateNowMoreOneYear.getFullYear() ? yearsLabels.push(futurDate) : yearsLabels.push(dateNowMoreOneYear)
-
-        // remplissage du tableau des dates
-        for (const data of datas.state) {
-            let date = new Date(data.date.timestamp * 1000)
-            stateData.stateTime.push(date)
-        }
+        const yearsMissingLabel = yearsLabel.concat(missingNumbers(yearsLabel));
         // Trie les dates par ordre croissant
-        stateData.stateTime.sort(function (a, b) {
+        yearsMissingLabel.sort(function (a, b) {
             return a - b
-        })
+        });
 
-        // Création des datasets pour chaque stateType
-        for (const data of datas.state) {
-            let datetime = new Date(data.date.timestamp*1000)
+        for (let yearLabel of yearsMissingLabel) {
+            yearLabel = new Date(yearLabel.toString());
+            chartLabel.push(yearLabel);
+        }
+
+        ////////////// SET THE STATE DATA ////////////////
+
+        // Remplissage des dates du state
+        for (const stateObj of data.state) {
+            let date = new Date(stateObj.date.timestamp * 1000);
+            state.date.push(date);
+            years.push(date.getFullYear());
+        }
+
+        // Trie les dates par ordre croissant State
+        state.date.sort(function (a, b) {
+            return a - b
+        });
+
+        // Création des datasets pour chaque state
+        for (const oneState of data.state) {
+            let datetime = new Date(oneState.date.timestamp*1000);
             // test de la présence de la date dans le tableau
-            if (stateData.stateTime.findIndex(isSameDate) !== -1){
+            if (state.date.findIndex(isSameDate) !== -1){
                 // Test pour repérer la dernière itération
-                if ((stateData.stateTime.findIndex(isSameDate) + 2) > stateData.stateTime.length){
-                    const lastDate = new Date(datetime)
-                    stateData[data.name].push({
+                if ((state.date.findIndex(isSameDate) + 2) > state.date.length){
+                    state[oneState.name].push({
                         x: datetime,
-                        y: data.quantity
+                        y: oneState.quantity
                     }, {
-                        // Dernière date du tableau + 3 mois
-                        x: yearsLabels[yearsLabels.length - 1],
-                        y: data.quantity
+                        // Dernière date du tableau
+                        x: chartLabel[chartLabel.length -1],
+                        y: oneState.quantity
                     })
                     // Test si Location
-                } else if(data.name === 'Location'){
-                    stateData[data.name].push({
+                } else if(oneState.name === 'Location'){
+                    state[oneState.name].push({
                         x: datetime,
-                        y: data.quantity
+                        y: oneState.quantity
                     }, {
-                        x: yearsLabels[yearsLabels.length - 1],
-                        y: data.quantity
+                        x: chartLabel[chartLabel.length - 1],
+                        y: oneState.quantity
                     })
                 }else {
-                    stateData[data.name].push({
+                    state[oneState.name].push({
                         x: datetime,
-                        y: data.quantity
+                        y: oneState.quantity
                     }, {
-                        x: stateData.stateTime[stateData.stateTime.findIndex(isSameDate) + 1],
-                        y: data.quantity
+                        x: state.date[state.date.findIndex(isSameDate) + 1],
+                        y: oneState.quantity
                     })
                 }
             }
@@ -108,39 +134,39 @@ $(function () {
                 return element.valueOf() === datetime.valueOf()
             }
         }
-        console.log(stateData)
+
+        ////////////// INIT CHARTS ////////////////
 
         const timeline = document.getElementById("timeline").getContext('2d')
-        timeline.height = 100
         const timeChart = new Chart(timeline, {
             type: 'line',
             data: {
-                labels: yearsLabels,
+                labels: chartLabel,
                 datasets: [{
                     type: "line",
-                    label: stateData.stepName[0],
+                    label: step.name[0],
                     backgroundColor: "#e87878",
-                    data: [stateData.stepDate[0], stateData.stepDate[1]]
+                    data: [step.date[0], step.date[1]]
                 }, {
                     type: "line",
-                    label: stateData.stepName[1],
+                    label: step.name[1],
                     backgroundColor: "#8ac7b5",
-                    data: [stateData.stepDate[2], stateData.stepDate[3]]
+                    data: [step.date[2], step.date[3]]
                 }, {
                     type: "line",
-                    label: stateData.stepName[2],
+                    label: step.name[2],
                     backgroundColor: "#ffd67d",
-                    data: [stateData.stepDate[4], stateData.stepDate[5]]
+                    data: [step.date[4], step.date[5]]
                 }, {
                     type: "line",
-                    label: stateData.stepName[3],
+                    label: step.name[3],
                     backgroundColor: "#ab85bd",
-                    data: [stateData.stepDate[6], stateData.stepDate[7]]
+                    data: [step.date[6], step.date[7]]
                 }, {
                     type: "line",
-                    label: stateData.stepName[4],
+                    label: step.name[4],
                     backgroundColor: "#7899c9",
-                    data: [stateData.stepDate[8], stateData.stepDate[9]]
+                    data: [step.date[8], step.date[9]]
                 }]
             },
             options: {
@@ -151,8 +177,8 @@ $(function () {
                         position: "bottom",
                         type: "time",
                         time: {
-                            max: yearsLabels[yearsLabels.length - 1],
-                            min: yearsLabels[0],
+                            max: chartLabel[chartLabel.length - 1],
+                            min: chartLabel[0],
                             unit: "year",
                             parser: '[Q]Q - YYYY',
                             tooltipFormat: '[Q]Q - YYYY',
@@ -165,8 +191,8 @@ $(function () {
                                 year: 'YYYY'
                             }
                         },
-                        gridLines : {
-                            display : true,
+                        gridLines: {
+                            display: true,
                         },
                         ticks: {
                             source: 'labels',
@@ -182,40 +208,39 @@ $(function () {
                 }
             }
         })
-
         const ctx = document.getElementById("myChart").getContext('2d')
         const myChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: yearsLabels,
+                labels: chartLabel,
                 datasets: [{
                     type: 'line',
-                    label: Object.keys(stateData)[3],
+                    label: Object.keys(state)[3],
                     backgroundColor: '#8d8b8f',
-                    data: stateData.Location
+                    data: state.Location
                 }, {
                     type: 'line',
-                    label:Object.keys(stateData)[0],
+                    label:Object.keys(state)[0],
                     backgroundColor: '#45a750',
-                    data: stateData.Vente
+                    data: state.Vente
                 }, {
                     type: 'line',
-                    label: Object.keys(stateData)[1],
+                    label: Object.keys(state)[1],
                     backgroundColor: '#90cb99',
-                    data: stateData.Prevente
+                    data: state.Prevente
                 }, {
                     type: 'line',
-                    label: Object.keys(stateData)[2],
+                    label: Object.keys(state)[2],
                     backgroundColor: '#c8e5cc',
-                    data: stateData.Option
+                    data: state.Option
                 }, {
                     type: 'line',
-                    label: Object.keys(stateData)[4],
+                    label: Object.keys(state)[4],
                     backgroundColor: '#eff7f1',
                     borderColor: '#454545',
                     borderWidth: 2,
                     borderDash: [1, 2],
-                    data: stateData.Projection
+                    data: state.Projection
                 }]
             },
             options: {
@@ -229,8 +254,8 @@ $(function () {
                         position: "bottom",
                         type: "time",
                         time: {
-                            max: yearsLabels[yearsLabels.length - 1],
-                            min: yearsLabels[0],
+                            max: chartLabel[chartLabel.length - 1],
+                            min: chartLabel[0],
                             unit: "year",
                             parser: '[Q]Q - YYYY',
                             tooltipFormat: '[Q]Q - YYYY',
@@ -252,7 +277,7 @@ $(function () {
                     }],
                     yAxes: [{
                         ticks: {
-                            max: datas.lots,
+                            max: data.lots,
                             min: 0
                         }
                     }]
@@ -260,4 +285,4 @@ $(function () {
             }
         })
     })
-})
+});

@@ -46,7 +46,7 @@ class ProjectStatController extends Controller
             $fileName = $project->$getImg();
             if (!is_null($fileName))
             {
-                $file = new File($this->getParameter('project_images_directory') . '/' . $project->getName() . '/' . $fileName);
+                $file = new File($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName() . '/' . $fileName);
                 $project->$setImg($file);
                 $session->set('fileName'.$i, $fileName);
             }
@@ -98,7 +98,7 @@ class ProjectStatController extends Controller
             $fileName = $project->$getImg();
             if (!is_null($fileName))
             {
-                $file = new File($this->getParameter('project_images_directory') . '/' . $project->getName() . '/' . $fileName);
+                $file = new File($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName() . '/' . $fileName);
                 $project->$setImg($file);
                 $session->set('fileName'.$i, $fileName);
             }
