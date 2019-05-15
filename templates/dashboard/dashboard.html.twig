@@ -36,6 +36,7 @@
                     <a class="dropdown-item" href="{{ path('project_list') }}">Liste</a>
                     {% if is_granted('ROLE_ADMIN') %}
                         <a class="dropdown-item" href="{{ path('project_add') }}">Ajouter</a>
+                        <a class="dropdown-item" href="{{ path('project_pdf') }}">PDF</a>
                     {% endif %}
                 </div>
             </li>

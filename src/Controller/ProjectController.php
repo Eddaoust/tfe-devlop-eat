@@ -49,12 +49,15 @@ class ProjectController extends Controller
 		$form->handleRequest($request);
 
 		if ($form->isSubmitted() && $form->isValid()) {
+		    // Save img file to a directory
 			for ($i = 1; $i <= 3; $i++) {
 				$getImg = 'getImg' . $i;
 				$file = $project->$getImg();
 				if (!is_null($file)) {
+				    // Rename the file with unique name
 					$fileName = md5(uniqid()) . '.' . $file->guessExtension();
 					$file->move(
+					    // Save file in a directory with the name of the project
                         $this->getParameter('project_images_directory') . '/' . $project->getName(),
 						$fileName);
 					$setImg = 'setImg' . $i;
@@ -63,6 +66,7 @@ class ProjectController extends Controller
 			}
 			$project->setDirectoryName($project->getName());
 			$project->setCreated(new \DateTime('now'));
+			// Add the project to the pending table to be generated as PDF file
 			$pendingPdfManager->addPendingPdf($project);
 			$manager->persist($project);
 			$manager->flush();
@@ -101,6 +105,7 @@ class ProjectController extends Controller
 	 */
     public function deletePoject(Project $project, ObjectManager $manager, Filesystem $filesystem, PendingPdfRepository $pendingPdfRepository)
 	{
+	    // Remove each img file related to the project
 		for ($i = 1; $i <= 3; $i++) {
 			$getImg = 'getImg' . $i;
 			if (!is_null($project->$getImg())) {
@@ -109,10 +114,11 @@ class ProjectController extends Controller
 		}
         $pdf = $pendingPdfRepository->findOneBy(['project' => $project]);
 
-
+        // If directory is empty, delete it
         if ($this->dir_is_empty($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName())) {
             $filesystem->remove($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName());
         }
+        // Remove the project to the pending table
         $manager->remove($pdf);
 		$manager->remove($project);
 		$manager->flush();
@@ -133,6 +139,7 @@ class ProjectController extends Controller
 	 */
 	public function deleteImage (Project $project, ObjectManager $manager, $id, $img, Filesystem $filesystem)
 	{
+	    // Delete the given img
 		$setImg = 'set' . $img;
 		$getImg = 'get' . $img;
         $filesystem->remove($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName() . '/' . $project->$getImg());
@@ -140,6 +147,7 @@ class ProjectController extends Controller
 		$manager->persist($project);
 		$manager->flush();
 
+		// Delete directory if is empty
         if ($this->dir_is_empty($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName())) {
             $filesystem->remove($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName());
         }
@@ -166,9 +174,12 @@ class ProjectController extends Controller
 			$getImg = 'getImg' . $i;
 			$setImg = 'setImg' . $i;
 			$fileName = $project->$getImg();
+			// If already an img, get the related file
 			if (!is_null($fileName)) {
                 $file = new File($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName() . '/' . $project->$getImg());
+                // Set the file to the input
 				$project->$setImg($file);
+				// Add the file name to session
 				$session->set('fileName' . $i, $fileName);
 			}
 		}
@@ -182,20 +193,23 @@ class ProjectController extends Controller
 				$setImg = 'setImg' . $j;
 				$file = $project->$getImg();
 
+				// If already a file
 				if (!is_null($file)) {
+				    // Get is name in session
 					if ($session->get('fileName' . $j)) {
+					    // Get the path to it, and delete the old img file
                         $path = $this->getParameter('project_images_directory') . '/' . $project->getDirectoryName() . '/' . $session->get('fileName' . $j);
 						unlink($path);
 					}
+					// Save the new file
 					$fileName = md5(uniqid()) . '.' . $file->guessExtension();
 					$file->move(
                         $this->getParameter('project_images_directory') . '/' . $project->getDirectoryName(),
 						$fileName);
 					$project->$setImg($fileName);
+					// if img dont change set the older name
 				} else if ($session->get('fileName' . $j) && is_null($file)) {
 					$project->$setImg($session->get('fileName' . $j));
-
-
 				}
 			}
             $pendingPdfManager->addPendingPdf($project);
@@ -214,6 +228,24 @@ class ProjectController extends Controller
 		]);
 	}
 
+    /**
+     * @Route("/admin/pdf/list", name="project_pdf")
+     */
+	public function pdfList(ProjectRepository $projectRepository)
+    {
+        $projects = $projectRepository->findAllWithRelation();
+
+        return $this->render('project/project_pdf_list.html.twig', [
+            'projects' => $projects
+        ]);
+    }
+
+    /**
+     * Private function to check if file directory is empty
+     *
+     * @param $dirname
+     * @return bool
+     */
     private function dir_is_empty($dirname)
     {
         if (!is_dir($dirname)) return false;
