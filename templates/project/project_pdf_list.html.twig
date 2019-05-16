@@ -26,7 +26,7 @@
                         <th>{{ project.name }}</th>
                         <th>{{ project.projectOwner.name }}</th>
                         <th>{{ project.created | date('d/m/Y') }}</th>
-                        <th class="text-center"><a href=""><i class="fas fa-file-pdf"></i></a></th>
+                        <th class="text-center"><a href="{{ path('project_pdf_dl', { id: project.id }) }}" target="_blank"><i class="fas fa-file-pdf"></i></a></th>
                     </tr>
                 {% endfor %}
                 </tbody>

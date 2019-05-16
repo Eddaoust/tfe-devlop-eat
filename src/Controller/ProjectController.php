@@ -9,6 +9,7 @@ use App\Repository\ProjectRepository;
 use App\Service\PendingPdfManager;
 use Doctrine\Common\Persistence\ObjectManager;
 use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -238,6 +239,19 @@ class ProjectController extends Controller
         return $this->render('project/project_pdf_list.html.twig', [
             'projects' => $projects
         ]);
+    }
+
+    /**
+     * Get one pdf file
+     *
+     * @param Project $project
+     * @return BinaryFileResponse
+     * @Route("/log/pdf/download/{id}", name="project_pdf_dl")
+     */
+    public function downloadPdf(Project $project)
+    {
+        $file = $this->getParameter('pdf_directory').'/'.$project->getName().'.pdf';
+        return new BinaryFileResponse($file);
     }
 
     /**

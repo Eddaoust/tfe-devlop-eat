@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\Encoder\JsonEncoder;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
@@ -170,4 +171,17 @@ class ApiController extends Controller
 
 		return new JsonResponse($data, 200, [], true);
 	}
+
+    /////////////////// MERGING PDF'S /////////////////////
+
+    /**
+     * @Route("/log/api/project/merge-pdf", name="api_project_pdf_merge")
+     */
+    public function mergePdf(Request $request, ProjectRepository $projectRepository)
+    {
+        $projectIds = $request->request->get('ids');
+        $projects = $projectRepository->findBy(['id' => $projectIds]);
+        dump($projects);
+        die();
+    }
 }
