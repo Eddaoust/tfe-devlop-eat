@@ -54,6 +54,7 @@ class Project {
     fieldSize: (int)
     turnover: (int)
     lots: (int)
+    directoryName: (string)
     created: (\Datetime)
     projectOwner: (Company)
     architect: (Architect)
@@ -75,6 +76,14 @@ class Invitation {
     user: (User)
     token: (string)
     sendDate: (\Datetime)
+    email: (string)
+    status: (int)
+    confirmed_at: (\Datetime)
+}
+
+class PendingPdf {
+    id: (int)
+    project: (Project)
 }
 
 class GeneralCompany {
@@ -144,5 +153,6 @@ CompanyCategory -- Country
 Project -- State
 State -- ProjectState
 Company -- Shareholder
+Project -- PendingPdf
 
 @enduml
