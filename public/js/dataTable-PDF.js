@@ -40,6 +40,6 @@ $(function () {
         },
     });
 
-    $('.dt-buttons').append('<button class="dt-button buttons-collection buttons-page-length" type="submit">Télécharger</button>')
+    $('.dt-buttons').append('<button class="dt-button buttons-collection buttons-page-length" type="submit">Fusionner et télécharger les PDF sélectionnés</button>')
 });
 
