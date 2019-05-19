@@ -17,6 +17,7 @@ use Symfony\Component\HttpFoundation\Session\Session;
 use Symfony\Component\Routing\Annotation\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
+use Jurosh\PDFMerge\PDFMerger;
 
 class ProjectController extends Controller
 {
@@ -250,8 +251,36 @@ class ProjectController extends Controller
      */
     public function downloadPdf(Project $project)
     {
+        //TODO check security
         $file = $this->getParameter('pdf_directory').'/'.$project->getName().'.pdf';
         return new BinaryFileResponse($file);
+    }
+
+    /**
+     * Get the merged pdf
+     *
+     * @param Request $request
+     * @param ProjectRepository $projectRepository
+     * @return BinaryFileResponse
+     * @throws \Exception
+     * @Route("/log/api/project/merge-pdf", name="api_project_pdf_merge")
+     */
+    public function mergePdf(Request $request, ProjectRepository $projectRepository)
+    {
+        //TODO change route & check security
+        $pdf = new PDFMerger();
+        $pdf->addPDF($this->getParameter('pdf_directory').'/merge/default.pdf', 'all');
+        $projectIds = $request->request->get('projects');
+        $projects = $projectRepository->findBy(['id' => $projectIds]);
+        foreach ($projects as $project) {
+            $pdf->addPDF($this->getParameter('pdf_directory').'/'.$project->getName().'.pdf', 'all');
+        }
+        $pdf->merge('file', $this->getParameter('pdf_directory').'/merge/merge.pdf');
+
+        $response =  new BinaryFileResponse($this->getParameter('pdf_directory').'/merge/merge.pdf');
+        $response->deleteFileAfterSend(true);
+
+        return $response;
     }
 
     /**

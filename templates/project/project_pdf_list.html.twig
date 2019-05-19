@@ -9,6 +9,7 @@
 {% block project_body %}
     <div class="row">
         <div class="col-12">
+            <form action="{{ path('api_project_pdf_merge') }}" method="post">
             <table id="table_id" class="table table-hover table-bordered">
                 <thead>
                 <tr>
@@ -22,7 +23,7 @@
                 <tbody>
                 {% for project in projects %}
                     <tr>
-                        <th><input type="checkbox" value="{{ project.id }}" class="check-project"></th>
+                        <th><input type="checkbox" value="{{ project.id }}" class="check-project" name="projects[]"></th>
                         <th>{{ project.name }}</th>
                         <th>{{ project.projectOwner.name }}</th>
                         <th>{{ project.created | date('d/m/Y') }}</th>
@@ -31,6 +32,7 @@
                 {% endfor %}
                 </tbody>
             </table>
+            </form>
         </div>
     </div>
 {% endblock %}

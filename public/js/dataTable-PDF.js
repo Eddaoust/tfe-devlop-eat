@@ -21,13 +21,7 @@ $(function () {
         ],
         responsive: true,
         dom: 'Bfrtip',
-        buttons: [
-            {
-                text: 'Télécharger les PDF sélectionnés',
-                className: 'merge-pdf'
-            },
-            'pageLength'
-        ],
+        buttons: ['pageLength'],
         lengthChange: true,
         language: {
             buttons: {
@@ -46,21 +40,6 @@ $(function () {
         },
     });
 
-    // Event on merge pdf click
-    $('.merge-pdf').click(function () {
-        let projectIds = {
-            'ids': []
-        };
-        $('.check-project').each(function () {
-            if (this.checked) {
-                projectIds.ids.push(this.value);
-            }
-        })
-        $.ajax({
-            type: 'POST',
-            url: '/log/api/project/merge-pdf',
-            data: projectIds,
-        })
-    });
+    $('.dt-buttons').append('<button class="dt-button buttons-collection buttons-page-length" type="submit">Télécharger</button>')
 });
 

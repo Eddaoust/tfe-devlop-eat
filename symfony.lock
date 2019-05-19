@@ -107,6 +107,9 @@
     "jdorn/sql-formatter": {
         "version": "v1.2.17"
     },
+    "jurosh/pdf-merge": {
+        "version": "2.0.0"
+    },
     "monolog/monolog": {
         "version": "1.24.0"
     },
@@ -157,6 +160,15 @@
             "version": "4.0",
             "ref": "421933bf8f0e75546ac8e00cb3eb12904fa2ac1a"
         }
+    },
+    "setasign/fpdf": {
+        "version": "1.8.1"
+    },
+    "setasign/fpdi": {
+        "version": "v2.2.0"
+    },
+    "setasign/fpdi-fpdf": {
+        "version": "v2.2.0"
     },
     "swiftmailer/swiftmailer": {
         "version": "v6.1.3"
