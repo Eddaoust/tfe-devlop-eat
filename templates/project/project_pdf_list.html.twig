@@ -24,7 +24,7 @@
                 {% for project in projects %}
                     <tr>
                         <th><input type="checkbox" value="{{ project.id }}" class="check-project" name="projects[]"></th>
-                        <th>{{ project.name }}</th>
+                        <th><a href="{{ path('project_one', {id: project.id}) }}">{{ project.name }}</a></th>
                         <th>{{ project.projectOwner.name }}</th>
                         <th>{{ project.created | date('d/m/Y') }}</th>
                         <th class="text-center"><a href="{{ path('project_pdf_dl', { id: project.id }) }}" target="_blank"><i class="fas fa-file-pdf"></i></a></th>

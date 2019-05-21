@@ -1,0 +1,43 @@
+@media print {
+  .jumbotron {
+    display: none;
+  }
+
+  .sidebar {
+    display: none;
+  }
+
+  .navbar {
+    display: none;
+  }
+
+  .chart-row {
+    position: fixed;
+    top: 1200px;
+    width: 900px;
+  }
+
+  .sf-toolbar {
+    display: none!important;
+  }
+
+  .content-row {
+    margin-top: 50px;
+    height: 1100px;
+  }
+
+  .img-row {
+    height: 1000px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  .img-row div {
+    align-items: flex-start;
+  }
+
+  .side-title {
+    font-size: 20px;
+  }
+}

@@ -16,6 +16,10 @@ const puppeteer = require('puppeteer');
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
     //await page.setCookie(cookie);
+    await page.setViewport({
+        width: 1250,
+        height: 1300,
+    });
     await page.setRequestInterception(true);
     page.on("request", request => {
         console.log(request.url());

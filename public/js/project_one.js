@@ -248,6 +248,11 @@ $(function () {
                 legend: {
                     position: 'bottom'
                 },
+                elements: {
+                    line: {
+                        tension: 0
+                    }
+                },
                 scales: {
                     xAxes: [{
                         autoSkip: false,
