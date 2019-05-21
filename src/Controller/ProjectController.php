@@ -120,8 +120,12 @@ class ProjectController extends Controller
         if ($this->dir_is_empty($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName())) {
             $filesystem->remove($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName());
         }
+        // Remove pdf file
+        unlink($this->getParameter('pdf_directory').'/'.$project->getName().'.pdf');
         // Remove the project to the pending table
-        $manager->remove($pdf);
+        if ($pdf) {
+            $manager->remove($pdf);
+        }
 		$manager->remove($project);
 		$manager->flush();
 
