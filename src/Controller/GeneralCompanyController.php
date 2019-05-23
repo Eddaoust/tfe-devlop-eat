@@ -43,8 +43,7 @@ class GeneralCompanyController extends Controller
         $form = $this->createForm(GeneralCompanyType::class, $genCompany);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($genCompany);
             $manager->flush();
 
@@ -101,8 +100,7 @@ class GeneralCompanyController extends Controller
         $form = $this->createForm(GeneralCompanyType::class, $genCompany);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($genCompany);
             $manager->flush();
 

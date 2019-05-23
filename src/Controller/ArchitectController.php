@@ -43,8 +43,7 @@ class ArchitectController extends Controller
         $form = $this->createForm(ArchitectType::class, $architect);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($architect);
             $manager->flush();
 
@@ -101,8 +100,7 @@ class ArchitectController extends Controller
         $form = $this->createForm(ArchitectType::class, $architect);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($architect);
             $manager->flush();
 

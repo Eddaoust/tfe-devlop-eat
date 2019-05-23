@@ -20,7 +20,7 @@ class AccountController extends Controller
 {
     //TODO Permettre la suppression de compte
     //TODO Afficher la présence d'une photo dans l'edit du profil
-    /**   
+    /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/log/account", name="account_one")
      */
@@ -47,21 +47,19 @@ class AccountController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-			//TODO Impossible de modifier l'image quand on est l'utilisateur connecté
+            //TODO Impossible de modifier l'image quand on est l'utilisateur connecté
             $data = $form->getData();
             $image = $data->getImage();
             // Test de la présence d'une image envoyé via le form
-            if (!is_null($image) && !is_null($image->getFile()))
-            {
+            if (!is_null($image) && !is_null($image->getFile())) {
                 $file = $image->getFile();
                 // Test si l'utilisateur contient déja une image
-                if (!is_null($user->getImage()->getName()))
-                {
-                    $path = $this->getParameter('user_images_directory').'/'.$user->getImage()->getName();
+                if (!is_null($user->getImage()->getName())) {
+                    $path = $this->getParameter('user_images_directory') . '/' . $user->getImage()->getName();
                     // Suppression de l'ancienne image
                     unlink($path);
                 }
-                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
                 $file->move(
                     $this->getParameter('user_images_directory'),
                     $fileName);
@@ -92,8 +90,7 @@ class AccountController extends Controller
         $form = $this->createForm(PasswordResetType::class, $user);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
             $manager->persist($user);
             $manager->flush();

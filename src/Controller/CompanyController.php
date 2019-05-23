@@ -43,8 +43,7 @@ class CompanyController extends Controller
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Société ajouté avec succès');
             $manager->persist($company);
             $manager->flush();
@@ -102,12 +101,9 @@ class CompanyController extends Controller
         $form = $this->createForm(CompanyType::class, $company);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
-            foreach ($company->getShareholders() as $shareholder)
-            {
-                if (is_null($shareholder->getPart()))
-                {
+        if ($form->isSubmitted() && $form->isValid()) {
+            foreach ($company->getShareholders() as $shareholder) {
+                if (is_null($shareholder->getPart())) {
                     $company->removeShareholder($shareholder);
                     $manager->remove($shareholder);
                 }

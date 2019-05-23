@@ -124,7 +124,7 @@ class UserController extends Controller
     {
         $users = $repo->findAll();
 
-        return $this->render('user/user_list.html.twig',[
+        return $this->render('user/user_list.html.twig', [
             'users' => $users
         ]);
     }
@@ -156,8 +156,7 @@ class UserController extends Controller
         $form = $this->createForm(UserUpdateType::class, $user);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid())
-        {
+        if ($form->isSubmitted() && $form->isValid()) {
             if (!array_key_exists('roles', $request->request->get('user_update'))) {
                 $user->setRoles(['ROLE_USER']);
             }
@@ -165,17 +164,15 @@ class UserController extends Controller
             $data = $form->getData();
             $image = $data->getImage();
             // Test de la présence d'une image envoyé via le form
-            if (!is_null($image) && !is_null($image->getFile()))
-            {
+            if (!is_null($image) && !is_null($image->getFile())) {
                 $file = $image->getFile();
                 // Test si l'utilisateur contient déja une image
-                if (!is_null($user->getImage()->getName()))
-                {
-                    $path = $this->getParameter('user_images_directory').'/'.$user->getImage()->getName();
+                if (!is_null($user->getImage()->getName())) {
+                    $path = $this->getParameter('user_images_directory') . '/' . $user->getImage()->getName();
                     // Suppression de l'ancienne image
                     unlink($path);
                 }
-                $fileName = md5(uniqid()).'.'.$file->guessExtension();
+                $fileName = md5(uniqid()) . '.' . $file->guessExtension();
                 $file->move(
                     $this->getParameter('user_images_directory'),
                     $fileName);
@@ -200,10 +197,9 @@ class UserController extends Controller
      */
     public function deleteUser(User $user, ObjectManager $manager, Filesystem $filesystem)
     {
-        if (!is_null($user->getImage()))
-        {
+        if (!is_null($user->getImage())) {
             // Si image, on supprime l'ancienne
-            $path = $this->getParameter('user_images_directory').'/'.$user->getImage()->getName();
+            $path = $this->getParameter('user_images_directory') . '/' . $user->getImage()->getName();
             $filesystem->remove($path);
         }
         $manager->remove($user);
