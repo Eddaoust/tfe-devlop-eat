@@ -2,7 +2,6 @@
 ###> symfony/framework-bundle ###
 crontab
 .env
-/.env
 /.env.local
 /.env.*.local
 /public/bundles/

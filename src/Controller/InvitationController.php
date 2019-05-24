@@ -54,6 +54,7 @@ class InvitationController extends Controller
                     ]),
                     'text/html'
                 );
+
             $mailer->send($message);
 
             $this->addFlash('success', 'Invitation envoyé à l\'utilisateur');

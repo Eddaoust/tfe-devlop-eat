@@ -1,0 +1,37 @@
+@startuml
+start
+partition Invitation {
+    if (Invitation par mail?) then (Accepte)
+        :Enregistrement sur la plateforme;
+        :Redirection vers la page de login;
+    else (Refuse)
+        :Redirection vers la page de login;
+        stop
+    endif
+}
+partition Login {
+    if (Connexion?) then (Oui)
+        :Redirection vers le Dashboard;
+    else (non)
+        :Redirection vers la page de login;
+        stop
+    endif
+}
+partition Dashboard {
+    if (Projets) then (Oui)
+        :Liste;
+        :PDF;
+    elseif (sociétés) then (Oui)
+        :Liste;
+    elseif (Architectes) then (Oui)
+        :Liste;
+    elseif (Entreprises générales) then (Oui)
+        :Liste;
+    elseif (Compte personnel) then (Oui)
+        :Editer le compte;
+        :Changer le mot de passe;
+    elseif (Déconnexion) then (Oui)
+        stop
+    endif
+}
+@enduml

@@ -1,0 +1,14 @@
+@startuml
+:Création d'un projet;
+:Ajout du projet à la table des PDF en attente;
+repeat
+  :Vérifie la présence d'éléments PDF en attente;
+  :Génération du premier élément;
+  :Suppression du premier élément;
+  note right
+    Tâche automatisé CRON
+    Exécuté toute les minutes
+  end note
+repeat while (Encore des PDF en attente?)
+:Demande de téléchargement du fichier;
+@enduml
