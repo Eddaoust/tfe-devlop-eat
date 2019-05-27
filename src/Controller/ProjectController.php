@@ -235,7 +235,11 @@ class ProjectController extends Controller
     }
 
     /**
-     * @Route("/admin/pdf/list", name="project_pdf")
+     * List of all project in PDF section
+     *
+     * @param ProjectRepository $projectRepository
+     * @return \Symfony\Component\HttpFoundation\Response
+     * @Route("/log/pdf/list", name="project_pdf")
      */
     public function pdfList(ProjectRepository $projectRepository)
     {
@@ -251,11 +255,11 @@ class ProjectController extends Controller
      *
      * @param Project $project
      * @return BinaryFileResponse
+     * @IsGranted("ROLE_USER")
      * @Route("/log/pdf/download/{id}", name="project_pdf_dl")
      */
     public function downloadPdf(Project $project)
     {
-        //TODO check security
         $file = $this->getParameter('pdf_directory') . '/' . $project->getName() . '.pdf';
         return new BinaryFileResponse($file);
     }
@@ -267,11 +271,11 @@ class ProjectController extends Controller
      * @param ProjectRepository $projectRepository
      * @return BinaryFileResponse
      * @throws \Exception
-     * @Route("/log/api/project/merge-pdf", name="api_project_pdf_merge")
+     * @IsGranted("ROLE_USER")
+     * @Route("/log/project/merge-pdf", name="api_project_pdf_merge")
      */
     public function mergePdf(Request $request, ProjectRepository $projectRepository)
     {
-        //TODO change route & check security
         $pdf = new PDFMerger();
         $pdf->addPDF($this->getParameter('pdf_directory') . '/merge/default.pdf', 'all');
         $projectIds = $request->request->get('projects');
