@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Company;
 use App\Entity\Shareholder;
+use App\Repository\CompanyRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
@@ -26,6 +27,10 @@ class ShareholderType extends AbstractType
                 'label' => 'Actionnaire',
                 'required' => true,
                 'class' => Company::class,
+                'query_builder' => function (CompanyRepository $cr) {
+                    return $cr->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                },
                 'choice_label' => 'name',
                 'placeholder' => 'Choisissez un actionnaire'
             ])
