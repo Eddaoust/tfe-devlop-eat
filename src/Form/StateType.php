@@ -20,6 +20,7 @@ class StateType extends AbstractType
             ->add('date', DateType::class, [
                 'required' => false,
                 'format' => 'dd-MM-yyyy',
+                'years' => range(date('Y')-20, date('Y')+15),
                 'placeholder' => [
                     'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
                 ]

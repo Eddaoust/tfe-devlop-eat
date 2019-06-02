@@ -18,7 +18,7 @@ class StepType extends AbstractType
                 'label' => 'Etude',
                 'required' => false,
                 'format' => 'dd-MM-yyyy',
-                'years' => range(date('Y')-10, date('Y')+10),
+                'years' => range(date('Y')-20, date('Y')+15),
                 'placeholder' => [
                     'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
                 ]
@@ -27,7 +27,7 @@ class StepType extends AbstractType
                 'label' => 'Maîtrise',
                 'required' => false,
                 'format' => 'dd-MM-yyyy',
-                'years' => range(date('Y')-10, date('Y')+10),
+                'years' => range(date('Y')-20, date('Y')+15),
                 'placeholder' => [
                     'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
                 ]
@@ -36,7 +36,7 @@ class StepType extends AbstractType
                 'label' => 'Permis (début)',
                 'required' => false,
                 'format' => 'dd-MM-yyyy',
-                'years' => range(date('Y')-10, date('Y')+10),
+                'years' => range(date('Y')-20, date('Y')+15),
                 'placeholder' => [
                     'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
                 ]
@@ -45,7 +45,7 @@ class StepType extends AbstractType
                 'label' => 'Permit (fin)',
                 'required' => false,
                 'format' => 'dd-MM-yyyy',
-                'years' => range(date('Y')-10, date('Y')+10),
+                'years' => range(date('Y')-20, date('Y')+15),
                 'placeholder' => [
                     'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
                 ]
@@ -54,7 +54,7 @@ class StepType extends AbstractType
                 'label' => 'Travaux (début)',
                 'required' => false,
                 'format' => 'dd-MM-yyyy',
-                'years' => range(date('Y')-10, date('Y')+10),
+                'years' => range(date('Y')-20, date('Y')+15),
                 'placeholder' => [
                     'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
                 ]
@@ -63,7 +63,7 @@ class StepType extends AbstractType
                 'label' => 'Travaux (fin)',
                 'required' => false,
                 'format' => 'dd-MM-yyyy',
-                'years' => range(date('Y')-10, date('Y')+10),
+                'years' => range(date('Y')-20, date('Y')+15),
                 'placeholder' => [
                     'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
                 ]
@@ -72,7 +72,7 @@ class StepType extends AbstractType
                 'label' => 'Livraison',
                 'required' => false,
                 'format' => 'dd-MM-yyyy',
-                'years' => range(date('Y')-10, date('Y')+10),
+                'years' => range(date('Y')-20, date('Y')+15),
                 'placeholder' => [
                     'year' => 'Année', 'month' => 'Mois', 'day' => 'Jour',
                 ]
