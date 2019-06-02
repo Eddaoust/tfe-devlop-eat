@@ -5,6 +5,8 @@ namespace App\Form;
 use App\Entity\Company;
 use App\Entity\CompanyCategory;
 use App\Entity\Country;
+use App\Repository\CompanyCategoryRepository;
+use App\Repository\CountryRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -40,13 +42,17 @@ class CompanyType extends AbstractType
                 'label' => 'Pays',
                 'class' => Country::class,
                 'choice_label' => 'name',
-                'placeholder' => 'Choisissez un pays'
+                'placeholder' => 'Choisissez un pays',
+                'query_builder' => function (CountryRepository $cr) {
+                    return $cr->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                }
             ])
             ->add('companyCategory', EntityType::class, [
                 'label' => 'Forme juridique',
                 'class' => CompanyCategory::class,
                 'choice_label' => 'name',
-                'placeholder' => 'Choisissez un type de société'
+                'placeholder' => 'Choisissez un type de société',
             ])
             ->add('address', TextType::class, $this->getConfiguration('Adresse', false, 'Entrez l\'adresse'))
             ->add('postalCode', TextType::class, $this->getConfiguration('Code Postal', false, 'Entrez le code postal'))

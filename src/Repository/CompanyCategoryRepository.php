@@ -26,6 +26,7 @@ class CompanyCategoryRepository extends ServiceEntityRepository
                     ->leftJoin('companyCategory.country', 'country')
                     ->andWhere('country.id = :countryId')
                     ->setParameter('countryId', $country)
+                    ->orderBy('companyCategory.name', 'ASC')
                     ->getQuery()
                     ->getResult();
     }

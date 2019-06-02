@@ -6,7 +6,9 @@ use App\Entity\Architect;
 use App\Entity\Company;
 use App\Entity\GeneralCompany;
 use App\Entity\Project;
+use App\Repository\ArchitectRepository;
 use App\Repository\CompanyRepository;
+use App\Repository\GeneralCompanyRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\CallbackTransformer;
@@ -55,21 +57,33 @@ class ProjectType extends AbstractType
                 'label' => 'Project owner *',
                 'class' => Company::class,
                 'choice_label' => 'name',
-                'placeholder' => 'Choisissez un project owner'
+                'placeholder' => 'Choisissez un project owner',
+                'query_builder' => function (CompanyRepository $cr) {
+                    return $cr->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                },
             ])
             ->add('architect', EntityType::class, [
                 'label' => 'Architecte',
                 'required' => false,
                 'class' => Architect::class,
                 'choice_label' => 'name',
-                'placeholder' => 'Choisissez un architecte'
+                'placeholder' => 'Choisissez un architecte',
+                'query_builder' => function (ArchitectRepository $ar) {
+                    return $ar->createQueryBuilder('a')
+                        ->orderBy('a.name', 'ASC');
+                }
             ])
             ->add('generalCompany', EntityType::class, [
                 'label' => 'Entreprise générale',
                 'required' => false,
                 'class' => GeneralCompany::class,
                 'choice_label' => 'name',
-                'placeholder' => 'Choisissez une entreprise générale'
+                'placeholder' => 'Choisissez une entreprise générale',
+                'query_builder' => function (GeneralCompanyRepository $gcr) {
+                    return $gcr->createQueryBuilder('gc')
+                        ->orderBy('gc.name', 'ASC');
+                }
             ])
             ->add('img1', FileType::class, [
                 'label' => 'Image 1 du projet',
