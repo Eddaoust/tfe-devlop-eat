@@ -3,70 +3,75 @@
 {% block stylesheets %}
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.css"/>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/responsive/2.2.3/css/responsive.dataTables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css"/>
 {% endblock %}
 
 {% block project_body %}
     <div class="row">
         <div class="col-12">
-            <table id="table_id" class="table table-hover table-bordered">
-                <thead>
-                <tr>
-                    <th class="desktop">#</th>
-                    <th class="desktop">Nom</th>
-                    <th class="desktop">Project Owner</th>
-                    <th class="desktop">Ville</th>
-                    <th class="desktop">Création</th>
-                    <th class="desktop">Données</th>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <th class="desktop">Modifier</th>
-                        <th class="desktop">Supprimer</th>
-                    {% endif %}
-                </tr>
-                </thead>
-                <tbody>
-                {% for project in projects %}
+            <form action="{{ path('api_project_pdf_merge') }}" method="post">
+                <table id="table_id" class="table table-hover table-bordered">
+                    <thead>
                     <tr>
-                        <th>{{ loop.index }}</th>
-                        <th><a href="{{ path('project_one', {id: project.id}) }}">{{ project.name }}</a></th>
-                        <th>{{ project.projectOwner.name }}</th>
-                        <th>{{ project.city }}</th>
-                        <th>{{ project.created | date('d/m/Y') }}</th>
-                        <th class="text-center"><a href="{{ path('projectStat_show', {id: project.id}) }}"><i class="fas fa-database"></i></a></th>
-                    {% if is_granted('ROLE_ADMIN') %}
-                        <th class="text-center"><a href="{{ path('project_update', {id: project.id}) }}"><i class="fas fa-pen"></i></a></th>
-                        <th class="text-center">
-                            <span data-toggle="modal" data-target="#project-{{ project.id }}">
-                                <a href="#" class="item-delete" id="{{ project.id }}" data-toggle="tooltip">
-                                    <i class="fas fa-trash-alt"></i>
-                                </a>
-                            </span>
-                        </th>
-                        </tr>
+                        <th class="desktop"><input type="checkbox" id="select-all"></th>
+                        <th class="desktop">Nom</th>
+                        <th class="desktop">Project Owner</th>
+                        <th class="desktop">Ville</th>
+                        <th class="desktop">Création</th>
+                        <th class="desktop">Données</th>
+                        <th class="desktop">Télécharger</th>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <th class="desktop">Modifier</th>
+                            <th class="desktop">Supprimer</th>
+                        {% endif %}
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for project in projects %}
+                        <tr>
+                            <th><input type="checkbox" value="{{ project.id }}" class="check-project" name="projects[]"></th>
+                            <th><a href="{{ path('project_one', {id: project.id}) }}">{{ project.name }}</a></th>
+                            <th>{{ project.projectOwner.name }}</th>
+                            <th>{{ project.city }}</th>
+                            <th>{{ project.created | date('d/m/Y') }}</th>
+                            <th class="text-center"><a href="{{ path('projectStat_show', {id: project.id}) }}"><i class="fas fa-database"></i></a></th>
+                            <th class="text-center"><a href="{{ path('project_pdf_dl', { id: project.id }) }}" target="_blank"><i class="fas fa-file-pdf"></i></a></th>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <th class="text-center"><a href="{{ path('project_update', {id: project.id}) }}"><i class="fas fa-pen"></i></a></th>
+                            <th class="text-center">
+                                <span data-toggle="modal" data-target="#project-{{ project.id }}">
+                                    <a href="#" class="item-delete" id="{{ project.id }}" data-toggle="tooltip">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </a>
+                                </span>
+                            </th>
+                            </tr>
 
-                        <!-- Modal -->
-                        <div class="modal fade" id="project-{{ project.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Suppression du projet: {{ project.name }}</h5>
-                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        Valider la suppression du projet: {{ project.name }}
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                                        <a class="btn btn-danger" href="{{ path('project_delete', {id: project.id}) }}">Supprimer</a>
+                            <!-- Modal -->
+                            <div class="modal fade" id="project-{{ project.id }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Suppression du projet: {{ project.name }}</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Valider la suppression du projet: {{ project.name }}
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                                            <a class="btn btn-danger" href="{{ path('project_delete', {id: project.id}) }}">Supprimer</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    {% endif %}
-                {% endfor %}
-                </tbody>
-            </table>
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </form>
         </div>
     </div>
 {% endblock %}
@@ -74,5 +79,6 @@
 {% block js %}
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/datatables.min.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/responsive/2.2.3/js/dataTables.responsive.min.js"></script>
-    <script type="text/javascript" src="{{ asset('js/dataTable-Init.js') }}"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/buttons/1.5.6/js/dataTables.buttons.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/dataTable-PDF.js') }}"></script>
 {% endblock %}

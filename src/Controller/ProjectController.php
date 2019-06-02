@@ -235,22 +235,6 @@ class ProjectController extends Controller
     }
 
     /**
-     * List of all project in PDF section
-     *
-     * @param ProjectRepository $projectRepository
-     * @return \Symfony\Component\HttpFoundation\Response
-     * @Route("/log/pdf/list", name="project_pdf")
-     */
-    public function pdfList(ProjectRepository $projectRepository)
-    {
-        $projects = $projectRepository->findAllWithRelation();
-
-        return $this->render('project/project_pdf_list.html.twig', [
-            'projects' => $projects
-        ]);
-    }
-
-    /**
      * Get one pdf file
      *
      * @param Project $project
@@ -272,7 +256,7 @@ class ProjectController extends Controller
      * @return BinaryFileResponse
      * @throws \Exception
      * @IsGranted("ROLE_USER")
-     * @Route("/log/project/merge-pdf", name="api_project_pdf_merge")
+     * @Route("/log/api/project/merge-pdf", name="api_project_pdf_merge")
      */
     public function mergePdf(Request $request, ProjectRepository $projectRepository)
     {
