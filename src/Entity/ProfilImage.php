@@ -52,7 +52,7 @@ class ProfilImage
     /**
      * @param mixed $file
      */
-    public function setFile(UploadedFile $file)
+    public function setFile($file)
     {
         $this->file = $file;
     }

@@ -73,6 +73,7 @@ class UserController extends Controller
                                 $fileName);
                             // Persist du nom
                             $image->setName($fileName);
+                            $image->setFile(null);
                         }
                         // Set user
                         $user->setPassword($encoder->encodePassword($user, $user->getPassword()))
@@ -177,6 +178,7 @@ class UserController extends Controller
                     $this->getParameter('user_images_directory'),
                     $fileName);
                 $image->setName($fileName);
+                $image->setFile(null);
             }
             $manager->persist($user);
             $manager->flush();
