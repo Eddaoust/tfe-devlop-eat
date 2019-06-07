@@ -23,7 +23,7 @@ class CompanyController extends Controller
      */
     public function listCompany(CompanyRepository $repo)
     {
-        $companies = $repo->findAll();
+        $companies = $repo->findBy(['deleted' => false]);
 
         return $this->render('company/company_list.html.twig', [
             'companies' => $companies
@@ -45,6 +45,7 @@ class CompanyController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->addFlash('success', 'Société ajouté avec succès');
+            $company->setDeleted(false);
             $manager->persist($company);
             $manager->flush();
 
@@ -80,7 +81,8 @@ class CompanyController extends Controller
      */
     public function deleteCompany(Company $company, ObjectManager $manager)
     {
-        $manager->remove($company);
+        $company->setDeleted(true);
+        $manager->persist($company);
         $manager->flush();
 
         $this->addFlash('success', 'Société supprimé avec succès');

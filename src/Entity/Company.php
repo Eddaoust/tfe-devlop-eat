@@ -137,6 +137,11 @@ class Company
      */
     private $projects;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $deleted;
+
     public function __construct()
     {
         $this->shareholders = new ArrayCollection();
@@ -338,6 +343,18 @@ class Company
                 $project->setProjectOwner(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): self
+    {
+        $this->deleted = $deleted;
 
         return $this;
     }
