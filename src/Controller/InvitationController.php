@@ -39,6 +39,7 @@ class InvitationController extends Controller
             $token = bin2hex(random_bytes(24));
 
             $invitation->setToken($token)
+                ->setDeleted(false)
                 ->setSendDate(new \DateTime())
                 ->setStatus($invitation::WAITING);
             $manager->persist($invitation);
@@ -107,7 +108,7 @@ class InvitationController extends Controller
      */
     public function invitationList(InvitationRepository $repo)
     {
-        $invitations = $repo->findAll();
+        $invitations = $repo->findBy(['deleted' => false]);
 
         return $this->render('invitation/invitation_list.html.twig', [
             'invitations' => $invitations
@@ -123,7 +124,8 @@ class InvitationController extends Controller
      */
     public function invitationDelete(Invitation $invitation, ObjectManager $manager)
     {
-        $manager->remove($invitation);
+        $invitation->setDeleted(true);
+        $manager->persist($invitation);
         $manager->flush();
 
         $this->addFlash('success', 'Invitation supprimée');
