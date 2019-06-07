@@ -38,47 +38,70 @@
         <br>
         <hr>
         <br>
-        <div class="row">
-            <div class="col-4">
-                <div class="row">
-                    <div class="img-wrapper" style="height: 250px; overflow: hidden;">
+        <div class="row justify-content-around">
+            <div class="col-3 img-component">
+                <div class="row justify-content-center">
+                    <div class="img-wrapper">
                         <img src="{{ project.img1 ? asset('img/project/' ~ project.directoryName ~ '/' ~ project.img1.fileName) : asset('img/project/default.png') }}"
                              class="img-fluid">
                     </div>
                 </div>
                 {% if project.img1 %}
-                    <div class="row"><a href="{{ path('project_image_delete', {id: project.id, img: 'img1'}) }}"
-                                        class="btn btn-danger">Supprimer l'image</a></div>
+                    <div class="row justify-content-center"><a href="{{ path('project_image_delete', {id: project.id, img: 'img1'}) }}"
+                                        class="btn btn-danger btn-sm">Supprimer l'image</a></div>
                 {% endif %}
                 <div class="row">{{ form_row(form.img1) }}</div>
             </div>
-            <div class="col-4">
-                <div class="row">
-                    <div class="img-wrapper" style="height: 250px; overflow: hidden;">
+            <div class="col-3 img-component">
+                <div class="row justify-content-center">
+                    <div class="img-wrapper">
                         <img src="{{ project.img2 ? asset('img/project/' ~ project.directoryName ~ '/' ~ project.img2.fileName) : asset('img/project/default.png') }}"
                              class="img-fluid">
                     </div>
                 </div>
                 {% if project.img2 %}
-                    <div class="row"><a href="{{ path('project_image_delete', {id: project.id, img: 'img2'}) }}"
-                                        class="btn btn-danger">Supprimer l'image</a></div>
+                    <div class="row justify-content-center"><a href="{{ path('project_image_delete', {id: project.id, img: 'img2'}) }}"
+                                        class="btn btn-danger btn-sm">Supprimer l'image</a></div>
                 {% endif %}
                 <div class="row">{{ form_row(form.img2) }}</div>
             </div>
-            <div class="col-4">
-                <div class="row">
-                    <div class="img-wrapper" style="height: 250px; overflow: hidden;">
+            <div class="col-3 img-component">
+                <div class="row justify-content-center">
+                    <div class="img-wrapper">
                         <img src="{{ project.img3 ? asset('img/project/' ~ project.directoryName ~ '/' ~ project.img3.fileName) : asset('img/project/default.png') }}"
                              class="img-fluid">
                     </div>
                 </div>
                 {% if project.img3 %}
-                    <div class="row"><a href="{{ path('project_image_delete', {id: project.id, img: 'img3'}) }}"
-                                        class="btn btn-danger">Supprimer l'image</a></div>
+                    <div class="row justify-content-center"><a href="{{ path('project_image_delete', {id: project.id, img: 'img3'}) }}"
+                                        class="btn btn-danger btn-sm">Supprimer l'image</a></div>
                 {% endif %}
                 <div class="row">{{ form_row(form.img3) }}</div>
             </div>
         </div>
+        <br>
         {{ form_end(form) }}
     </div>
+    <style>
+        .img-component {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            padding: 20px;
+            border: 1px solid #eee;
+            box-shadow: 0 2px 3px #ccc;
+            width: 25%;
+            height: 400px;
+        }
+
+        .img-wrapper {
+            height: 200px;
+        }
+
+        .img-wrapper img {
+            max-width: 100%;
+            max-height: 100%;
+        }
+
+    </style>
 {% endblock %}
