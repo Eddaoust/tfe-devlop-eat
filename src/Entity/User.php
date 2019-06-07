@@ -90,6 +90,11 @@ class User implements UserInterface
      */
     private $image;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $deleted;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -246,6 +251,18 @@ class User implements UserInterface
     public function setImage($image)
     {
         $this->image = $image;
+    }
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): self
+    {
+        $this->deleted = $deleted;
+
+        return $this;
     }
 
 }

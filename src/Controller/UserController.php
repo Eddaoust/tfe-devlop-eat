@@ -77,6 +77,7 @@ class UserController extends Controller
                         }
                         // Set user
                         $user->setPassword($encoder->encodePassword($user, $user->getPassword()))
+                            ->setDeleted(false)
                             ->setRoles(['ROLE_USER'])
                             ->setCreated(new \DateTime('now'));
 
@@ -123,7 +124,7 @@ class UserController extends Controller
      */
     public function listUsers(UserRepository $repo)
     {
-        $users = $repo->findAll();
+        $users = $repo->findBy(['deleted' => false]);
 
         return $this->render('user/user_list.html.twig', [
             'users' => $users
@@ -204,7 +205,12 @@ class UserController extends Controller
             $path = $this->getParameter('user_images_directory') . '/' . $user->getImage()->getName();
             $filesystem->remove($path);
         }
-        $manager->remove($user);
+        $user->setDeleted(true)
+            ->setEmail(bin2hex(random_bytes(24)))
+            ->setFirstName('')
+            ->setLastName('')
+            ->setBirthdate(null);
+        $manager->persist($user);
         $manager->flush();
 
         $this->addFlash('success', 'Utilisateur supprimé avec succès');
