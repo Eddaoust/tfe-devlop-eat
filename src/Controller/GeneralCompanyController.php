@@ -22,7 +22,7 @@ class GeneralCompanyController extends Controller
      */
     public function listGenCompanies(GeneralCompanyRepository $repo)
     {
-        $genCompanies = $repo->findAll();
+        $genCompanies = $repo->findBy(['deleted' => false]);
 
         return $this->render('general_company/genCompany_list.html.twig', [
             'genCompanies' => $genCompanies
@@ -44,6 +44,7 @@ class GeneralCompanyController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $genCompany->setDeleted(false);
             $manager->persist($genCompany);
             $manager->flush();
 
@@ -79,7 +80,8 @@ class GeneralCompanyController extends Controller
      */
     public function deleteGenCompany(GeneralCompany $genCompany, ObjectManager $manager)
     {
-        $manager->remove($genCompany);
+        $genCompany->setDeleted(true);
+        $manager->persist($genCompany);
         $manager->flush();
 
         $this->addFlash('success', 'Entreprise générale supprimé avec succès');

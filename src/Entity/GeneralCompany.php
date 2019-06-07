@@ -87,6 +87,11 @@ class GeneralCompany
      */
     private $projects;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $deleted;
+
     public function __construct()
     {
         $this->projects = new ArrayCollection();
@@ -196,6 +201,18 @@ class GeneralCompany
                 $project->setGeneralCompany(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): self
+    {
+        $this->deleted = $deleted;
 
         return $this;
     }
