@@ -87,6 +87,11 @@ class Architect
      */
     private $projects;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $deleted;
+
     public function __construct()
     {
         $this->projects = new ArrayCollection();
@@ -196,6 +201,18 @@ class Architect
                 $project->setArchitect(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): self
+    {
+        $this->deleted = $deleted;
 
         return $this;
     }

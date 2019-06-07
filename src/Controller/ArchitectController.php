@@ -20,9 +20,9 @@ class ArchitectController extends Controller
      * @IsGranted("ROLE_USER")
      * @Route("/log/architect", name="architect_list")
      */
-    public function listProjects(ArchitectRepository $repo)
+    public function listArchitects(ArchitectRepository $repo)
     {
-        $architects = $repo->findAll();
+        $architects = $repo->findBy(['deleted' => false]);
 
         return $this->render('architect/architect_list.html.twig', [
             'architects' => $architects
@@ -44,6 +44,7 @@ class ArchitectController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $architect->setDeleted(false);
             $manager->persist($architect);
             $manager->flush();
 
@@ -79,7 +80,8 @@ class ArchitectController extends Controller
      */
     public function deleteArchitect(Architect $architect, ObjectManager $manager)
     {
-        $manager->remove($architect);
+        $architect->setDeleted(true);
+        $manager->persist($architect);
         $manager->flush();
 
         $this->addFlash('success', 'Architecte supprimé avec succès');
@@ -95,7 +97,7 @@ class ArchitectController extends Controller
      * @Route("/admin/architect/update/{id}", name="architect_update")
      * @ParamConverter("architect", options={"exclude": {"request","manager"}})
      */
-    public function updateProject(Architect $architect, Request $request, ObjectManager $manager)
+    public function updateArchitect(Architect $architect, Request $request, ObjectManager $manager)
     {
         $form = $this->createForm(ArchitectType::class, $architect);
         $form->handleRequest($request);
