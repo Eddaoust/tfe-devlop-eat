@@ -13,6 +13,7 @@ $(function () {
     });
 
     $('#table_id').DataTable({
+        info: false,
         columnDefs: [
             {
                 orderable: false,
