@@ -45,6 +45,7 @@ class ProjectRepository extends ServiceEntityRepository
                     ->leftJoin('project.projectOwner', 'projectOwner')
                     ->leftJoin('project.architect', 'architect')
                     ->leftJoin('project.generalCompany', 'generalCompany')
+                    ->where('project.deleted = false')
                     ->getQuery()
                     ->getResult();
     }

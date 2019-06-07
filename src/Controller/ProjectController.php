@@ -66,6 +66,7 @@ class ProjectController extends Controller
                     $project->$setImg($fileName);
                 }
             }
+            $project->setDeleted(false);
             $project->setDirectoryName($project->getName());
             $project->setCreated(new \DateTime('now'));
             // Add the project to the pending table to be generated as PDF file
@@ -105,28 +106,15 @@ class ProjectController extends Controller
      * @Route("/admin/project/delete/{id}", name="project_delete")
      * @ParamConverter("project", options={"exclude": {"manager"}})
      */
-    public function deletePoject(Project $project, ObjectManager $manager, Filesystem $filesystem, PendingPdfRepository $pendingPdfRepository)
+    public function deletePoject(Project $project, ObjectManager $manager, PendingPdfRepository $pendingPdfRepository)
     {
-        // Remove each img file related to the project
-        for ($i = 1; $i <= 3; $i++) {
-            $getImg = 'getImg' . $i;
-            if (!is_null($project->$getImg())) {
-                unlink($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName() . '/' . $project->$getImg());
-            }
-        }
         $pdf = $pendingPdfRepository->findOneBy(['project' => $project]);
-
-        // If directory is empty, delete it
-        if ($this->dir_is_empty($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName())) {
-            $filesystem->remove($this->getParameter('project_images_directory') . '/' . $project->getDirectoryName());
-        }
-        // Remove pdf file
-        unlink($this->getParameter('pdf_directory') . '/' . $project->getName() . '.pdf');
         // Remove the project to the pending table
         if ($pdf) {
             $manager->remove($pdf);
         }
-        $manager->remove($project);
+        $project->setDeleted(true);
+        $manager->persist($project);
         $manager->flush();
 
         $this->addFlash('success', 'Projet supprimé avec succès');

@@ -192,6 +192,11 @@ class Project
      */
     private $directoryName;
 
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $deleted;
+
     public function __construct()
     {
         $this->projectImages = new ArrayCollection();
@@ -452,6 +457,18 @@ class Project
     public function setDirectoryName(?string $directoryName): self
     {
         $this->directoryName = $directoryName;
+
+        return $this;
+    }
+
+    public function getDeleted(): ?bool
+    {
+        return $this->deleted;
+    }
+
+    public function setDeleted(bool $deleted): self
+    {
+        $this->deleted = $deleted;
 
         return $this;
     }
