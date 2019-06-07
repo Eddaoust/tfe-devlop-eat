@@ -142,7 +142,7 @@ class ApiController extends Controller
      */
     public function getProjectByYear(ProjectRepository $repo)
     {
-        $count = $repo->getProjectByYear();
+        $count = $repo->getProjectCountByYears();
 
         $encoders = [new JsonEncoder()];
         $normalizers = [(new ObjectNormalizer())];

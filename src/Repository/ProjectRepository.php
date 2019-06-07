@@ -85,18 +85,16 @@ class ProjectRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    /**
-     * @return mixed
-     */
-    public function getProjectByYear()
+    public function getProjectCountByYears()
     {
         $conn = $this->getEntityManager()->getConnection();
 
         $sql = '
-            SELECT COUNT(p.id) as projectCount, YEAR(p.created) as year
+            SELECT COUNT(p.id) as projectCount, YEAR(step.study) as year
             FROM project p
-            GROUP BY YEAR(p.created)
-            ORDER BY YEAR(p.created) ASC
+            INNER JOIN step ON p.steps_id = step.id
+            GROUP BY YEAR(step.study)
+            ORDER BY YEAR(step.study) ASC
         ';
 
         $doctrine = $conn->prepare($sql);
