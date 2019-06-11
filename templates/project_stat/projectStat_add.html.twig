@@ -8,16 +8,14 @@
         <hr class="mb-5">
         {{ form_start(form) }}
         <div class="row">
-            <div class="col-lg-6">{{ form_row(form.steps.study) }}</div>
-            <div class="col-lg-6">{{ form_row(form.steps.mastery) }}</div>
+            <div class="col-lg-4">{{ form_row(form.steps.study) }}</div>
+            <div class="col-lg-4">{{ form_row(form.steps.mastery) }}</div>
+            <div class="col-lg-4">{{ form_row(form.steps.permitStart) }}</div>
         </div>
         <div class="row">
-            <div class="col-lg-6">{{ form_row(form.steps.permitStart) }}</div>
-            <div class="col-lg-6">{{ form_row(form.steps.permitEnd) }}</div>
-        </div>
-        <div class="row">
-            <div class="col-lg-6">{{ form_row(form.steps.worksStart) }}</div>
-            <div class="col-lg-6">{{ form_row(form.steps.worksEnd) }}</div>
+            <div class="col-lg-4">{{ form_row(form.steps.permitEnd) }}</div>
+            <div class="col-lg-4">{{ form_row(form.steps.worksStart) }}</div>
+            <div class="col-lg-4">{{ form_row(form.steps.worksEnd) }}</div>
         </div>
         <div class="row">
             <div class="col-12">{{ form_row(form.steps.delivery) }}</div>

@@ -50,7 +50,7 @@ class ProjectType extends AbstractType
             ->add('city', TextType::class, $this->getConfiguration('Ville', false, 'Entrez la ville du projet'))
             ->add('description', TextareaType::class, $this->getConfiguration('Description', false, 'Description du projet'))
             ->add('pointOfInterest', TextareaType::class, $this->getConfiguration('Point d\'intérêt', false, 'Ajoutez les points d\'intérêts'))
-            ->add('fieldSize', IntegerType::class, $this->getConfiguration('Dimension du terrain', false, 'Dimension du terrai en are'))
+            ->add('fieldSize', IntegerType::class, $this->getConfiguration('Dimension du terrain', false, 'Dimension du terrain en are'))
             ->add('turnover', MoneyType::class, $this->getConfiguration('Chiffre d\'affaire', false, 'Chiffre d\'affaire'))
             ->add('lots', IntegerType::class, $this->getConfiguration('Lots', false, 'Nombres de lots'))
             ->add('projectOwner', EntityType::class, [

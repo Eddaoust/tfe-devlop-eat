@@ -16,6 +16,7 @@ class ProjectStatType extends AbstractType
         $builder
             ->add('steps', StepType::class)
             ->add('state', CollectionType::class, [
+                'label' => 'Etat',
                 'entry_type' => StateType::class,
                 'allow_add' => true,
                 'by_reference' => false
