@@ -13,9 +13,7 @@
             <th class="desktop">Nom</th>
             <th class="desktop">Type</th>
             <th class="desktop">Pays</th>
-            <th class="desktop">Addresse</th>
             <th class="desktop">Ville</th>
-            <th class="desktop">Numero TVA</th>
             <th class="desktop">Banque</th>
             {% if is_granted('ROLE_ADMIN') %}
                 <th class="desktop">Modifier</th>
@@ -30,9 +28,7 @@
                 <th><a href="{{ path('company_one', {id: company.id}) }}">{{ company.name }}</a></th>
                 <th>{{ company.companyCategory.abbreviation }}</th>
                 <th>{{ company.country.code }}</th>
-                <th>{{ company.address }}</th>
                 <th>{{ company.city }}</th>
-                <th>{{ company.tvaNum }}</th>
                 <th>{{ company.bank }}</th>
             {% if is_granted('ROLE_ADMIN') %}
                 <th class="text-center"><a href="{{ path('company_update', {id: company.id}) }}"><i class="fas fa-pen"></i></a></th>

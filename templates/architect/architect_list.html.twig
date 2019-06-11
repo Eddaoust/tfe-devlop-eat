@@ -11,10 +11,7 @@
         <tr>
             <th class="desktop">#</th>
             <th class="desktop">Nom</th>
-            <th class="desktop">Adresse</th>
-            <th class="desktop">Code Postal</th>
             <th class="desktop">Ville</th>
-            <th class="desktop">Phone</th>
             <th class="desktop">Email</th>
             {% if is_granted('ROLE_ADMIN') %}
                 <th class="desktop">Modifier</th>
@@ -26,10 +23,7 @@
             <tr>
                 <th>{{ loop.index }}</th>
                 <th><a href="{{ path('architect_one', {id: architect.id}) }}">{{ architect.name }}</a></th>
-                <th>{{ architect.address }}</th>
-                <th>{{ architect.postalCode }}</th>
                 <th>{{ architect.city }}</th>
-                <th>{{ architect.phone }}</th>
                 <th>{{ architect.email }}</th>
             {% if is_granted('ROLE_ADMIN') %}
                 <th class="text-center"><a href="{{ path('architect_update', {id: architect.id}) }}"><i class="fas fa-pen"></i></a></th>
