@@ -18,8 +18,6 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class AccountController extends Controller
 {
-    //TODO Permettre la suppression de compte
-    //TODO Afficher la présence d'une photo dans l'edit du profil
     /**
      * @return \Symfony\Component\HttpFoundation\Response
      * @Route("/log/account", name="account_one")
@@ -87,16 +85,21 @@ class AccountController extends Controller
     public function editPassword(Request $request, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
     {
         $user = $this->getUser();
-        $form = $this->createForm(PasswordResetType::class, $user);
+        $form = $this->createForm(PasswordResetType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
-            $manager->persist($user);
-            $manager->flush();
+            if ($encoder->isPasswordValid($user, $request->request->get('oldPassword'))) {
+                $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+                $manager->persist($user);
+                $manager->flush();
 
-            $this->addFlash('success', 'Votre password a été modifié avec succès');
-            return $this->redirectToRoute('account_one');
+                $this->addFlash('success', 'Votre password a été modifié avec succès');
+                return $this->redirectToRoute('account_one');
+            } else {
+                $this->addFlash('danger', 'Votre ancien password ne correspond pas');
+                return $this->redirectToRoute('account_password');
+            }
         }
 
         return $this->render('user/user_password.html.twig', [
