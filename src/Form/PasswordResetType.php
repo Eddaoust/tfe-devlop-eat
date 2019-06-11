@@ -33,7 +33,7 @@ class PasswordResetType extends AbstractType
             ->add('password', PasswordType::class, $this->getConfiguration('Mot de passe', 'Entrez votre mot de passe'))
             ->add('confirmPassword', PasswordType::class, $this->getConfiguration('Confirmation', 'Confirmez votre mot de passe'))
             ->add('submit', SubmitType::class, [
-                'label' => 'Envoyer',
+                'label' => 'Valider',
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]

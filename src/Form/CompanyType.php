@@ -69,7 +69,7 @@ class CompanyType extends AbstractType
                 'by_reference' => false
             ])
             ->add('Ajouter', SubmitType::class, [
-                'label' => 'Envoyer',
+                'label' => 'Valider',
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]

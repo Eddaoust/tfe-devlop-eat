@@ -98,7 +98,7 @@ class ProjectType extends AbstractType
                 'required' => false
             ])
             ->add('Ajouter', SubmitType::class, [
-                'label' => 'Envoyer',
+                'label' => 'Valider',
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]

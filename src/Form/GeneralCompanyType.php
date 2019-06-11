@@ -38,7 +38,7 @@ class GeneralCompanyType extends AbstractType
             ->add('phone', TextType::class, $this->getConfiguration('Téléphone', false, 'Entrez le numero'))
             ->add('email', EmailType::class, $this->getConfiguration('Email *', true, 'Entrez l\'adresse email'))
             ->add('submit', SubmitType::class, [
-                'label' => 'Envoyer',
+                'label' => 'Valider',
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]
