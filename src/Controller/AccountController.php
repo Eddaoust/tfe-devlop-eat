@@ -90,7 +90,7 @@ class AccountController extends Controller
 
         if ($form->isSubmitted() && $form->isValid()) {
             if ($encoder->isPasswordValid($user, $request->request->get('oldPassword'))) {
-                $user->setPassword($encoder->encodePassword($user, $user->getPassword()));
+                $user->setPassword($encoder->encodePassword($user, $request->request->get('password_reset')['password']));
                 $manager->persist($user);
                 $manager->flush();
 
