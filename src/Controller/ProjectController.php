@@ -226,14 +226,19 @@ class ProjectController extends Controller
      * Get one pdf file
      *
      * @param Project $project
-     * @return BinaryFileResponse
+     * @return BinaryFileResponse|\Symfony\Component\HttpFoundation\RedirectResponse
      * @IsGranted("ROLE_USER")
      * @Route("/log/pdf/download/{id}", name="project_pdf_dl")
      */
     public function downloadPdf(Project $project)
     {
         $file = $this->getParameter('pdf_directory') . '/' . $project->getName() . '.pdf';
-        return new BinaryFileResponse($file);
+        if (file_exists($file)) {
+            return new BinaryFileResponse($file);
+        } else {
+            $this->addFlash('danger', 'Le fichier n\'a pas encore été généré, veuillez réessayer dans quelques instants');
+            return $this->redirectToRoute('project_list');
+        }
     }
 
     /**
@@ -253,7 +258,9 @@ class ProjectController extends Controller
         $projectIds = $request->request->get('projects');
         $projects = $projectRepository->findBy(['id' => $projectIds]);
         foreach ($projects as $project) {
-            $pdf->addPDF($this->getParameter('pdf_directory') . '/' . $project->getName() . '.pdf', 'all');
+            if (file_exists($this->getParameter('pdf_directory') . '/' . $project->getName() . '.pdf')) {
+                $pdf->addPDF($this->getParameter('pdf_directory') . '/' . $project->getName() . '.pdf', 'all');
+            }
         }
         $pdf->merge('file', $this->getParameter('pdf_directory') . '/merge/merge.pdf');
 
