@@ -58,6 +58,7 @@ class ProjectRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('project')
             ->select('project.name', 'projectOwner.id')
             ->leftJoin('project.projectOwner', 'projectOwner')
+            ->where('project.deleted = false')
             ->getQuery()
             ->getResult();
     }
@@ -70,6 +71,7 @@ class ProjectRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('project')
             ->select('project.name', 'generalCompany.id')
             ->leftJoin('project.generalCompany', 'generalCompany')
+            ->where('project.deleted = false')
             ->getQuery()
             ->getResult();
     }
@@ -82,6 +84,7 @@ class ProjectRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('project')
             ->select('project.name', 'architect.id')
             ->leftJoin('project.architect', 'architect')
+            ->where('project.deleted = false')
             ->getQuery()
             ->getResult();
     }
@@ -94,6 +97,7 @@ class ProjectRepository extends ServiceEntityRepository
             SELECT COUNT(p.id) as projectCount, YEAR(step.study) as year
             FROM project p
             INNER JOIN step ON p.steps_id = step.id
+            WHERE p.deleted = false
             GROUP BY YEAR(step.study)
             ORDER BY YEAR(step.study) ASC
         ';
@@ -115,6 +119,7 @@ class ProjectRepository extends ServiceEntityRepository
         $sql = '
             SELECT p.name, p.turnover, p.created
             FROM project p
+            WHERE p.deleted = false
             ORDER BY p.created DESC
             LIMIT 15
         ';
