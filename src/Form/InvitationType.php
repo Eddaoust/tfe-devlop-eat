@@ -22,7 +22,7 @@ class InvitationType extends AbstractType
                 ]
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Envoyer l\'invitation',
+                'label' => 'Envoyer',
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]

@@ -95,6 +95,16 @@ class User implements UserInterface
      */
     private $deleted;
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $token;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $resetDate;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -261,6 +271,30 @@ class User implements UserInterface
     public function setDeleted(bool $deleted): self
     {
         $this->deleted = $deleted;
+
+        return $this;
+    }
+
+    public function getToken(): ?string
+    {
+        return $this->token;
+    }
+
+    public function setToken(?string $token): self
+    {
+        $this->token = $token;
+
+        return $this;
+    }
+
+    public function getResetDate(): ?\DateTimeInterface
+    {
+        return $this->resetDate;
+    }
+
+    public function setResetDate(?\DateTimeInterface $resetDate): self
+    {
+        $this->resetDate = $resetDate;
 
         return $this;
     }

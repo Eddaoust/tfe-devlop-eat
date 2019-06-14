@@ -3,6 +3,8 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Form\InvitationType;
+use App\Form\PasswordResetType;
 use App\Form\UserAddType;
 use App\Form\UserUpdateType;
 use App\Repository\InvitationRepository;
@@ -215,5 +217,96 @@ class UserController extends Controller
 
         $this->addFlash('success', 'Utilisateur supprimé avec succès');
         return $this->redirectToRoute('user_list');
+    }
+
+    /**
+     * @param Request $request
+     * @return Response
+     * @Route("/reset-password", name="user_reset_password")
+     */
+    public function resetPasswordByToken(Request $request, UserRepository $repository, \Swift_Mailer $mailer, ObjectManager $manager)
+    {
+        $form = $this->createForm(InvitationType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $repository->findOneBy(['email' => $request->request->get('invitation')['email']]);
+            if ($user) {
+                $token = bin2hex(random_bytes(24));
+                $user->setToken($token)
+                    ->setResetDate(new \DateTime());
+                $manager->persist($user);
+                $manager->flush();
+
+                $message = (new \Swift_Message('Récupération de mot de passe'))
+                    ->setFrom('noreply@devlop-eat.com')
+                    ->setTo($user->getEmail())
+                    ->setBody(
+                        $this->renderView('user/user_password_link.html.twig', [
+                            'token' => $token,
+                        ]),
+                        'text/html'
+                    );
+
+                $mailer->send($message);
+
+                $this->addFlash('success', 'Allez consulter votre mail pour continuer');
+                return $this->redirectToRoute('login');
+            } else {
+                $this->addFlash('danger', 'L\'adresse email n\'est pas valide');
+                return $this->redirectToRoute('user_reset_password');
+            }
+        }
+
+        return $this->render('user/user_password_by_mail.html.twig', [
+            'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/reset/token/check", name="user_check_token")
+     */
+    public function passwordTokenCheck(Request $request, UserRepository $repository, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
+    {
+        if ($request->query->get('token')) {
+            $user = $repository->findOneBy(['token' => $request->query->get('token')]);
+
+            if ($user) {
+                $now = new \DateTime();
+                $sendDate = clone($user->getResetDate());
+                $timeOut = new \DateInterval('PT24H');
+
+                if ($now->sub($timeOut) < $sendDate) {
+                    $form = $this->createForm(PasswordResetType::class, $user);
+                    $form->handleRequest($request);
+
+                    if ($form->isSubmitted() && $form->isValid()) {
+                        // Set user
+                        $user->setPassword($encoder->encodePassword($user, $user->getPassword()))
+                            ->setToken(null);
+
+                        $manager->persist($user);
+                        $manager->flush();
+
+                        $this->addFlash('success', 'Mot de passe modifié avec succès');
+                        return $this->redirectToRoute('login');
+                    }
+                    return $this->render('user/user_forget_password.html.twig', [
+                        'form' => $form->createView()
+                    ]);
+                } else {
+                    $user->setToken(null);
+                    $manager->persist($user);
+                    $manager->flush();
+
+                    $this->addFlash('danger', 'Le lien n\'est plus valide');
+                    return $this->redirectToRoute('login');
+                }
+            } else {
+                throw new \Exception('Accès refusé');
+            }
+        } else {
+            throw new \Exception('Accès refusé');
+        }
     }
 }
