@@ -220,8 +220,14 @@ class UserController extends Controller
     }
 
     /**
+     * Start the password recuperation process
+     *
      * @param Request $request
-     * @return Response
+     * @param UserRepository $repository
+     * @param \Swift_Mailer $mailer
+     * @param ObjectManager $manager
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Exception
      * @Route("/reset-password", name="user_reset_password")
      */
     public function resetPasswordByToken(Request $request, UserRepository $repository, \Swift_Mailer $mailer, ObjectManager $manager)
@@ -264,6 +270,14 @@ class UserController extends Controller
     }
 
     /**
+     * Check token & write the new password
+     *
+     * @param Request $request
+     * @param UserRepository $repository
+     * @param ObjectManager $manager
+     * @param UserPasswordEncoderInterface $encoder
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @throws \Exception
      * @Route("/reset/token/check", name="user_check_token")
      */
     public function passwordTokenCheck(Request $request, UserRepository $repository, ObjectManager $manager, UserPasswordEncoderInterface $encoder)
