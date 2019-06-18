@@ -65,7 +65,7 @@ class UserAddType extends AbstractType
                 'required' => false
             ])
             ->add('submit', SubmitType::class, [
-                'label' => 'Envoyer l\'invitation',
+                'label' => 'Valider',
                 'attr' => [
                     'class' => 'btn btn-success'
                 ]
