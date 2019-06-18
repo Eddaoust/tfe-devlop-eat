@@ -125,6 +125,7 @@ class InvitationController extends Controller
     public function invitationDelete(Invitation $invitation, ObjectManager $manager)
     {
         $invitation->setDeleted(true);
+        $invitation->setToken(null);
         $manager->persist($invitation);
         $manager->flush();
 
